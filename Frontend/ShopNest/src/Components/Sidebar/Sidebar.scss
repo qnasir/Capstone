@@ -1,5 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+
+
 .frame_div {
     box-sizing: border-box;
     background-color: #002540;
     border-top: 7px solid #0ff;
+    padding: 2.75rem 1.625rem 7.938rem 1.188rem;
+    
+    .rectangle_frame {
+
+
+        .box{
+            border-bottom: 1px solid #0ff;
+            display: flex;
+            padding: 10px;
+            font-weight: 300;
+            font-size: 16px;
+            color: white;
+            font-style: normal;
+            font-weight: 300;
+            gap: 5px;
+            font-family: "Inter", sans-serif;
+            cursor: pointer;
+        }
+    }
 }
+
+/* Electrical Appliances */
+
+// position: absolute;
+// width: 155px;
+// height: 19px;
+// left: 96px;
+// top: 171px;
+
+// font-family: 'Inter';
+// font-style: normal;
+// font-weight: 300;
+// font-size: 16px;
+// line-height: 19px;
+
+// color: #FFFFFF;
+

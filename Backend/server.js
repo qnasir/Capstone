@@ -13,7 +13,7 @@ app.use(cors());
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
-  next(); // Call next() to avoid hanging responses
+  next();
 });
 
 app.get("/", (req, res) => {

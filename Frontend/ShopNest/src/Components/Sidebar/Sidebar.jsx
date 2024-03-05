@@ -35,7 +35,7 @@ const Sidebar = () => {
           <div>
             <HiOutlinePaintBrush />
           </div>
-          <div className="category">Staitionary</div>
+          <div className="category">Stationary</div>
         </div>
         <div className="box">
           <div>

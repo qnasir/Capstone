@@ -10,8 +10,8 @@ function Navbar() {
 
       <div className='text_container'>
         <div className='text'>HOME</div>
-        <div className='text'>Wishlist</div>
-        <div className='text'>Contact Us</div>
+        <div className='text'>WISHLIST</div>
+        <div className='text'>CONTACT US</div>
 
         <div className="button_div">
           <button className='button'>Register</button>

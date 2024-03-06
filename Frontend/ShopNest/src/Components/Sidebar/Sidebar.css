@@ -4,6 +4,9 @@
   background-color: #002540;
   border-top: 7px solid #0ff;
   padding: 2.75rem 1.625rem 7.938rem 1.188rem;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  margin-top: 2.813rem;
 }
 .frame_div .rectangle_frame .box {
   border-bottom: 1px solid #0ff;
@@ -15,6 +18,14 @@
   font-style: normal;
   gap: 5px;
   font-family: "Inter", sans-serif;
+}
+.frame_div .rectangle_frame .box .category {
+  font-size: 15px;
+  color: var(--greyText);
+}
+.frame_div .rectangle_frame .box:hover {
+  color: #0ff;
+  transform: translateX(7px);
   cursor: pointer;
 }
 

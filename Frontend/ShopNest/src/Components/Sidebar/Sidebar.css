@@ -1,5 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 .frame_div {
   box-sizing: border-box;
   background-color: #002540;
   border-top: 7px solid #0ff;
-}/*# sourceMappingURL=Sidebar.css.map */
+  padding: 2.75rem 1.625rem 7.938rem 1.188rem;
+}
+.frame_div .rectangle_frame .box {
+  border-bottom: 1px solid #0ff;
+  display: flex;
+  padding: 10px;
+  font-weight: 300;
+  font-size: 16px;
+  color: white;
+  font-style: normal;
+  gap: 5px;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+}
+
+/* Electrical Appliances *//*# sourceMappingURL=Sidebar.css.map */

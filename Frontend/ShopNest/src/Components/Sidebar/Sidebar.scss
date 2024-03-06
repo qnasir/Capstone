@@ -5,6 +5,8 @@
     background-color: #002540;
     border-top: 7px solid #0ff;
     padding: 2.75rem 1.625rem 7.938rem 1.188rem;
+    max-width: max-content;
+    margin-top: 2.813rem;
     
     .rectangle_frame {
 
@@ -19,7 +21,18 @@
             font-style: normal;
             gap: 5px;
             font-family: "Inter", sans-serif;
-            cursor: pointer;
+            // cursor: pointer;
+
+            .category{
+                font-size: 15px;
+                color: var(--greyText);
+            }
+
+            &:hover{
+                color: #0ff;
+                transform: translateX(7px);
+                cursor: pointer;
+            }
         }
     }
 }

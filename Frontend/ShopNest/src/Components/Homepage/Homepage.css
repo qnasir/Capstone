@@ -7,4 +7,8 @@
   background-color: #00192C;
   margin-left: 2.75rem;
   margin-right: 2.75rem;
+}
+.homepage .flex {
+  display: flex;
+  justify-content: space-between;
 }/*# sourceMappingURL=Homepage.css.map */

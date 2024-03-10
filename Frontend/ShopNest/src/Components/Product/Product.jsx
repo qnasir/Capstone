@@ -5,18 +5,20 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { SlLocationPin } from "react-icons/sl";
 import { GrLanguage } from "react-icons/gr";
 import image from './svg/download.jpeg'
+import { languages } from '../LanguageSelector/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { changeLanguage } from 'i18next';
+import { useEffect } from 'react';
 
 
 function Product() {
-
-    const {t,i18n} = useTranslation();
-
+    
+    const {t, i18n} = useTranslation();
     const { sell } = t("ProductPage");
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    }
+    useEffect(()=> {
+        document.body.dir = i18n.dir();
+      }, [i18n,i18n.language])
 
     return (
         <div className='main_container'>
@@ -33,10 +35,9 @@ function Product() {
                 <div className='language_filter dropdown'>
                     <GrLanguage className='dropdown_button'/>
                     <div className='dropdown_content'>
-                        <a href="#" onClick={() => changeLanguage("hi")}>Hindi</a>
-                        <a href="#" onClick={() => changeLanguage("en")}>English</a>
-                        <a href="#" onClick={() => changeLanguage("fr")}>French</a>
-                        <a href="#" onClick={() => changeLanguage("ar")}>Arabic</a>
+                        {languages.map((language) => (
+                            <a href="#" key={language.code} onClick={() => changeLanguage(language.code)} >{language.lang}</a>
+                        ))}
                     </div>
                 </div>
 

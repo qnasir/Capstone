@@ -12,6 +12,7 @@ import { GiTiedScroll } from "react-icons/gi";
 import { TbDeviceMobile } from "react-icons/tb";
 import { FiMonitor } from "react-icons/fi";
 import { TfiMouse } from "react-icons/tfi";
+import { languages,changeLanguage } from '../LanguageSelector/LanguageSelector'
 
 
 const Sidebar = () => {

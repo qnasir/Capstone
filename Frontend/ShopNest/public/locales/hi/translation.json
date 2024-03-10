@@ -1,0 +1,24 @@
+{
+    "Sidebar" : {
+        "electrical" : "बिजली के उपकरण",
+        "clothes" : "कपड़े",
+        "stationery" : "अचल",
+        "books" : "पुस्तकें",
+        "furniture" : "फर्नीचर",
+        "sports" : "खेल सामग्री",
+        "jobs" : "पार्ट टाइम जॉब",
+        "mobile" : "मोबाइल फोन",
+        "laptop" : "लैपटॉप",
+        "gadgets" : "गैजेट"
+    },
+    "Navbar" : {
+        "home" : "होमबार",
+        "wishlist" : "इच्छा-सूची",
+        "contact" : "संपर्क करें",
+        "register" : "पंजीकरण करवाना"
+    },
+    "ProductPage" : {
+        "sell" : "बेचना"
+    }
+
+}

@@ -5,9 +5,19 @@ import { FaIndianRupeeSign } from "react-icons/fa6";
 import { SlLocationPin } from "react-icons/sl";
 import { GrLanguage } from "react-icons/gr";
 import image from './svg/download.jpeg'
+import { useTranslation } from 'react-i18next';
 
 
 function Product() {
+
+    const {t,i18n} = useTranslation();
+
+    const { sell } = t("ProductPage");
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    }
+
     return (
         <div className='main_container'>
             <div className="search_container">
@@ -20,12 +30,18 @@ function Product() {
                     <CiFilter className='filter_icon' />
                 </div>
 
-                <div className='language_filter'>
-                    <GrLanguage />
+                <div className='language_filter dropdown'>
+                    <GrLanguage className='dropdown_button'/>
+                    <div className='dropdown_content'>
+                        <a href="#" onClick={() => changeLanguage("hi")}>Hindi</a>
+                        <a href="#" onClick={() => changeLanguage("en")}>English</a>
+                        <a href="#" onClick={() => changeLanguage("fr")}>French</a>
+                        <a href="#" onClick={() => changeLanguage("ar")}>Arabic</a>
+                    </div>
                 </div>
 
                 <div className="wrap">
-                    <button className="button">Sell</button>
+                    <button className="button">{sell}</button>
                 </div>
             </div>
 

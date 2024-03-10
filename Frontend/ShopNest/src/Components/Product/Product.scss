@@ -10,6 +10,7 @@
 
 .main_container {
     margin-top: 2.813rem;
+    font-family: "Inter", sans-serif;
     width: 74%; //Adjust Width for products relative to sidebar
 
     .search_container {
@@ -107,15 +108,52 @@
             display: flex;
             align-self: center;
             color: white;
-            padding: 0.45rem;
+            padding: 0.45rem 0.45rem 0;
             box-shadow: 0px 0px 5px rgba(79,209,197,.64);
             border-radius: 8px;
             font-size: 25px;
+            cursor: pointer;
             transition: 0.2s ;
+            display: inline-block;
 
-
-            &:hover {
+            &:hover  {
               background: var(--PrimaryColor);
+            }
+
+            &:hover .dropdown_content {
+              display: block;
+            }
+
+            .dropdown_content {
+              position: absolute;
+              min-width: 160px;
+              z-index: 1;
+              border-radius: 5px;
+              margin-top: 0.2rem;
+              box-shadow: 0px 0px 5px rgba(79,209,197,.64);
+              display: none;
+
+              a{
+                text-decoration: none;
+                font-size: 1.3rem;
+                text-transform: uppercase;
+                display: block;
+                border-bottom: 2px solid var(--PrimaryColor);
+                border-right: 2px solid var(--PrimaryColor);
+                color: white;
+                padding: 12px 16px;
+                background-color: var(--SecondaryColor);
+                border-radius: 5px;
+                transition: background-color 0.2s;
+
+                &:hover {
+                  background-color: var(--PrimaryColor);
+                  color: black;
+                  border-radius: 5px;
+                  border-bottom: 2px solid #00192C;
+                  border-right: 2px solid #00192C;
+                }
+              }
             }
           }
 

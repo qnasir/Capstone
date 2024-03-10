@@ -1,0 +1,24 @@
+{
+    "Sidebar" : {
+        "electrical" : "الأجهزة الكهربائية",
+        "clothes" : "ملابس",
+        "stationery" : "ثابت",
+        "books" : "كتب",
+        "furniture" : "أثاث",
+        "sports" : "ادوات رياضية",
+        "jobs" : "وظائف بدوام جزئي",
+        "mobile" : "الهواتف المحمولة",
+        "laptop" : "أجهزة الكمبيوتر المحمولة",
+        "gadgets" : "الأدوات"
+    },
+    "Navbar" : {
+        "home" : "شريط المنزل",
+        "wishlist" : "قائمة الرغبات",
+        "contact" : "اتصل بنا",
+        "register" : "يسجل"
+    },
+    "ProductPage" : {
+        "sell" : "يبيع"
+    }
+
+}

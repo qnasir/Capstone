@@ -1,0 +1,24 @@
+{
+    "Sidebar" : {
+        "electrical" : "Appareils électriques",
+        "clothes" : "Vêtements",
+        "stationery" : "Stationnaire",
+        "books" : "Livres",
+        "furniture" : "Meubles",
+        "sports" : "Équipement sportif",
+        "jobs" : "Emplois à temps partiel",
+        "mobile" : "Téléphones portables",
+        "laptop" : "Ordinateurs portables",
+        "gadgets" : "Gadgets"
+    },
+    "Navbar" : {
+        "home" : "Barre d'ACCUEIL",
+        "wishlist" : "liste de souhaits",
+        "contact" : "CONTACTEZ-NOUS",
+        "register" : "Registre"
+    },
+    "ProductPage" : {
+        "sell" : "VENDRE"
+    }
+
+}

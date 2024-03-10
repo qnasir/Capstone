@@ -1,6 +1,7 @@
 import './Navbar.css'
 import logo from './svg/logo.png'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
 
@@ -14,12 +15,18 @@ function Navbar() {
       </div>
 
       <div className='text_container'>
-        <div className='text'>{home}</div>
-        <div className='text'>{wishlist}</div>
-        <div className='text'>{contact}</div>
+        <div className='text'>
+          <Link to="/">{home}</Link>
+        </div>
+        <div className='text'>
+          <Link to="/wishlist">{wishlist}</Link>
+        </div>
+        <div className='text'>
+          <Link to="contact-us">{contact}</Link>
+        </div>
 
         <div className="button_div">
-          <button className='button'>{register}</button>
+          <Link to="/register"><button className='button'>{register}</button></Link>
         </div>
       </div>
     </div>

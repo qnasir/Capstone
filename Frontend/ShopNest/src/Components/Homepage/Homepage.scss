@@ -6,4 +6,9 @@
     background-color: #00192C;
     margin-left: 2.75rem;
     margin-right: 2.75rem;
+
+    .flex {
+        display: flex;
+        justify-content: space-between;
+    }
 }

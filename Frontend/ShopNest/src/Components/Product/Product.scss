@@ -23,6 +23,7 @@
             color: var(--WhiteColor);
             width: 100%;
             align-self: center;
+            display: flex;
 
             .search {
                 width: 100%;
@@ -43,10 +44,11 @@
     
             .search_light_icon {
                 margin-left: -25px;
+                align-self: center;
+                font-size: 1.1rem;
                 z-index: 1;
                 top: 5px;
                 cursor: pointer;
-                // box-shadow: 5px 5px 10px #00ffff;
             }
     
         }
@@ -60,10 +62,11 @@
             justify-content: center;
             box-shadow: 0px 0px 5px rgba(79,209,197,.64);
             border-radius: 8px;
+            font-size: 1.1rem;
             align-items: center;
             background-color: var(--SecondaryColor);
             border-bottom: 3px solid var(--PrimaryColor);
-            transition: 0.2s ;
+            transition: 0.1s ;
 
 
     
@@ -90,7 +93,7 @@
         .filter:hover {
             color: var(--SecondaryColor);
             border-bottom: 3px solid #0094FF;
-            font-size: 23px;
+            font-size: 1.4rem;
         }
 
         .filter:hover::before {
@@ -107,17 +110,20 @@
           .language_filter {
             display: flex;
             align-self: center;
+            background-color: var(--SecondaryColor);
             color: white;
-            padding: 0.45rem 0.45rem 0;
+            padding: 0.51rem 0.8rem 0.17rem;
             box-shadow: 0px 0px 5px rgba(79,209,197,.64);
             border-radius: 8px;
-            font-size: 25px;
+            border-bottom: 3px solid var(--PrimaryColor);
+            font-size: 1.3rem;
             cursor: pointer;
             transition: 0.2s ;
             display: inline-block;
 
             &:hover  {
               background: var(--PrimaryColor);
+              color: black;
             }
 
             &:hover .dropdown_content {
@@ -129,13 +135,14 @@
               min-width: 160px;
               z-index: 1;
               border-radius: 5px;
-              margin-top: 0.2rem;
+              margin-top: 0.5rem;
               box-shadow: 0px 0px 5px rgba(79,209,197,.64);
               display: none;
 
-              a{
-                text-decoration: none;
+              button{
                 font-size: 1.3rem;
+                border: none;
+                width: 100%;
                 text-transform: uppercase;
                 display: block;
                 border-bottom: 2px solid var(--PrimaryColor);
@@ -155,11 +162,6 @@
                 }
               }
             }
-          }
-
-          .language_filter:active {
-            box-shadow: 0px 0px 15px rgba(79,209,197,.64);
-            transform: translateY(4px);
           }
     
         .wrap {

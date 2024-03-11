@@ -16,6 +16,9 @@ app.use((err, req, res, next) => {
   next();
 });
 
+const ProductRouter = require('./Routes/ProductRoute.js')
+app.use('/product-route', ProductRouter)
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });

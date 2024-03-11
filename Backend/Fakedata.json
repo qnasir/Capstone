@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Toaster",
+        "title": "Bread Toaster",
+        "image": "https://media.croma.com/image/upload/v1691679435/Croma%20Assets/Small%20Appliances/Toasters%20Sandwich%20Makers/Images/237742_4_lq1ott.png",
+        "location": "BH-5",
+        "price": 1299
+    },
+    {
+        "name": "Blender",
+        "title": "High-Speed Blender",
+        "image": "https://www.shutterstock.com/image-illustration/electric-blender-kitchen-appliance-equipment-600nw-360910346.jpg",
+        "location": "BH-3",
+        "price": 1999
+    },
+    {
+        "name": "Coffee Maker",
+        "title": "Espresso Coffee Maker",
+        "image": "https://images.philips.com/is/image/philipsconsumer/72dbb6e1509a4cacb631ad1900d54b9e?wid=420&hei=360&$jpglarge$",
+        "location": "BH-1",
+        "price": 3499
+    },
+    {
+        "name": "Microwave",
+        "title": "Convection Microwave Oven",
+        "image": "https://www.shutterstock.com/image-photo/microwave-oven-260nw-180415394.jpg",
+        "location": "BH-6",
+        "price": 4599
+    },
+    {
+        "name": "Juicer",
+        "title": "Cold Press Juicer",
+        "image": "https://rukminim2.flixcart.com/image/850/1000/kxqg2a80/mixer-grinder-juicer/q/i/l/fruit-and-vegetable-hand-mixer-juicer-mantavya-original-imaga4fr5m6fgw3q.jpeg?q=90&crop=false",
+        "location": "BH-4",
+        "price": 2299
+    },
+    {
+        "name": "Rice Cooker",
+        "title": "Multi-Function Rice Cooker",
+        "image": "https://5.imimg.com/data5/SELLER/Default/2022/5/GA/XC/VV/6067977/panasonic-steamer-rice-cooker-7-2l.JPG",
+        "location": "BH-8",
+        "price": 1599
+    },
+    {
+        "name": "Food Processor",
+        "title": "Compact Food Processor",
+        "image": "https://m.media-amazon.com/images/I/81B2GyHcPrL._AC_UF350,350_QL80_.jpg",
+        "location": "BH-9",
+        "price": 2499
+    },
+    {
+        "name": "Air Fryer",
+        "title": "Digital Air Fryer",
+        "image": "https://m.media-amazon.com/images/I/61XbB15l8dL._AC_UF894,1000_QL80_.jpg",
+        "location": "BH-10",
+        "price": 3499
+    },
+    {
+        "name": "Hand Blender",
+        "title": "Cordless Hand Blender",
+        "image": "https://kitchenmart.co.in/cdn/shop/files/20840424_MS1BG1150I_STP_D_def_2000x.webp?v=1692429059",
+        "location": "BH-11",
+        "price": 1499
+    }
+]

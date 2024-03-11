@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Products.css'
 
 // React Icons
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { SlLocationPin } from "react-icons/sl";
+import { PiHeartStraightFill } from "react-icons/pi";
 
 function Products({product}) {
+
+  const [ isLiked,setIsLiked ] = useState(false)
+
+  const AddToWishlist = () => {
+    setIsLiked(!isLiked);
+  }
 
   const { name, title, location, price, image } = product
 
@@ -17,6 +24,9 @@ function Products({product}) {
         <div className="single_product">
           <div className="productImg">
             <img src={image} alt="" />
+            <span className={isLiked ? 'heart active' : 'heart'} onClick={AddToWishlist}>
+              <PiHeartStraightFill className='heart_icon'/>
+            </span>
           </div>
 
           <div className="productInfo">

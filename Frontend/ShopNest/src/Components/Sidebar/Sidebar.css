@@ -7,6 +7,9 @@
   max-width: -moz-max-content;
   max-width: max-content;
   margin-top: 2.813rem;
+  max-height: -moz-max-content;
+  max-height: max-content;
+  min-width: 15rem;
 }
 .frame_div .rectangle_frame .box {
   border-bottom: 1px solid #0ff;

@@ -27,14 +27,40 @@
   height: 180px;
   width: 100%;
   overflow: hidden;
-  background: white;
+  background: #ffffff;
+  position: relative;
 }
 .product_container .single_product .productImg img {
   height: 100%;
   width: 100%;
-  -o-object-fit: fill;
-     object-fit: fill;
+  -o-object-fit: contain;
+     object-fit: contain;
   transition: 2s ease;
+}
+.product_container .single_product .productImg .heart {
+  display: block;
+  position: absolute;
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: 50%;
+  display: flex;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  font-size: 1.3rem;
+  background-color: var(--WhiteColor);
+  top: 0.7rem;
+  color: #b4b4b4;
+  right: 0.7rem;
+  transition: 0.2s ease;
+}
+.product_container .single_product .productImg .heart .heart_icon {
+  position: absolute;
+  z-index: 1000;
+}
+.product_container .single_product .productImg .heart.active {
+  color: #FF6363;
 }
 .product_container .single_product .productInfo {
   font-family: "Inter", sans-serif;

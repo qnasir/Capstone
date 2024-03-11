@@ -4,7 +4,6 @@ import Wishlist from '../Components/Wishlist/Wishlist';
 import Register from '../Components/Register/Register';
 import ContactUs from '../Components/ContactUs/ContactUs';
 
-
 function AllRoutes() {
   return (
     <>

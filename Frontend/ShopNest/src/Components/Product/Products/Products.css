@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+:root {
+  --PrimaryColor: #00FFFF;
+  --SecondaryColor: #002540;
+  --Search_text_color: #787878;
+  --WhiteColor: #FFFFFF;
+  --HeartColor: #FF6363;
+}
+
+.product_container {
+  display: grid;
+  padding-top: 2.625rem;
+  color: var(--WhiteColor);
+  gap: 2.625rem;
+}
+.product_container .single_product {
+  height: -moz-fit-content;
+  height: fit-content;
+  row-gap: 10px;
+  background: var(--SecondaryColor);
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(140, 140, 141, 0.549);
+  overflow: hidden;
+  border-bottom: 6px solid var(--PrimaryColor);
+}
+.product_container .single_product .productImg {
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
+  background: white;
+}
+.product_container .single_product .productImg img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+  transition: 2s ease;
+}
+.product_container .single_product .productInfo {
+  font-family: "Inter", sans-serif;
+  padding: 1.313rem 1rem 0;
+}
+.product_container .single_product .productInfo .productName {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.product_container .single_product .productInfo .productTitle {
+  font-size: 0.625rem;
+  color: var(--Search_text_color);
+}
+.product_container .single_product .productInfo .price_div {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.438rem 0 1.313rem;
+}
+.product_container .single_product .productInfo .price_div span {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.product_container .single_product .productInfo .price_div span .location {
+  font-size: 0.625rem;
+}
+.product_container .single_product .productInfo .price_div span .location_icon {
+  font-size: 1rem;
+}
+.product_container .single_product .productInfo .price_div span .price_text {
+  margin-left: -5px;
+}
+.product_container .single_product .productInfo .price_div .price {
+  font-size: 1.25rem;
+  font-weight: bold;
+}/*# sourceMappingURL=Products.css.map */

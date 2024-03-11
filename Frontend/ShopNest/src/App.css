@@ -1,3 +1,11 @@
 .app{
     background-color: #00192C;
 }
+
+.grid_parent {
+    display: grid;
+    padding-top: 2.625rem;
+    grid-template-columns: repeat(3,1fr);
+    color: var(--WhiteColor);
+    gap: 2.625rem;
+}

@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+    --PrimaryColor: #00FFFF;
+    --SecondaryColor: #002540;
+    --Search_text_color: #787878;
+    --WhiteColor: #FFFFFF;
+    --HeartColor: #FF6363;
+}
+
+.search_container {
+    display: flex;
+    gap: 2.25rem;
+    width: 100%;
+    // align-items: center;
+
+    .search_bar {
+        color: var(--WhiteColor);
+        width: 100%;
+        align-self: center;
+        display: flex;
+
+        .search {
+            width: 100%;
+            color: var(--WhiteColor);
+            box-shadow: 0px 0px 5px rgba(79,209,197,.64);
+            max-width: 47rem;
+            background-color: #002540;
+            height: 2.25rem;
+            outline: none;
+            border: none;
+            border-bottom: 3px solid var(--PrimaryColor);
+            box-sizing: border-box;
+            z-index: 1;
+            font-size: 0.938rem;
+            padding: 0.375rem 0.688rem 0.375rem 1.75rem;
+            
+        }
+
+        .search_light_icon {
+            margin-left: -25px;
+            align-self: center;
+            font-size: 1.1rem;
+            z-index: 1;
+            top: 5px;
+            cursor: pointer;
+        }
+
+    }
+
+    .filter {
+        cursor: pointer;
+        color: var(--WhiteColor);
+        min-width: 2.875rem;
+        max-height: 2.25rem;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0px 0px 5px rgba(79,209,197,.64);
+        border-radius: 8px;
+        font-size: 1.1rem;
+        align-items: center;
+        background-color: var(--SecondaryColor);
+        border-bottom: 3px solid var(--PrimaryColor);
+        transition: 0.1s ;
+
+
+
+        .filter_icon {
+            z-index: 100;
+            position: absolute;
+            transition: 0.8s;
+        }
+
+    }
+
+    .filter::before {
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        background: #00FFFF;
+        border-radius: 8px;
+        z-index: -1;
+        transition: 0.8s ;
+    }
+
+    .filter:hover {
+        color: var(--SecondaryColor);
+        border-bottom: 3px solid #0094FF;
+        font-size: 1.4rem;
+    }
+
+    .filter:hover::before {
+        height: 100%;
+        z-index: 1;
+        color: var(--SecondaryColor);
+    }
+
+    .filter:active {
+        box-shadow: 0px 0px 15px rgba(79,209,197,.64);
+        transform: translateY(4px);
+      }
+      
+      .language_filter {
+        display: flex;
+        align-self: center;
+        background-color: var(--SecondaryColor);
+        color: white;
+        padding: 0.51rem 0.8rem 0.17rem;
+        box-shadow: 0px 0px 5px rgba(79,209,197,.64);
+        border-radius: 8px;
+        border-bottom: 3px solid var(--PrimaryColor);
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: 0.2s ;
+        display: inline-block;
+
+        &:hover  {
+          background: var(--PrimaryColor);
+          color: black;
+        }
+
+        &:hover .dropdown_content {
+          display: block;
+        }
+
+        .dropdown_content {
+          position: absolute;
+          min-width: 160px;
+          z-index: 1;
+          border-radius: 5px;
+          margin-top: 0.5rem;
+          box-shadow: 0px 0px 5px rgba(79,209,197,.64);
+          display: none;
+
+          button{
+            font-size: 1.3rem;
+            border: none;
+            width: 100%;
+            text-transform: uppercase;
+            display: block;
+            border-bottom: 2px solid var(--PrimaryColor);
+            border-right: 2px solid var(--PrimaryColor);
+            color: white;
+            padding: 12px 16px;
+            background-color: var(--SecondaryColor);
+            border-radius: 5px;
+            transition: background-color 0.2s;
+
+            &:hover {
+              background-color: var(--PrimaryColor);
+              color: black;
+              border-radius: 5px;
+              border-bottom: 2px solid #00192C;
+              border-right: 2px solid #00192C;
+            }
+          }
+        }
+      }
+
+    .wrap {
+      
+        .button {
+          min-width: 7.625rem;
+          min-height: 2.063rem;
+          font-family: 'Nunito', sans-serif;
+          font-size: 1rem;
+          color: white;
+          text-transform: uppercase;
+          letter-spacing: 1.3px;
+          font-weight: 700;
+          color: #313133;
+          background: #4FD1C5;
+          background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+          border: none;
+          border-radius: 1000px;
+          box-shadow: 5px 5px 15px rgba(79,209,197,.64);
+          transition: all 0.3s ease-in-out 0s;
+          cursor: pointer;
+          outline: none;
+          position: relative;
+          padding: 10px;
+      
+          &:before {
+            content: '';
+            border-radius: 1000px;
+            min-width: calc(7.625rem + 0.75rem);
+            min-height: calc(2.063rem + 0.75rem);
+            border: 4px solid #00FFCB;
+            box-shadow: 0 0 60px rgba(0,255,203,.64);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all .3s ease-in-out 0s;
+          }
+      
+          &:hover, &:focus {
+            color: #313133;
+            transform: translateY(-6px);
+      
+            &:before {
+                opacity: 1;
+            }
+      
+            &:after {
+              animation: ring 1.5s infinite;
+            }
+          }
+      
+          &:after {
+            content: '';
+            width: 30px; 
+            height: 30px;
+            border-radius: 100%;
+            border: 6px solid #00FFCB;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+      }
+      
+      @keyframes ring {
+        0% {
+          width: 10px;
+          height: 10px;
+          opacity: 1;
+        }
+        100% {
+          width: 10.625rem;
+          height: 10.625rem;
+          opacity: 0;
+        }
+      }
+      
+      
+      
+}

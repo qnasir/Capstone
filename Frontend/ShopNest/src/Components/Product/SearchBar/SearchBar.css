@@ -7,10 +7,17 @@
   --HeartColor: #FF6363;
 }
 
+.parent_div {
+  display: flex;
+  justify-content: center;
+}
+
 .search_container {
   display: flex;
+  margin-top: 2.813rem;
   gap: 2.25rem;
   width: 100%;
+  max-width: 66rem;
 }
 .search_container .search_bar {
   color: var(--WhiteColor);

@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+.product_page_container {
+    margin: 0 3rem;
+    color: white;
+    padding-top: 3rem;
+    
+    .product {
+        display: flex;
+        gap: 2rem;
+        font-family: "Inter", sans-serif;
+    
+    
+        .product_image {
+            img {
+                height: 22.5rem;
+                width: 22.5rem;
+                object-fit: cover;
+                overflow: hidden;
+            }
+        }
+    
+        .product_info {
+            padding: 2rem 2.625rem;
+            background: #002540;
+            position: relative;
+            width: 100%;
+            border-bottom: 5px solid #00ffff;
+    
+    
+            .heading {
+                display: flex;
+                justify-content: space-between;
+    
+                .name {
+                    font-size: 2.125rem;
+                    font-weight: 700;
+                }
+    
+                .location {
+                    position: absolute;
+                    top: 1rem;
+                    right: 2rem;
+                    display: flex;
+                    gap: 0.5rem;
+                    font-size: 1rem;
+                }
+            }
+    
+            .title {
+                font-size: 1.125rem;
+                font-weight: 300;
+                font-family: Calibri;
+            }
+    
+            .price {
+                display: flex;
+                font-size: 3.313rem;
+                padding: 0.8rem 0;
+                font-weight: 700;
+                align-items: center;
+                margin-left: -0.6rem;
+            }
+    
+            .discription {
+                font-weight: 1.125rem;
+                font-weight: 300;
+                width: fit-content;
+                line-height: 1.375rem;
+                font-family: Calibri;
+                max-width: 92%;
+            }
+    
+            .buttons {
+                display: flex;
+                gap: 2rem;
+                margin-top: 1.7rem;
+                // padding-top: 1rem;
+                // width: fit-content;
+                // height: 2rem;
+    
+                button {
+    
+                    padding: 0.5rem 1.5rem;
+                    font-size: 0.938rem;
+                    font-weight: 700;
+                    border: none;
+                    outline: none;
+                }
+    
+                .buy {
+                    background: #00ffff;
+                    border-bottom: 4px solid #0094FF;
+                }
+    
+                .wishlist {
+                    color: #00ffff;
+                    background: none;
+                    border: 1px solid #00ffff;
+                    transition: 0.2s ease;
+
+                    &:hover {
+                        color: black;
+                        background: #00ffff;
+                    }
+                }
+    
+            }
+        }
+    }
+
+    .seller_info {
+        font-family: "Inter", sans-serif;
+        font-weight: 300;
+        display: flex;
+        font-style: italic;
+        gap: 2rem;
+        padding-top: 2rem;
+
+        .seller_detail {
+            min-width: 22.5rem;
+            height: 18rem;
+            background: #002540;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 5px solid #00ffff;
+
+            .seller_image {
+                padding: 2.25rem 0 0.75rem;
+
+                img {
+                    width: 6.25rem;
+                    height: 6.25rem;
+                    border-radius: 100%;
+                    object-fit: cover;
+                }
+
+            }
+
+            .post {
+                font-size: 1.188rem;
+                margin-top: -1rem;
+            }
+
+            .seller {
+                font-size: 2.125rem;
+                font-weight: 600;
+            }
+
+            .verification {
+                font-size: 0.938rem;
+            }
+
+        }
+
+        .map {
+            width: 100%;
+            background: #002540;
+            border-bottom: 5px solid #00ffff;
+        }
+
+    }
+
+    
+
+}

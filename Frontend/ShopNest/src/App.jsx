@@ -1,13 +1,16 @@
 import './App.css'
-import Homepage from './Components/Homepage/Homepage'
-// import AllRoutes from './AllRoutes/AllRoutes'
+import Navbar from './Components/Navbar/Navbar'
+import Footer from './Components/Footer/Footer'
+import AllRoutes from './AllRoutes/AllRoutes'
+
 
 function App() {
 
   return (
     <div className='app'>
-      {/* <AllRoutes /> */}
-      <Homepage />
+      <Navbar />
+      <AllRoutes />
+      <Footer />
     </div>
   )
 }

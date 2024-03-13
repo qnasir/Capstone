@@ -38,13 +38,88 @@
                     font-weight: 700;
                 }
     
-                .location {
-                    position: absolute;
-                    top: 1rem;
-                    right: 2rem;
+                .logo {
                     display: flex;
-                    gap: 0.5rem;
-                    font-size: 1rem;
+                    justify-content: space-between;
+                    // width: 50%;
+
+                    .toggle {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        background: white;
+                        border-radius: 50%;
+                        color: #333;
+                        cursor: pointer;
+                        font-size: 0.2rem;
+                        box-shadow: 0  3px 4px rgba(0,0,0,0.15);
+                        transition: 1.25s;
+                    }
+
+                    .toggle.active {
+                        transform: rotate(360deg);
+                        box-shadow: 0 6px 8px rgba(0,0,0,0.15), 0 0 0 2px #333, 0 0 0 8px #fff;                       
+                    }
+
+                    .active {
+                        scale: 1;              
+                        background: #fff;
+                        display: flex;
+                        justify-content: center;
+                        border-radius: 50%;
+                        box-shadow: 0 3px 4px rgba(0,0,0,0.15);
+                        transition: 0.7s;
+                        transition-delay: calc(0.05s * var(--i));
+
+                        // transform: rotate(calc(360deg/-8 * var(--i)));
+
+                        .social_icon {
+                            height: 3rem;
+                            width: 3rem;  
+                        }
+
+
+
+                    }
+
+                    li {
+                        position: absolute;
+                        top: 1.7rem;
+                        right: 23rem;
+                        list-style: none;
+                        transition: 0.5s;
+                        // transform: rotate(calc(360deg/8 * var(--i)));
+                        transform: translateX(calc(4rem * var(--i)));
+                        transform-origin: 21rem;
+                        scale: 0;
+                        // transition-delay: calc(0.05s * var(--i));
+
+                        .social_icon {
+                            position: relative;
+                            display: flex;
+                            // transform: rotate(calc(360deg/-8 * var(--i)));
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            color: var(--clr);
+                            box-shadow: 0 3px 4px rgba(0,0,0,0.15);
+                            transition: 0.5s;
+
+                        }
+
+                    }                  
+                    
+                    li:hover {
+
+                        .social_icon {
+                            font-size: 2rem;
+                            box-shadow: 0 0 0 2px var(--clr), 0 0 0 6px #fff;
+                        }
+                    }
+
                 }
             }
     
@@ -72,40 +147,58 @@
                 max-width: 92%;
             }
     
-            .buttons {
+            .footer {
                 display: flex;
-                gap: 2rem;
-                margin-top: 1.7rem;
-                // padding-top: 1rem;
-                // width: fit-content;
-                // height: 2rem;
-    
-                button {
-    
-                    padding: 0.5rem 1.5rem;
-                    font-size: 0.938rem;
-                    font-weight: 700;
-                    border: none;
-                    outline: none;
-                }
-    
-                .buy {
-                    background: #00ffff;
-                    border-bottom: 4px solid #0094FF;
-                }
-    
-                .wishlist {
-                    color: #00ffff;
-                    background: none;
-                    border: 1px solid #00ffff;
-                    transition: 0.2s ease;
+                justify-content: space-between;
+                align-items: center;
 
-                    &:hover {
-                        color: black;
-                        background: #00ffff;
+                .buttons {
+                    display: flex;
+                    gap: 2rem;
+                    margin-top: 1.7rem;
+                    // padding-top: 1rem;
+                    // width: fit-content;
+                    // height: 2rem;
+        
+                    button {
+        
+                        padding: 0.5rem 1.5rem;
+                        font-size: 0.938rem;
+                        font-weight: 700;
+                        border: none;
+                        outline: none;
                     }
+        
+                    .buy {
+                        background: #00ffff;
+                        border-bottom: 4px solid #0094FF;
+                    }
+        
+                    .wishlist {
+                        color: #00ffff;
+                        background: none;
+                        border: 1px solid #00ffff;
+                        transition: 0.2s ease;
+    
+                        &:hover {
+                            color: black;
+                            background: #00ffff;
+                        }
+                    }
+        
                 }
     
+                .location {
+                    position: absolute;
+                    bottom: 1rem;
+                    right: 2rem;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    font-size: 1rem;
+                }
             }
         }
     }

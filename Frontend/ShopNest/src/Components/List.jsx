@@ -7,7 +7,7 @@ function List() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        axios.get('https://capstone-tn3i.onrender.com/product-route')
+        axios.get(import.meta.env.VITE_PRODUCTS_DATA_KEY)
             .then(response => setProducts(response.data))
             .catch(err => console.log(err))
     }, [])

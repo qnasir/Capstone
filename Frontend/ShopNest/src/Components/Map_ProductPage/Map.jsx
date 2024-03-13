@@ -8,14 +8,14 @@ const BingMapsComponent = () => {
 
     useEffect(() => {
         const script = document.createElement('script');
-        script.src = 'https://www.bing.com/api/maps/mapcontrol?callback=getMap';
+        script.src = import.meta.env.VITE_BING_MAP_KEY;
         script.async = true;
         document.body.appendChild(script);
 
         window.getMap = () => {
             const newMap = new window.Microsoft.Maps.Map('#map', {
-                credentials: 'AnSwNOD-rjLdT-e7jJq1Y7mzbGpX7H4lS2dcU1V7CMPUx6BmmPh8g-No4K9dJNN5', 
-                center: new window.Microsoft.Maps.Location(20.76485825, 78.58431244),
+                credentials: import.meta.env.VITE_BING_CREDENTIALS_KEY, 
+                center: new window.Microsoft.Maps.Location(10.81802845, 76.26371002),
                 zoom: 10
             });
 

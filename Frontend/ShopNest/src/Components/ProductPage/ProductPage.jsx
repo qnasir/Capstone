@@ -2,6 +2,7 @@ import React from 'react'
 import './ProductPage.css'
 import image from '../Product/svg/download.jpeg'
 import SearchBar from '../Product/SearchBar/SearchBar'
+import Map from '../Map_ProductPage/Map'
 
 // React Icons
 // import { FaIndianRupeeSign } from "react-icons/fa6";
@@ -53,7 +54,7 @@ function ProductPage() {
                             <p className='seller'>NASIR</p>
                             <p className='verification'>VERIFIED</p>
                         </div>
-                        <div className="map"></div>
+                        <div className="map"><Map /></div>
                     </div>
 
                 </div>

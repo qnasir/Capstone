@@ -16,7 +16,8 @@
             img {
                 height: 22.5rem;
                 width: 22.5rem;
-                object-fit: cover;
+                object-fit: fit;
+                background: white;
                 overflow: hidden;
             }
         }

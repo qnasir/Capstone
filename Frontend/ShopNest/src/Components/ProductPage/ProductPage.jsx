@@ -37,15 +37,28 @@ function ProductPage() {
 
     const { productId } = useParams();
 
+    const [product, setProduct] = useState({
+        name: "",
+        title: "",
+        location: "",
+        price: "",
+        description: "",
+        image: "",
+    })
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const  response = await axios.get(`https://capstone-tn3i.onrender.com/product-route/product/${productId}`)
+                const { image, name, location,  title,  description, price } = response.data
+                setProduct({ image, name, location,  title,  description, price })
+                console.log(response.data)
             } catch (error) {
                 console.error(error)
             }
         }
-    })
+        fetchProduct();
+    }, [productId])
 
     const shareURL = 'Website URl'
     // const [product, setProduct] = useState(null);
@@ -64,13 +77,13 @@ function ProductPage() {
 
                 <div className="product">
                     <div className="product_image">
-                        <img src={image} alt="" />
+                        <img src={product.image} alt="" />
                     </div>
                     <div className="product_info">
                         <div className="heading">
 
                             <div className='name'>
-                                <p>GREEN CHEF COOKER</p>
+                                <p>{product.name}</p>
                             </div>
 
                             <div className="logo">
@@ -115,13 +128,13 @@ function ProductPage() {
                             </div>
 
                         </div>
-                        <p className='title'>Green Chef</p>
+                        <p className='title'>{product.title}</p>
                         <span className='price'>
                             <FaRupeeSign className='price_icon' />
-                            <p>999</p>
+                            <p>{product.price}</p>
                         </span>
                         <div className="discription">
-                            <p>Discription Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui aut, voluptatem voluptates optio alias aspernatur voluptate quidem veniam ab sequi odio iste temporibus assumenda molestias velit, quis dignissimos, debitis aliquam! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p>{product.description}</p>
                         </div>
                         <div className="footer">
                             <div className="buttons">
@@ -131,7 +144,7 @@ function ProductPage() {
                             <div>
                                 <span className='location'>
                                     <SlLocationPin />
-                                    <p>BH-2</p>
+                                    <p>{product.location}</p>
                                 </span>
                             </div>
                         </div>

@@ -12,8 +12,9 @@
 .product_page_container .product .product_image img {
   height: 22.5rem;
   width: 22.5rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: fit;
+     object-fit: fit;
+  background: white;
   overflow: hidden;
 }
 .product_page_container .product .product_info {

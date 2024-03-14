@@ -13,7 +13,7 @@ function AllRoutes() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/product-page' element={<ProductPage />} />
+        <Route path='/product-page/:productId' element={<ProductPage />} />
       </Routes>
     </>
   )

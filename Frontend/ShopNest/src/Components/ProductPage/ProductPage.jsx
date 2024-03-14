@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
 import './ProductPage.css'
 import image from '../Product/svg/download.jpeg'
 import SearchBar from '../Product/SearchBar/SearchBar'
 import Map from '../Map_ProductPage/Map'
+import { useParams } from 'react-router-dom';
 
 // React Icons
 import { FaRupeeSign } from "react-icons/fa";
@@ -33,8 +35,20 @@ import {
 
 function ProductPage() {
 
-    const shareURL = 'Website URl'
+    const { productId } = useParams();
 
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const  response = await axios.get(`https://capstone-tn3i.onrender.com/product-route/product/${productId}`)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    })
+
+    const shareURL = 'Website URl'
+    // const [product, setProduct] = useState(null);
     const [isToggle, setIsToggle] = useState(false);
 
     const ToggleShare = () => {

@@ -13,6 +13,10 @@
   color: var(--WhiteColor);
   gap: 2.625rem;
 }
+.product_container a:-webkit-any-link {
+  color: inherit;
+  text-decoration: none;
+}
 .product_container .single_product {
   height: -moz-fit-content;
   height: fit-content;

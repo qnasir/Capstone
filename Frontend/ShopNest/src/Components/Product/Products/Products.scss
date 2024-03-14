@@ -14,6 +14,11 @@
     color: var(--WhiteColor);
     gap: 2.625rem;
 
+    a:-webkit-any-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .single_product {
       height: fit-content;
       row-gap: 10px;
@@ -28,6 +33,8 @@
       //   box-shadow: 1 4px 4px rgba(85, 85, 114, 0.549);
       //   transition: .3s ease;
       // }
+
+      
 
       .productImg {
         height: 180px;

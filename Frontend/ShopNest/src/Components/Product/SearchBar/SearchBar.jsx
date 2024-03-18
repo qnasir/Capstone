@@ -3,6 +3,7 @@ import './SearchBar.css'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from 'i18next';
 import { languages } from '../../LanguageSelector/LanguageSelector'
+import { Link } from "react-router-dom";
 
 // React Icons
 import { BsSearch } from "react-icons/bs";
@@ -41,7 +42,7 @@ function SearchBar() {
                 </div>
 
                 <div className="wrap">
-                    <button className="button">{sell}</button>
+                    <Link to='/selling-page'><button className="button">{sell}</button></Link>
                 </div>
             </div>
     </>

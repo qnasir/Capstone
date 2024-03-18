@@ -1,0 +1,30 @@
+.selling_container {
+
+    .buttons_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 2rem;
+
+        .Electrical {
+            button {
+                height: 2.5rem;
+                width: 12rem;
+                border-radius: 0.5rem;
+                border: none;
+                color: black;
+                font-size: 1rem;
+                background: #00ffff;
+                cursor: pointer;
+
+                &:hover {
+                    background: #52c7c7;
+                    font-size: 1.1rem;
+                }
+
+                
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ import Wishlist from '../Components/Wishlist/Wishlist';
 import Register from '../Components/Register/Register';
 import ContactUs from '../Components/ContactUs/ContactUs';
 import ProductPage from '../Components/ProductPage/ProductPage';
+import Sell_Categories from '../Components/Sell_Categories/Sell_Categories';
 
 function AllRoutes() {
   return (
@@ -13,6 +14,7 @@ function AllRoutes() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/selling-page" element={<Sell_Categories />} />
         <Route path='/product-page/:productId' element={<ProductPage />} />
       </Routes>
     </>

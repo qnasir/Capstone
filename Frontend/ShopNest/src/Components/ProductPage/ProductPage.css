@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+.parent_div {
+  padding-top: 5rem;
+}
+
 .product_page_container {
   margin: 0 3rem;
   color: white;

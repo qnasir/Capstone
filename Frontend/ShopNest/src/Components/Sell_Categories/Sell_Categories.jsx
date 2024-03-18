@@ -1,5 +1,6 @@
 import React from 'react'
 import './Selling_Categories.css'
+import { Link } from 'react-router-dom'
 
 function Sell_Categories() {
   return (
@@ -7,7 +8,7 @@ function Sell_Categories() {
         <div className="buttons_container">
 
             <div className="Electrical">
-                <button>Electrical Appliances</button>
+                <Link to="/electrical-appliance"><button>Electrical Appliances</button></Link>
             </div>
 
             <div className="Electrical">

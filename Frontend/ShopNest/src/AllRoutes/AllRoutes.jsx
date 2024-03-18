@@ -5,6 +5,7 @@ import Register from '../Components/Register/Register';
 import ContactUs from '../Components/ContactUs/ContactUs';
 import ProductPage from '../Components/ProductPage/ProductPage';
 import Sell_Categories from '../Components/Sell_Categories/Sell_Categories';
+import Electrical from '../Components/SellingForms/Electrical';
 
 function AllRoutes() {
   return (
@@ -16,6 +17,7 @@ function AllRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/selling-page" element={<Sell_Categories />} />
         <Route path='/product-page/:productId' element={<ProductPage />} />
+        <Route path='/electrical-appliance' element={<Electrical />} />
       </Routes>
     </>
   )

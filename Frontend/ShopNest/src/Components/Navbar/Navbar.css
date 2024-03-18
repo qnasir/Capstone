@@ -7,17 +7,27 @@
 }
 
 .navbar {
+  padding-top: 1.7rem;
+  transition: 1s ease;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.navbar .contents {
   display: flex;
   justify-content: space-between;
-  padding-top: 1.7rem;
 }
-.navbar .logo {
+.navbar .contents .logo {
   height: 3.25rem;
+  padding-left: 2.75rem;
   width: 11.5rem;
   cursor: pointer;
 }
-.navbar .text_container {
+.navbar .contents .text_container {
   display: flex;
+  padding-right: 2.75rem;
   gap: 3.875rem;
   margin-top: -1.4rem;
   align-items: center;
@@ -26,7 +36,7 @@
   font-style: normal;
   font-family: "Inter", sans-serif;
 }
-.navbar .text_container .text {
+.navbar .contents .text_container .text {
   background-clip: text;
   background-image: var(--gradientColor);
   background-size: 200% 100%;
@@ -40,7 +50,7 @@
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
-.navbar .text_container .text:before {
+.navbar .contents .text_container .text:before {
   content: "";
   background: #54b3d6;
   display: block;
@@ -51,13 +61,13 @@
   height: 3px;
   transition: all 0.3s ease-in-out;
 }
-.navbar .text_container .text:hover {
+.navbar .contents .text_container .text:hover {
   background-position: 0;
 }
-.navbar .text_container .text:hover::before {
+.navbar .contents .text_container .text:hover::before {
   width: 100%;
 }
-.navbar .text_container .button {
+.navbar .contents .text_container .button {
   text-align: center;
   letter-spacing: 2px;
   position: relative;
@@ -72,7 +82,7 @@
   background: none;
   cursor: pointer;
 }
-.navbar .text_container .button:hover {
+.navbar .contents .text_container .button:hover {
   background: var(--whiteColor);
   box-shadow: 0px 2px 10px 5px #1abc9c;
   color: var(--blackColor);
@@ -80,7 +90,7 @@
   font-weight: 600;
   transition: all 0.3s ease-in-out;
 }
-.navbar .text_container .button:after {
+.navbar .contents .text_container .button:after {
   content: "";
   background: var(--PrimaryColor);
   display: block;
@@ -91,12 +101,43 @@
   opacity: 0;
   transition: all 0.8s;
 }
-.navbar .text_container .button:active:after {
+.navbar .contents .text_container .button:active:after {
   padding: 0;
   margin: 0;
   opacity: 1;
   transition: 0s;
 }
-.navbar .text_container .button:focus {
+.navbar .contents .text_container .button:focus {
   outline: 0;
+}
+
+.sticky {
+  position: fixed;
+  background: #216ba3;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  transition: 0.6s;
+  padding: 0.5rem 0;
+}
+.sticky .contents {
+  display: flex;
+  justify-content: space-between;
+}
+.sticky .contents .logo_container {
+  display: flex;
+  align-items: center;
+  padding-left: 2.75rem;
+}
+.sticky .contents .logo_container {
+  padding: 0;
+}
+.sticky .contents .text_container {
+  display: flex;
+  align-items: center;
+  padding-right: 2.75rem;
+  padding-top: 1rem;
 }/*# sourceMappingURL=Navbar.css.map */

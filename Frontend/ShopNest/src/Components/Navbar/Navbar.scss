@@ -8,25 +8,35 @@
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
     padding-top: 1.7rem;
+    transition: 1s ease;
+    position: absolute;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
 
-    .logo {
+    .contents {
+      display: flex;
+      justify-content: space-between;
+
+      .logo {
         height: 3.25rem;
+        padding-left: 2.75rem;
         width: 11.5rem;
         cursor: pointer;
     }
 
     .text_container{
         display: flex;
+        padding-right: 2.75rem;
         gap: 3.875rem;
         margin-top: -1.4rem;
         align-items: center;
         color: var(--whiteColor);
         font-size: 0.938rem;
         font-style: normal;
-        font-family: "Inter", sans-serif;
+        font-family: "Inter", sans-serif;      
 
         .text {
             background-clip: text;
@@ -41,6 +51,7 @@
             -webkit-text-fill-color: transparent;
             transition: all 0.3s ease-in-out;
             cursor: pointer;
+
           }
           
           .text:before{
@@ -112,4 +123,39 @@
         
         
     }
+    }
+}
+
+.sticky {
+  position: fixed;
+  background: #216ba3;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  transition: 0.6s;
+  padding: 0.5rem 0;
+
+  .contents {
+    display: flex;
+    justify-content: space-between;
+
+    .logo_container {
+      display: flex;
+      align-items: center;
+      padding-left: 2.75rem;
+    }
+    .logo_container {
+      padding: 0;
+    }
+
+    .text_container {
+      display: flex;
+      align-items: center;
+      padding-right: 2.75rem;
+      padding-top: 1rem;
+    }
+  }
 }

@@ -1,12 +1,11 @@
 import React from 'react'
 import './Electrical.css'
 
-function Electrical() {
-    return (
-        <>
-            <div className='main'>
+function Mobiles() {
+  return (
+    <div className='main'>
                 <div className="add-product-container">
-                    <h2>ELECTRICAL APPLIANCE</h2>
+                    <h2>FORM</h2>
                     <form>
                         <label>
                             Product Name:
@@ -24,20 +23,6 @@ function Electrical() {
                         </label>
                         <br />
                         <label>
-                            Warranty:
-                            <input type="text" />
-                        </label>
-                        <br />
-                        <label>
-                            Condition:
-                            <select>
-                                <option value="like_new">Like New</option>
-                                <option value="good">Good</option>
-                                <option value="acceptable">Acceptable</option>
-                            </select>
-                        </label>
-                        <br />
-                        <label>
                             Price:
                             <input type="text" />
                         </label>
@@ -49,16 +34,14 @@ function Electrical() {
                         <br />
                         <label>
                             Description:
-                            <textarea name="appliance_description"></textarea>
+                            <textarea name="review_content" />
                         </label>
                         <br />
-                        <button className='btn' type="submit">Post Listing</button>
+                        <button className='btn' type="submit">Go to step 2</button>
                     </form>
                 </div>
             </div>
-
-        </>
-    )
+  )
 }
 
-export default Electrical
+export default Mobiles

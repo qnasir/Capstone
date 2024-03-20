@@ -12,35 +12,39 @@ function Sell_Categories() {
             </div>
 
             <div className="Electrical">
-                <button>Clothes</button>
+            <Link to="/clothes"><button>Clothes</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Stationary</button>
+            <Link to="/stationary"><button>Stationary</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Furniture</button>
+            <Link to="/furniture"><button>Furniture</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Sports Equipment</button>
+            <Link to="/sports"><button>Sports Equipments</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Part Time Job</button>
+            <Link to="/books"><button>Books</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Mobile Phones</button>
+            <Link to="/jobs"><button>Part Time Job</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Laptops</button>
+            <Link to="/mobiles"><button>Mobile Phones</button></Link>
             </div>
 
             <div className="Electrical">
-                <button>Gadgets</button>
+            <Link to="/laptop"><button>Laptops</button></Link>
+            </div>
+
+            <div className="Electrical">
+            <Link to="/gadgets"><button>Gadgets</button></Link>
             </div>
 
         </div>

@@ -4,6 +4,7 @@
         "title": "Bread Toaster",
         "image": "https://media.croma.com/image/upload/v1691679435/Croma%20Assets/Small%20Appliances/Toasters%20Sandwich%20Makers/Images/237742_4_lq1ott.png",
         "location": "BH-5",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 1299
     },
     {
@@ -11,6 +12,7 @@
         "title": "High-Speed Blender",
         "image": "https://www.shutterstock.com/image-illustration/electric-blender-kitchen-appliance-equipment-600nw-360910346.jpg",
         "location": "BH-3",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 1999
     },
     {
@@ -18,6 +20,7 @@
         "title": "Espresso Coffee Maker",
         "image": "https://images.philips.com/is/image/philipsconsumer/72dbb6e1509a4cacb631ad1900d54b9e?wid=420&hei=360&$jpglarge$",
         "location": "BH-1",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 3499
     },
     {
@@ -25,6 +28,7 @@
         "title": "Convection Microwave Oven",
         "image": "https://www.shutterstock.com/image-photo/microwave-oven-260nw-180415394.jpg",
         "location": "BH-6",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 4599
     },
     {
@@ -32,6 +36,7 @@
         "title": "Cold Press Juicer",
         "image": "https://rukminim2.flixcart.com/image/850/1000/kxqg2a80/mixer-grinder-juicer/q/i/l/fruit-and-vegetable-hand-mixer-juicer-mantavya-original-imaga4fr5m6fgw3q.jpeg?q=90&crop=false",
         "location": "BH-4",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 2299
     },
     {
@@ -39,6 +44,7 @@
         "title": "Multi-Function Rice Cooker",
         "image": "https://5.imimg.com/data5/SELLER/Default/2022/5/GA/XC/VV/6067977/panasonic-steamer-rice-cooker-7-2l.JPG",
         "location": "BH-8",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 1599
     },
     {
@@ -46,6 +52,7 @@
         "title": "Compact Food Processor",
         "image": "https://m.media-amazon.com/images/I/81B2GyHcPrL._AC_UF350,350_QL80_.jpg",
         "location": "BH-9",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 2499
     },
     {
@@ -53,6 +60,7 @@
         "title": "Digital Air Fryer",
         "image": "https://m.media-amazon.com/images/I/61XbB15l8dL._AC_UF894,1000_QL80_.jpg",
         "location": "BH-10",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 3499
     },
     {
@@ -60,6 +68,7 @@
         "title": "Cordless Hand Blender",
         "image": "https://kitchenmart.co.in/cdn/shop/files/20840424_MS1BG1150I_STP_D_def_2000x.webp?v=1692429059",
         "location": "BH-11",
+        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum voluptatum suscipit inventore aliquam provident sit voluptate numquam ducimus fugiat hic quo, earum quisquam et, cupiditate, corporis nihil eveniet sed. Quibusdam.",
         "price": 1499
     }
 ]

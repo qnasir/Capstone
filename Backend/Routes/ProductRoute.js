@@ -38,7 +38,24 @@ router.post('/post', async (req,res) => {
         title: req.body.title,
         price: req.body.price,
         location: req.body.location,
-        image: req.body.image
+        image: req.body.image,
+        brand: req.body.brand,
+        warranty: req.body.warranty,
+        condition: req.body.condition,
+        size: req.body.size,
+        gender: req.body.gender,
+        color: req.body.color,
+        material: req.body.material,
+        ISBN: req.body.ISBN,
+        edition: req.body.edition,
+        publisher: req.body.publisher,
+        jobType: req.body.jobType,
+        requirements: req.body.requirements,
+        processor: req.body.processor,
+        ram: req.body.ram,
+        storage: req.body.storage,
+        screenSize: req.body.screenSize,
+        os: req.body.os
     })
 
     try {

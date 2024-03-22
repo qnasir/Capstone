@@ -39,7 +39,7 @@ router.post('/post', async (req,res) => {
         price: req.body.price,
         location: req.body.location,
         description: req.body.description,
-        image: req.body.image,
+        images: req.body.images,
         brand: req.body.brand,
         warranty: req.body.warranty,
         condition: req.body.condition,
@@ -47,7 +47,7 @@ router.post('/post', async (req,res) => {
         gender: req.body.gender,
         color: req.body.color,
         material: req.body.material,
-        ISBN: req.body.ISBN,
+        isbn: req.body.isbn,
         edition: req.body.edition,
         publisher: req.body.publisher,
         jobType: req.body.jobType,
@@ -60,8 +60,8 @@ router.post('/post', async (req,res) => {
     })
 
     try {
-        const product1 = await product.save()
-        res.json(product1)
+        const savedProduct = await product.save()
+        res.json(savedProduct)
     } catch (err) {
         console.error(err)
     }

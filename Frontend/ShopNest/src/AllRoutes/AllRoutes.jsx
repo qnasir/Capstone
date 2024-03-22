@@ -15,6 +15,7 @@ import Sports from '../Components/SellingForms/Sports'
 import Stationary from '../Components/SellingForms/Stationary'
 import Books from '../Components/SellingForms/Books'
 import Laptop from '../Components/SellingForms/Laptop'
+import Images from '../Components/SellingForms/Images'
 
 function AllRoutes() {
   return (
@@ -26,16 +27,17 @@ function AllRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/selling-page" element={<Sell_Categories />} />
         <Route path='/product-page/:productId' element={<ProductPage />} />
-        <Route path='/electrical-appliance' element={<Electrical />} />
-        <Route path='/books' element={<Books />} />
-        <Route path='/stationary' element={<Stationary />} />
-        <Route path='/sports' element={<Sports />} />
-        <Route path='/mobiles' element={<Mobiles />} />
-        <Route path='/jobs' element={<Jobs />} />
-        <Route path='/gadgets' element={<Gadgets />} />
-        <Route path='/furniture' element={<Furtiture />} />
-        <Route path='/clothes' element={<Clothes />} />
-        <Route path='/laptop' element={<Laptop />} />
+        <Route path='/selling-page/electrical-appliance' element={<Electrical />} />
+        <Route path='/selling-page/books' element={<Books />} />
+        <Route path='/selling-page/stationary' element={<Stationary />} />
+        <Route path='/selling-page/sports' element={<Sports />} />
+        <Route path='/selling-page/mobiles' element={<Mobiles />} />
+        <Route path='/selling-page/jobs' element={<Jobs />} />
+        <Route path='/selling-page/gadgets' element={<Gadgets />} />
+        <Route path='/selling-page/furniture' element={<Furtiture />} />
+        <Route path='/selling-page/clothes' element={<Clothes />} />
+        <Route path='/selling-page/laptop' element={<Laptop />} />
+        <Route path='/selling-page/upload-images' element={<Images />} />
       </Routes>
     </>
   )

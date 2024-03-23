@@ -15,7 +15,7 @@ const ProductSchema = new mongoose.Schema({
     },
     images: [{
         type: String,
-        required: false
+        required: true
     }],
     description: {
         type: String,
@@ -36,6 +36,10 @@ const ProductSchema = new mongoose.Schema({
     condition: {
         type: String,
         required: false
+    },
+    category: {
+        type: String,
+        required: true
     },
     size: {
         type: Number,

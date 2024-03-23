@@ -42,7 +42,7 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     size: {
-        type: Number,
+        type: String,
         required: false
     },
     gender: {

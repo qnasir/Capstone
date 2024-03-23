@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import './Electrical.css'
 import { useForm } from 'react-hook-form';
 

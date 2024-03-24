@@ -24,6 +24,10 @@
   height: 2.5rem;
   width: 10rem;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   border-radius: 0.3rem;
   font-size: 1rem;
   background-color: #00ffff;

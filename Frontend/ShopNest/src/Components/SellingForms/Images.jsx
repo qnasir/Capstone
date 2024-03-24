@@ -8,20 +8,17 @@ const Images = () => {
     const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
     const [fetchedData, setFetchedData] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
-    
+    const [progress, setProgress] = useState(0);
+    const [successMessage, setSuccessMessage] = useState('');
+
     useEffect(() => {
         const fetchData = async () => {
-
             const queryParams = new URLSearchParams(window.location.search);
             const data = {};
             for (let [key, value] of queryParams.entries()) {
                 data[key] = value;
             }
-
-            // console.log(data)
-            // console.log(images)
-            setFetchedData(data)
-
+            setFetchedData(data);
         };
 
         if (images.length > 0) {
@@ -29,54 +26,75 @@ const Images = () => {
         }
     }, [images]);
 
-    // useEffect(() => {
-    //     console.log(fetchedData);
-    // }, [fetchedData]);
-
     const submitProduct = async () => {
-
         if (images.length === 0) {
             alert("Please upload at least one image");
-            return; 
+            return;
         }
 
         setIsPosting(true);
 
         const uploadUrls = [];
-        for (const image of images) {
+        for (const [index, image] of images.entries()) {
             const formData = new FormData();
             formData.append('file', image);
             formData.append('upload_preset', 'Shop_Nest');
 
             try {
-                const response = await axios.post('https://api.cloudinary.com/v1_1/dblgnnd2d/image/upload', formData)
-                // console.log("Cloudify url", response.data.secure_url)
-                // alert('Images uploaded successfully!');
-                uploadUrls.push(response.data.secure_url)
+                const response = await axios.post('https://api.cloudinary.com/v1_1/dblgnnd2d/image/upload', formData, {
+                    onUploadProgress: progressEvent => {
+                        const percentCompleted = Math.round((progressEvent.loaded * 50) / progressEvent.total); // Scale to 50%
+                        let currentProgress = 0;
+                        const increment = 1; 
+                        const interval = setInterval(() => {
+                            if (currentProgress <= percentCompleted) {
+                                setProgress(prevProgress => {
+                                    const newProgress = Math.min(prevProgress + increment, 50); 
+                                    currentProgress += increment;
+                                    return newProgress;
+                                });
+                            } else {
+                                clearInterval(interval);
+                            }
+                        }, 50);
+                    }
+                });
+                uploadUrls.push(response.data.secure_url);
             } catch (err) {
-                console.error("Error in submitProduct", err)
+                console.error("Error in submitProduct", err);
             }
-
         }
-        setUploadedImageUrls(uploadUrls)
-        // console.log(uploadedImageUrls)
+
+        setUploadedImageUrls(uploadUrls);
 
         const updatedData = {
             ...fetchedData,
             images: uploadUrls
         };
-        // console.log(fetchedData)
 
-            try {
-                await axios.post(`https://capstone-tn3i.onrender.com/product-route/post`, updatedData)
-                alert("Product Added Successfully")
-                setIsPosting(false)
-                window.history.go(-2)
-            } catch(err) {
-                console.error(err)
+        try {
+            await axios.post(`https://capstone-tn3i.onrender.com/product-route/post`, updatedData);
+            updateProgress();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const updateProgress = () => {
+        let currentProgress = 50;
+        const increment = 1;
+        const interval = setInterval(() => {
+            if (currentProgress < 100) {
+                setProgress(prevProgress => Math.min(prevProgress + increment, 100));
+                currentProgress += increment;
+            } else {
+                clearInterval(interval);
+                setIsPosting(false);
+                setProgress(0);
+                setSuccessMessage('Product Added Successfully');
             }
-        
-    }
+        }, 50);
+    };
 
     const onDrop = (acceptedFiles) => {
         setImages([...images, ...acceptedFiles]);
@@ -110,10 +128,14 @@ const Images = () => {
                 ))}
             </div>
             {isPosting ? (
-                <button className='uploadButton'> 🔃 Posting data, please wait...</button>
+                <div className='progress'>
+                    <progress className='bar' value={progress} max={100} />
+                    <button className='uploadButton' disabled>Uploading...</button>
+                </div>
             ) : (
                 <button onClick={submitProduct} className='uploadButton'>Upload Images</button>
             )}
+            {successMessage && <p>{successMessage}</p>}
         </div>
     );
 };

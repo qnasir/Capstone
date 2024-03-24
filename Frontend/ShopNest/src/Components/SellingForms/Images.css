@@ -4,6 +4,22 @@
   flex-direction: column;
   align-items: center;
 }
+.image-uploader .progress {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.image-uploader .progress .bar {
+  width: 30rem;
+  height: 2rem;
+}
+.image-uploader p {
+  color: white;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
 .image-uploader .uploadButton {
   height: 2.5rem;
   width: 10rem;

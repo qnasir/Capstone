@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import './Images.css';
+import ClipLoader from 'react-spinners/ClipLoader'
 import axios from 'axios';
-import ClipLoader from "react-spinners/ClipLoader";
 
 const Images = () => {
     const [images, setImages] = useState([]);
@@ -46,11 +46,11 @@ const Images = () => {
                     onUploadProgress: progressEvent => {
                         const percentCompleted = Math.round((progressEvent.loaded * 50) / progressEvent.total); // Scale to 50%
                         let currentProgress = 0;
-                        const increment = 1;
+                        const increment = 1; 
                         const interval = setInterval(() => {
                             if (currentProgress <= percentCompleted) {
                                 setProgress(prevProgress => {
-                                    const newProgress = Math.min(prevProgress + increment, 50);
+                                    const newProgress = Math.min(prevProgress + increment, 50); 
                                     currentProgress += increment;
                                     return newProgress;
                                 });
@@ -130,9 +130,8 @@ const Images = () => {
             </div>
             {isPosting ? (
                 <div className='progress'>
-                    <progress className='bar' value={progress} max={10} />
-                    
-                    <button className='uploadButton' disabled> <ClipLoader loading = {isPosting} color={'red'} size={15} /> Uploading...</button>
+                    <progress className='bar' value={progress} max={100} />
+                    <button className='uploadButton' disabled><ClipLoader loading={isPosting} color={'red'} size={15} />Uploading...</button>
                 </div>
             ) : (
                 <button onClick={submitProduct} className='uploadButton'>Upload Images</button>

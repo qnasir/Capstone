@@ -115,7 +115,7 @@ const Images = () => {
     return (
         <div className="image-uploader">
             <div {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
+                <input accept='images/**' {...getInputProps()} />
                 <p>Drag & drop some files here, or click to select files</p>
             </div>
             <div className="image-preview">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Navbar.css'
 import logo from './svg/logo.png'
+import Cookies from 'js-cookie'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -10,6 +11,11 @@ function Navbar() {
   const { home, wishlist, contact, register } = t("Navbar");
 
   const [isSticky, setIsSticky] = useState(false)
+
+  const handleLogout = () => {
+    Cookies.remove('access_token')
+    window.location.reload()
+  }
 
   useEffect(() => {
 
@@ -44,7 +50,7 @@ function Navbar() {
           </div>
 
           <div className="button_div">
-            <Link to="/login"><button className='button'>{register}</button></Link>
+            {!Cookies.get('access_token') ? <Link to="/login"><button className='button'>{register}</button></Link> : <Link><button className='button' onClick={handleLogout}>Logout</button></Link>}
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ function Navbar() {
           </div>
 
           <div className="button_div">
-            <Link to="/register"><button className='button'>{register}</button></Link>
+            <Link to="/login"><button className='button'>{register}</button></Link>
           </div>
         </div>
       </div>

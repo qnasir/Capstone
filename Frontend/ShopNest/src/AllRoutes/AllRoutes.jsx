@@ -16,6 +16,8 @@ import Stationary from '../Components/SellingForms/Stationary'
 import Books from '../Components/SellingForms/Books'
 import Laptop from '../Components/SellingForms/Laptop'
 import Images from '../Components/SellingForms/Images'
+import Login from '../Components/Authentication/Login'
+import Signup from '../Components/Authentication/Signup';
 
 function AllRoutes() {
   return (
@@ -38,6 +40,8 @@ function AllRoutes() {
         <Route path='/selling-page/clothes' element={<Clothes />} />
         <Route path='/selling-page/laptop' element={<Laptop />} />
         <Route path='/selling-page/upload-images' element={<Images />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
       </Routes>
     </>
   )

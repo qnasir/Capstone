@@ -8,7 +8,11 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    likedProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'product'
+    }]
 })
 
 const user = mongoose.model('user', UserSchema)

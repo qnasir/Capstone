@@ -15,7 +15,7 @@ function Login() {
       const data = { username,password }
       
       try {
-        const response = await axios.post('http://localhost:3000/product-route/login',data)
+        const response = await axios.post(import.meta.env.VITE_LOGIN_KEY,data)
             setCookies("access_token", response.data.token);
             setCookies("username", response.data.username)
             window.localStorage.setItem("userId", response.data.userId)

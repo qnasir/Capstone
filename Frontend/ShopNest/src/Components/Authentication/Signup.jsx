@@ -12,7 +12,7 @@ function Signup() {
       const data = { username,password }
       
       try {
-        const response = await axios.post('http://localhost:3000/product-route/signup',data)
+        const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY,data)
         alert("User added successfully")
       } catch (err) {
         console.error(err)

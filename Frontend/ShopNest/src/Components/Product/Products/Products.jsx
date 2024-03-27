@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './Products.css'
+import Cookies from 'js-cookie'
 import { Link } from 'react-router-dom'
 
 
@@ -13,7 +14,13 @@ function Products({ product }) {
   const [isLiked, setIsLiked] = useState(false)
 
   const AddToWishlist = () => {
-    setIsLiked(!isLiked);
+    const accessToken = Cookies.get('access_token')
+    if(!accessToken) {
+      window.location.href = '/login'
+    } else {
+      setIsLiked(!isLiked);
+    }
+    
   }
 
   const { name, title, location, price, image, _id } = product

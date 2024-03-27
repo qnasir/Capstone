@@ -17,9 +17,7 @@ function List() {
         <div className='grid_parent'>
             {products.map((product) => {
                 return (
-                    <>
                         <Products key={product._id} product={product} />
-                    </>
                 )
             })}
         </div>

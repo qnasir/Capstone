@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../Models/UserModel')
 
+// Get route for getting all the users
 router.get('/login', async (req,res) => {
 
     try {
@@ -15,6 +16,24 @@ router.get('/login', async (req,res) => {
 
 })
 
+// Post route for wishlist products
+router.post('/like-product', async (req,res) => {
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+    console.log(productId,userId)
+
+    try {
+
+        const updatedUser = await User.updateOne({ _id: userId }, { $addToSet: { likedProducts: productId } });
+        res.json({ message: "liked success" })
+        
+    } catch (err) {
+        console.error(err)
+    }
+
+})
+
+// Post route for signUp
 router.post('/signup', async (req,res) => {
     
     const user = {
@@ -45,6 +64,8 @@ router.post('/signup', async (req,res) => {
     }
 })
 
+
+// Post route for Login
 router.post('/login', async (req,res) => {
 
     const loginData = req.body;
@@ -73,6 +94,34 @@ router.post('/login', async (req,res) => {
     } catch (error) {
         console.error("error logging user:", error)
         res.status(500).json({ message: "Internal server error" });
+    }
+
+})
+
+// Delete route to remove liked products
+router.delete('/remove-like-product/:userId/:productId', async (req,res) => {
+
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+
+    try {
+
+        const result = await User.findOneAndUpdate(
+            { _id: userId },
+            { $pull: { likedProducts: productId } },
+            { new: true }
+            );
+
+            if (result) {
+                res.json({ message: "removed product" })
+            } else {
+                console.log("No document found matching the query criteria.");
+                res.status(404).json({ error: "No document found matching the query criteria." });
+            }
+
+    } catch(error) {
+        console.log("Error:", error.message);
+        res.status(500).json({ error: error.message });
     }
 
 })

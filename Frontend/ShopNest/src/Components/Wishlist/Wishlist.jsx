@@ -13,7 +13,7 @@ function Wishlist() {
     const fetchProductIds = async () => {
       try {
         const userId = localStorage.getItem('userId')
-        const response = await axios.get(`http://localhost:3000/product-route/wishlist/${userId}`)
+        const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
         console.log(response.data)
         setWishProducts(response.data)
       } catch (err) {
@@ -27,7 +27,7 @@ function Wishlist() {
       const fetchedProducts = [];
       try {
         for (const [index, productIds] of wishProducts.entries()) {
-          const response = await axios.get(`https://capstone-tn3i.onrender.com/product-route/product/${productIds}`)
+          const response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productIds}`)
           fetchedProducts.push(response.data)
           console.log(products)
         }

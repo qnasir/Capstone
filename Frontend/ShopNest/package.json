@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^4.30.7",
+    "@clerk/themes": "^1.7.10",
     "@tawk.to/tawk-messenger-react": "^2.0.2",
     "axios": "^1.6.8",
     "bourbon": "^7.3.0",

@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import './Navbar.css'
 import logo from './svg/logo.png'
 import Cookies from 'js-cookie'
+import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 function Navbar() {
 
@@ -31,6 +33,8 @@ function Navbar() {
 
   }, [])
 
+  const userId = localStorage.getItem('userId')
+
   return (
     <div className={`navbar ${isSticky ? 'sticky' : ""}`}>
       <div className='contents'>
@@ -43,14 +47,21 @@ function Navbar() {
             <Link to="/">{home}</Link>
           </div>
           <div className='text'>
-            <Link to="/wishlist">{wishlist}</Link>
+            <Link to={`/wishlist/${userId}`} >{wishlist}</Link>
           </div>
           <div className='text'>
             <Link to="contact-us">{contact}</Link>
           </div>
 
           <div className="button_div">
-            {!Cookies.get('access_token') ? <Link to="/login"><button className='button'>{register}</button></Link> : <Link><button className='button' onClick={handleLogout}>Logout</button></Link>}
+            <header>
+              <SignedOut>
+                <SignInButton className='button' />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </header>
           </div>
         </div>
       </div>

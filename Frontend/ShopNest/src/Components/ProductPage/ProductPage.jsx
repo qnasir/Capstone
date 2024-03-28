@@ -49,7 +49,7 @@ function ProductPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const  response = await axios.get(`https://capstone-tn3i.onrender.com/product-route/product/${productId}`)
+                const  response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productId}`)
                 const { image, name, location,  title,  description, price } = response.data
                 setProduct({ image, name, location,  title,  description, price })
                 console.log(response.data)

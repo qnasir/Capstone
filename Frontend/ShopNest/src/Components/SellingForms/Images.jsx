@@ -42,7 +42,7 @@ const Images = () => {
             formData.append('upload_preset', 'Shop_Nest');
 
             try {
-                const response = await axios.post('https://api.cloudinary.com/v1_1/dblgnnd2d/image/upload', formData, {
+                const response = await axios.post(import.meta.env.VITE_CLOUDINARY_KEY, formData, {
                     onUploadProgress: progressEvent => {
                         const percentCompleted = Math.round((progressEvent.loaded * 50) / progressEvent.total); // Scale to 50%
                         let currentProgress = 0;
@@ -74,7 +74,7 @@ const Images = () => {
         };
 
         try {
-            await axios.post(`https://capstone-tn3i.onrender.com/product-route/post`, updatedData);
+            await axios.post(import.meta.env.VITE_PRODUCT_POST_KEY, updatedData);
             updateProgress();
         } catch (err) {
             console.error(err);

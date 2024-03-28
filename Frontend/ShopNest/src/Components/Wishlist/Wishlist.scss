@@ -1,0 +1,7 @@
+.grid_parent_wishlist{
+    color: red;
+    display: grid;
+    padding-top: 10rem;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2.625rem;
+}

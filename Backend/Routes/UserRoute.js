@@ -16,6 +16,18 @@ router.get('/login', async (req,res) => {
 
 })
 
+// Get route to get wishlist products
+router.get('/wishlist/:userId', async (req,res) => {
+    let userId = req.params.userId
+
+    try {
+        const response = await User.findById({ _id: userId })
+        res.json(response.likedProducts)
+    } catch(err) {
+        console.error(err)
+    }
+})
+
 // Post route for wishlist products
 router.post('/like-product', async (req,res) => {
     let productId = req.body.productId;

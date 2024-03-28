@@ -24,7 +24,7 @@ function AllRoutes() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/wishlist/:userId" element={<Wishlist />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/register" element={<Register />} />
         <Route path="/selling-page" element={<Sell_Categories />} />

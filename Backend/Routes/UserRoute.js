@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../Models/UserModel");
+const Product = require("../Models/ProductModel")
 
 // Get route for getting all the users
 router.get("/login", async (req, res) => {
@@ -17,12 +18,9 @@ router.get("/login", async (req, res) => {
 // Get route to get wishlist products
 router.get("/wishlist/:userId", async (req, res) => {
   let userId = req.params.userId;
-  console.log(userId)
 
   try {
     const response = await User.find({ userId: userId });
-    console.log(response)
-    console.log(response[0].likedProducts)
     res.json(response[0].likedProducts);
   } catch (err) {
     console.error(err);
@@ -36,9 +34,12 @@ router.post("/like-product", async (req, res) => {
   console.log(userId, productId)
 
   try {
+
+    const productToBeAdded = await Product.findById( productId ).exec()
+
     const updatedUser = await User.updateOne(
       { userId: userId },
-      { $addToSet: { likedProducts: productId } }
+      { $addToSet: { likedProducts: productToBeAdded } }
     );
     res.json({ message: "liked success" });
   } catch (err) {
@@ -115,11 +116,12 @@ router.post("/login", async (req, res) => {
 router.delete("/remove-like-product/:userId/:productId", async (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
+  console.log(userId, productId)
 
   try {
     const result = await User.findOneAndUpdate(
       { userId: userId },
-      { $pull: { likedProducts: productId } },
+      { $pull: { 'likedProducts': { _id : productId} } },
       { new: true }
     );
 

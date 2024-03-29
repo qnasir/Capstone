@@ -28,7 +28,7 @@ function Products({ product }) {
     if (user && user.id) {
       setUserId(user.id);
     }
-  }, [])
+  })
 
   const AddToWishlist = async (productId) => {
     console.log(auth)
@@ -49,6 +49,7 @@ function Products({ product }) {
         } else {
           console.log(userId)
           const response = await axios.delete(`${import.meta.env.VITE_REMOVE_LIKED_PRODUCT_KEY}/${userId}/${productId}`)
+          console.log(response)
           if (response.data.message) {
             alert('Removed successfully')
             setIsLiked(false)

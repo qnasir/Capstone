@@ -63,21 +63,23 @@ function Navbar() {
 
   handleAuth();
 
-  const handleWishlistClick = () => {
-    // console.log(auth);
+  const handleWishlistClick = async () => {
+    console.log(user);
+    console.log(auth);
+
     if (auth === '0') {
-      setIsLoggedIn(false);
-      alert("Please login first");
+        setIsLoggedIn(false);
+        alert("Please login first");
     } else {
-      setIsLoggedIn(true);
-      if (userId) {
-        navigate(`/wishlist/${userId}`);
-      } else {
-        alert("User ID not available.");
-      }
+        setIsLoggedIn(true);
+        console.log(user.id);
+        if (user.id) {
+            navigate(`/wishlist/${user.id}`);
+        } else {
+            console.log(user);
+        }
     }
-  };
-  
+};
 
   return (
     <div className={`navbar ${isSticky ? 'sticky' : ""}`}>

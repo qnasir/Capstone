@@ -23,7 +23,7 @@ function Navbar() {
   useEffect(() => {
     // Check if the user is logged in
     const userAuth = Cookies.get('__client_uat');
-    console.log(auth)
+    // console.log(auth)
     setAuth(userAuth)
 
     // Set userId if user is logged in
@@ -63,7 +63,7 @@ function Navbar() {
   handleAuth();
 
   const handleWishlistClick = () => {
-    console.log(auth);
+    // console.log(auth);
     if (auth === '0') {
       setIsLoggedIn(false);
       alert("Please login first");

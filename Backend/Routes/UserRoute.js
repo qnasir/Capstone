@@ -30,11 +30,11 @@ router.get("/wishlist/:userId", async (req, res) => {
 router.post("/like-product", async (req, res) => {
   let productId = req.body.productId;
   let userId = req.body.userId;
-  console.log(productId, userId);
+  console.log(userId, productId)
 
   try {
     const updatedUser = await User.updateOne(
-      { _id: userId },
+      { userId: userId },
       { $addToSet: { likedProducts: productId } }
     );
     res.json({ message: "liked success" });
@@ -59,7 +59,7 @@ router.post("/signup", async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ userId: user.userId });
     if (existingUser) {
-      return
+      return res.status(400).json({ message: "User already exists" });
     }
 
     // Create new user
@@ -115,7 +115,7 @@ router.delete("/remove-like-product/:userId/:productId", async (req, res) => {
 
   try {
     const result = await User.findOneAndUpdate(
-      { _id: userId },
+      { userId: userId },
       { $pull: { likedProducts: productId } },
       { new: true }
     );

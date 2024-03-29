@@ -50,7 +50,7 @@ function Navbar() {
         const phone = user.primaryPhoneNumber.phoneNumber;
         const data = { userId, email, phone };
         
-        const response = await axios.post("http://localhost:3000/product-route/signup", data);
+        const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY, data);
         console.log(response);
         alert("User added successfully");
         console.log(data);

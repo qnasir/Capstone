@@ -40,7 +40,7 @@ function Navbar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [user]);
+  }, []);
 
   const handleAuth = async () => {
     try {
@@ -53,6 +53,7 @@ function Navbar() {
         const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY, data);
         console.log(response);
         alert("User added successfully");
+        window.location.reload()
         console.log(data);
       }
     } catch (err) {

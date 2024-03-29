@@ -17,10 +17,13 @@ router.get("/login", async (req, res) => {
 // Get route to get wishlist products
 router.get("/wishlist/:userId", async (req, res) => {
   let userId = req.params.userId;
+  console.log(userId)
 
   try {
-    const response = await User.findById({ _id: userId });
-    res.json(response.likedProducts);
+    const response = await User.find({ userId: userId });
+    console.log(response)
+    console.log(response[0].likedProducts)
+    res.json(response[0].likedProducts);
   } catch (err) {
     console.error(err);
   }

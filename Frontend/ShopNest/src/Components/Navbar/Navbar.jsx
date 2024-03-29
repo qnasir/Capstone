@@ -40,7 +40,7 @@ function Navbar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  });
 
   const handleAuth = async () => {
     try {

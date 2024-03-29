@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 import './Wishlist.css'
 
 function Wishlist() {
 
   const [wishProducts, setWishProducts] = useState([])
   const [products, setProducts] = useState([])
+  // const [Id, setUserId] = useState(null)
+
+  const { userId } = useParams()
+  // console.log(userId)
+  // setUserId(userId)
 
   useEffect(() => {
 
     // Fetching product ids from user id
     const fetchProductIds = async () => {
       try {
-        const userId = localStorage.getItem('userId')
+        console.log(userId)
         const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
         console.log(response.data)
         setWishProducts(response.data)

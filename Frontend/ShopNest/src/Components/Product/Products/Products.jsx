@@ -103,11 +103,11 @@ function Products({ product }) {
           <div className="single_product">
             <div className="productImg">
               <img src={image} alt="" />
-              <Link to="/">
+              {/* <Link to="/"> */}
                 <span className={likedProducts.includes(_id) ? 'heart active' : 'heart'}   onClick={() => AddToWishlist(_id)}>
                   <PiHeartStraightFill className='heart_icon' />
                 </span>
-              </Link>
+              {/* </Link> */}
             </div>
 
             <div className="productInfo">

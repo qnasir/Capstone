@@ -9,7 +9,6 @@
 
 .product_container {
   display: grid;
-  padding-top: 2.625rem;
   color: var(--WhiteColor);
   gap: 2.625rem;
 }

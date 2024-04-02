@@ -11,4 +11,22 @@
   font-family: "Inter", sans-serif;
   width: 74%;
   margin-top: 5rem;
+}
+.main_container .search_result {
+  color: white;
+  padding-top: 2rem;
+}
+.main_container .search_result .button {
+  height: 2rem;
+  width: 8rem;
+  border: none;
+  margin-left: 2rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #00FFFF;
+  color: black;
+}
+.main_container .none {
+  display: none;
 }/*# sourceMappingURL=Product.css.map */

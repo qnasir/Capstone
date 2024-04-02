@@ -74,6 +74,7 @@ const Images = () => {
         };
 
         try {
+            console.log(updatedData)
             await axios.post(import.meta.env.VITE_PRODUCT_POST_KEY, updatedData);
             updateProgress();
         } catch (err) {

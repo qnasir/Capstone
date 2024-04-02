@@ -14,5 +14,26 @@
     width: 74%;
     margin-top: 5rem; //Adjust Width for products relative to sidebar
 
+    .search_result {
+        color: white;
+        padding-top: 2rem;
+
+        .button {
+            height: 2rem;
+            width: 8rem;
+            border: none;
+            margin-left: 2rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #00FFFF;
+            color: black;
+        }
+    }
+
+    .none {
+        display: none;
+    }
+
 }
 

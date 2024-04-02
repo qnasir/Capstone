@@ -11,29 +11,34 @@ import { LuFilter } from "react-icons/lu";
 import { GrLanguage } from "react-icons/gr";
 
 
-function SearchBar() {
+function SearchBar(props) {
 
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
     const { sell } = t("ProductPage");
 
-    useEffect(()=> {
+    useEffect(() => {
         document.body.dir = i18n.dir();
-      }, [i18n,i18n.language])
+    }, [i18n, i18n.language])
 
-  return (
-    <>
-        <div className="search_container">
+    return (
+        <>
+            <div className="search_container">
                 <div className="search_bar">
-                    <input className="search" placeholder="Search..." type="text" />
-                    <BsSearch className="search_light_icon" />
+                    <input
+                        className="search"
+                        onChange={(e) => props.handleSearch && props.handleSearch(e.target.value)}
+                        placeholder="Search..." type="text"
+                        value={props && props.search}
+                    />
+                    <BsSearch className="search_light_icon" onClick={() => props.handleClick && props.handleClick()} />
                 </div>
 
                 <div className="filter">
-                    <LuFilter  className='filter_icon' />
+                    <LuFilter className='filter_icon' />
                 </div>
 
                 <div className='language_filter dropdown'>
-                    <GrLanguage className='dropdown_button'/>
+                    <GrLanguage className='dropdown_button' />
                     <div className='dropdown_content'>
                         {languages.map((language) => (
                             <button key={language.code} onClick={() => changeLanguage(language.code)} >{language.lang}</button>
@@ -45,8 +50,8 @@ function SearchBar() {
                     <Link to='/selling-page'><button className="button">{sell}</button></Link>
                 </div>
             </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default SearchBar

@@ -5,13 +5,25 @@ import axios from 'axios'
 import { useState, useEffect } from 'react';
 
 
-function Product() {
+function Product({selectedCategory}) {
 
     const [search, setSearch] = useState('')
     const [products, setProducts] = useState([])
     const [showSearchResult, setShowSearchResult] = useState(false);
     const [render, setRender] = useState(true)
     const [productslength, setProductsLength] = useState(0)
+
+    useEffect(()=> {
+        if(selectedCategory) {
+            console.log(selectedCategory)
+            axios.get(`${import.meta.env.VITE_CATEGORY_KEY + selectedCategory}`)
+            .then(response => {
+                console.log(response.data)
+                setProducts(response.data)
+            })
+            .catch(err => console.log(err))
+        }
+    }, [selectedCategory])
 
     useEffect(() => {
         axios.get(import.meta.env.VITE_PRODUCTS_DATA_KEY)
@@ -27,7 +39,7 @@ function Product() {
 
     const handleClick = () => {
 
-        axios.get('http://localhost:3000/product-route/search?search=' + search)
+        axios.get(`${import.meta.env.VITE_SEARCH_KEY + search}`)
             .then(response => {
                 console.log(response.data)
                 setProducts(response.data)
@@ -37,14 +49,6 @@ function Product() {
             })
             .catch(err => console.log(err))
 
-        // console.log("Clicked")
-        // console.log(products)
-        // let filteredProducts = products.filter((item) => {
-        //     if(item.name.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase())) {
-        //         return item;
-        //     }
-        // })
-        // setProducts(filteredProducts)
     }
 
     return (

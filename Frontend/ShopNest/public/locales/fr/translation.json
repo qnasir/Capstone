@@ -1,5 +1,6 @@
 {
     "Sidebar" : {
+        "all": "toutes catégories",
         "electrical" : "Appareils électriques",
         "clothes" : "Vêtements",
         "stationery" : "Stationnaire",

@@ -15,7 +15,7 @@ function Jobs() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'jobs'} 
+        const dataWithCategory = {...data, category: 'Part Time Jobs'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

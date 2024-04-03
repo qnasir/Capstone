@@ -15,7 +15,7 @@ function Clothes() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'clothes'} 
+        const dataWithCategory = {...data, category: 'Clothes'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

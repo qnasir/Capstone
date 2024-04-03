@@ -15,7 +15,7 @@ function Sports() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'sports'} 
+        const dataWithCategory = {...data, category: 'Sports Equipment'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

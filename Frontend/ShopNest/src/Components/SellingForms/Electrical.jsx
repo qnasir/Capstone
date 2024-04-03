@@ -15,7 +15,7 @@ function Electrical() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'electrical'} 
+        const dataWithCategory = {...data, category: 'Electrical Appliances'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

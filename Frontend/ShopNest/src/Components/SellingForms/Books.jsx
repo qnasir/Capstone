@@ -15,7 +15,7 @@ function Books() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'books'} 
+        const dataWithCategory = {...data, category: 'Books'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

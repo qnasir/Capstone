@@ -15,7 +15,7 @@ function Gadgets() {
         }
 
         setData(data)
-        const dataWithCategory = {...data, category: 'gadgets'} 
+        const dataWithCategory = {...data, category: 'Gadgets'} 
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

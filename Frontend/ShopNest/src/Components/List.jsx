@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 function List({products}) {
 
+
     return (
         <div className='grid_parent'>
             {products && products.map((product) => {

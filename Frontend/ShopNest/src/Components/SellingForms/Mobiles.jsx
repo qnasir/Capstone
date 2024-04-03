@@ -15,7 +15,7 @@ function Mobiles() {
         }
 
         setData(data)
-        const dataWithCategory = { ...data, category: 'mobile' }
+        const dataWithCategory = { ...data, category: 'Mobile Phones' }
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

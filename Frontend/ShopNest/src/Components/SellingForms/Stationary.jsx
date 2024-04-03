@@ -15,7 +15,7 @@ function Stationary() {
         }
 
         setData(data)
-        const dataWithCategory = { ...data, category: 'stationary' }
+        const dataWithCategory = { ...data, category: 'Stationary' }
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 

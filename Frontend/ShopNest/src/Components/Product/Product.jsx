@@ -16,7 +16,7 @@ function Product({selectedCategory}) {
     useEffect(()=> {
         if(selectedCategory) {
             console.log(selectedCategory)
-            axios.get('http://localhost:3000/product-route/category?category=' + selectedCategory)
+            axios.get(`${import.meta.env.VITE_CATEGORY_KEY + selectedCategory}`)
             .then(response => {
                 console.log(response.data)
                 setProducts(response.data)
@@ -39,7 +39,7 @@ function Product({selectedCategory}) {
 
     const handleClick = () => {
 
-        axios.get('http://localhost:3000/product-route/search?search=' + search)
+        axios.get(`${import.meta.env.VITE_SEARCH_KEY + search}`)
             .then(response => {
                 console.log(response.data)
                 setProducts(response.data)

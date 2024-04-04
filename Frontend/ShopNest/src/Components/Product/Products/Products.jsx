@@ -47,7 +47,6 @@ function Products({ product }) {
     setIsLiked(updatedIsLiked);
   }, [likedProducts]);
 
-  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const ids = [];
@@ -57,11 +56,9 @@ function Products({ product }) {
         });
         setLikedProducts(ids);
       } catch (err) {
-        console.error(err);
+        console.log("Wishlist Updated");
       }
     };
-    fetchProducts()
-  }, [])
 
   const AddToWishlist = async (productId) => {
     if (auth === '0') {

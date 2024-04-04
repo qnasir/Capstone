@@ -31,37 +31,39 @@ function Navbar() {
       setUserId(user.id);
     }
 
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // const handleScroll = () => {
+    //   setIsSticky(window.scrollY > 0);
+    // };
+  
+    // window.addEventListener("scroll", handleScroll);
+  
+    // return () => {
+    //   window.removeEventListener("scroll", handleScroll);
+    // };
   },[]);
 
-  const handleAuth = async () => {
-    try {
-      if (user) {
-        const userId = user.id;
-        const email = user.primaryEmailAddress.emailAddress;
-        const phone = user.primaryPhoneNumber.phoneNumber;
-        const data = { userId, email, phone };
-        
-        const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY, data);
-        console.log(response);
-        alert("User added successfully");
-        window.location.reload()
-        console.log(data);
+  useEffect(() => {
+    const handleAuth = async () => {
+      try {
+        if (user) {
+          const userId = user.id;
+          const email = user.primaryEmailAddress.emailAddress;
+          const phone = user.primaryPhoneNumber.phoneNumber;
+          const data = { userId, email, phone };
+          
+          const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY, data);
+          console.log(response);
+          alert("User added successfully");
+          window.location.reload()
+          console.log(data);
+        }
+      } catch (err) {
+        console.log("User already exists");
       }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  handleAuth();
+    };
+  
+    handleAuth();
+  })
 
   const handleWishlistClick = async () => {
     console.log(user);

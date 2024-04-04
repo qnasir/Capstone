@@ -7,7 +7,14 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: ['http://localhost:5173', 'https://capstone-tn3i.onrender.com'],
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type',
+    credentials: true,
+}
+));
 
 // Middleware for error catching
 app.use((err, req, res, next) => {

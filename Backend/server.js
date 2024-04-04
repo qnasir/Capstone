@@ -10,8 +10,9 @@ app.use(express.json());
 app.use(cors({
   origin: ['http://localhost:5173', 'https://capstone-tn3i.onrender.com', 'https://shop-nest-seven.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
+  allowedHeaders: 'Content-Type',
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
 
 

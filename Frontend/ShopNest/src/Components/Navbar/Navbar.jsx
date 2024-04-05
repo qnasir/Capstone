@@ -95,7 +95,7 @@ function Navbar() {
             <Link to="/">{home}</Link>
           </div>
           <div className='text'>
-            <div onClick={handleWishlistClick}>{wishlist}</div>
+            <div onClick={handleWishlistClick}>{wishlist}</div>    
           </div>
           <div className='text'>
             <Link to="contact-us">{contact}</Link>

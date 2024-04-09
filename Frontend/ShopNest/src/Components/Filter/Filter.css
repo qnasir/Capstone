@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+.filter_container {
+  display: flex;
+  color: white;
+  border-top: 2px solid #ffffff;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+.filter_container .title {
+  display: flex;
+  font-size: 1.25rem;
+  align-items: center;
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
+}
+.filter_container .price_container {
+  width: 30%;
+  border-right: 2px solid white;
+}
+.filter_container .price_container .flex {
+  display: flex;
+  font-size: 12px;
+  margin-top: 1rem;
+  align-items: center;
+  line-height: 1.8rem;
+  width: 80%;
+}
+.filter_container .price_container .flex lable {
+  margin-left: 0.5rem;
+}
+.filter_container .price_container .slider_container .slider {
+  width: 80%;
+  height: 3px;
+  background-color: #002540;
+  margin-top: 2rem;
+}
+.filter_container .price_container .slider_container .slider .thumb {
+  width: 23px;
+  height: 23px;
+  cursor: grab;
+  background: #00ffff;
+  border-radius: 50%;
+  top: -10px;
+}
+.filter_container .price_container .slider_container .slider .track-1 {
+  background-color: #275efe;
+}
+.filter_container .price_container .values {
+  padding-top: 1rem;
+  display: flex;
+  font-size: 0.7rem;
+  width: 80%;
+  justify-content: space-between;
+}
+.filter_container .property_container {
+  border-right: 2px solid white;
+  padding-left: 3rem;
+  width: 38%;
+}
+.filter_container .property_container .property_flex {
+  display: flex;
+  font-size: 12px;
+  margin-top: 1rem;
+  align-items: center;
+  line-height: 1.8rem;
+}
+.filter_container .property_container .property_flex .select_container select {
+  background: #002540;
+  cursor: pointer;
+  height: 2rem;
+  color: white;
+  width: 9rem;
+  padding-left: 1rem;
+  border-radius: 2px;
+  border: none;
+  margin-top: 1rem;
+}
+.filter_container .reset_container {
+  padding-left: 3rem;
+}
+.filter_container .reset_container .remove_filter_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 3.5rem;
+  height: 2.3rem;
+  cursor: pointer;
+  width: 8rem;
+  border: none;
+  background: #00ffff;
+  border-bottom: 4px solid #0094FF;
+}/*# sourceMappingURL=Filter.css.map */

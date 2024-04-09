@@ -30,8 +30,9 @@ function Products({ product }) {
       setLikedProducts(storedLikedProducts);
     }
 
-    fetchProducts();
-
+    if (userId) {
+      fetchProducts();
+    }
   }, [userId]);
 
   useEffect(() => {
@@ -47,18 +48,18 @@ function Products({ product }) {
     setIsLiked(updatedIsLiked);
   }, [likedProducts]);
 
-    const fetchProducts = async () => {
-      try {
-        const ids = [];
-        const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`);
-        response.data.forEach(obj => {
-          ids.push(obj._id);
-        });
-        setLikedProducts(ids);
-      } catch (err) {
-        console.log("Wishlist Updated");
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const ids = [];
+      const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`);
+      response.data.forEach(obj => {
+        ids.push(obj._id);
+      });
+      setLikedProducts(ids);
+    } catch (err) {
+      console.log("Wishlist Updated");
+    }
+  };
 
   const AddToWishlist = async (productId) => {
     if (auth === '0') {
@@ -93,8 +94,6 @@ function Products({ product }) {
       }
     }
   };
-  
-
 
   return (
     <>

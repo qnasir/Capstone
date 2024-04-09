@@ -2,6 +2,7 @@ import './Product.css'
 import SearchBar from './SearchBar/SearchBar'
 import List from '../List';
 import axios from 'axios'
+import Filter from '../Filter/Filter'
 import { useState, useEffect } from 'react';
 
 
@@ -12,6 +13,8 @@ function Product({selectedCategory}) {
     const [showSearchResult, setShowSearchResult] = useState(false);
     const [render, setRender] = useState(true)
     const [productslength, setProductsLength] = useState(0)
+    const [isFilter, setFilter] = useState(false)
+
 
     useEffect(()=> {
         if(selectedCategory) {
@@ -51,10 +54,19 @@ function Product({selectedCategory}) {
 
     }
 
+    const handleFilter = () => {
+        if (isFilter) {
+            setFilter(false)
+        } else {
+            setFilter(true)
+        }
+    }
+
     return (
         <div className='main_container'>
 
-            <SearchBar search={search} handleSearch={handleSearch} handleClick={handleClick} />
+            {/* SearchBar */}
+            <SearchBar search={search} handleSearch={handleSearch} handleClick={handleClick} handleFilter={handleFilter} />
 
             {showSearchResult ?
                 <div className='search_result'>Search Results Found :- {productslength}
@@ -64,6 +76,10 @@ function Product({selectedCategory}) {
                     <button onClick={() => window.location.reload()} className='button'>Clear</button>
                 </div>}
 
+            {/* Filter */}
+            { isFilter ? <Filter handleFilter={handleFilter}/> : ''}
+
+            {/* Products */}
             <List products={products} />
 
         </div>

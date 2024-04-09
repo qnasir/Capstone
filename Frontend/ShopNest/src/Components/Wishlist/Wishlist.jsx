@@ -47,7 +47,7 @@ function Wishlist() {
     <div className="grid_parent_wishlist">
       {products.map((product) => {
         return (
-          <div>
+          <div key={product._id}>
             <p>{product.name}</p>
             <p>{product.price}</p>
             <p>{product.location}</p>

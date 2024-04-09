@@ -33,7 +33,7 @@ function SearchBar(props) {
                     <BsSearch className="search_light_icon" onClick={() => props.handleClick && props.handleClick()} />
                 </div>
 
-                <div className="filter">
+                <div className="filter" onClick={() => props.handleFilter && props.handleFilter()} >
                     <LuFilter className='filter_icon' />
                 </div>
 

@@ -3,7 +3,8 @@ import SearchBar from './SearchBar/SearchBar'
 import List from '../List';
 import axios from 'axios'
 import Filter from '../Filter/Filter'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../Context/ParentContext';
 
 
 function Product({selectedCategory}) {
@@ -15,6 +16,13 @@ function Product({selectedCategory}) {
     const [productslength, setProductsLength] = useState(0)
     const [isFilter, setFilter] = useState(false)
 
+    const {filteredProducts} = useContext(AppContext)
+
+    useEffect(() => {
+        if (isFilter) {
+            setProducts(filteredProducts)
+        }
+    }, [filteredProducts])
 
     useEffect(()=> {
         if(selectedCategory) {
@@ -53,7 +61,7 @@ function Product({selectedCategory}) {
             .catch(err => console.log(err))
 
     }
-
+    
     const handleFilter = () => {
         if (isFilter) {
             setFilter(false)
@@ -61,6 +69,7 @@ function Product({selectedCategory}) {
             setFilter(true)
         }
     }
+    
 
     return (
         <div className='main_container'>
@@ -77,7 +86,7 @@ function Product({selectedCategory}) {
                 </div>}
 
             {/* Filter */}
-            { isFilter ? <Filter handleFilter={handleFilter}/> : ''}
+            { isFilter ? <Filter handleFilter={handleFilter} /> : ''}
 
             {/* Products */}
             <List products={products} />

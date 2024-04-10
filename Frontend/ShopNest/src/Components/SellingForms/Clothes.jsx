@@ -8,6 +8,9 @@ function Clothes() {
 
     const { register, handleSubmit, errors, reset } = useForm();
 
+    const sizeOptions = ["Small", "Medium", "Large", "XL", "XXL", "XXXL"];
+    const colorOptions = ["Black","White","Gray","Beige","Brown","Navy","Red","Blue","Yellow","Green","Orange","Purple","Light Pink","Light Blue","Mint Green","Lavender"];
+
     const onSubmit = async (data) => {
         if (!data.name || !data.color || !data.brand || !data.gender || !data.title || !data.condition || !data.price || !data.location || !data.description) {
             alert("Please fill out all fields before submitting.");
@@ -42,8 +45,13 @@ function Clothes() {
                     <br />
                     <label>
                         Size:
-                        <input type="text" {...register("title", { required: true })} />
-                        {errors?.title && <span className="error">This field is required</span>}
+                        <select  {...register("title", { required: true })} >
+                            {sizeOptions.map((size,index) => (
+                            <option key={index} value={size}>{size}</option>
+                            ))}
+                        </select>
+                        {/* <input type="text" {...register("title", { required: true })} />
+                        {errors?.title && <span className="error">This field is required</span>} */}
                     </label>
                     <br />
                     <label>
@@ -57,8 +65,13 @@ function Clothes() {
                     <br />
                     <label>
                         Color:
-                        <input type="text" {...register("color", { required: true })} />
-                        {errors?.color && <span className="error">This field is required</span>}
+                        <select  {...register("color", { required: true })} >
+                            {colorOptions.map((color,index) => (
+                            <option key={index} value={color}>{color}</option>
+                            ))}
+                        </select>
+                        {/* <input type="text" {...register("color", { required: true })} />
+                        {errors?.color && <span className="error">This field is required</span>} */}
                     </label>
                     <br />
                     <label>

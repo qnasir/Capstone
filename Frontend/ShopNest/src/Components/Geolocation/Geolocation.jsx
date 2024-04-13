@@ -12,8 +12,8 @@ function GeocodingForm() {
     const [state, setState] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [country, setCountry] = useState('');
-    const [latitude, setLatitude] = useState(null);
-    const [longitude, setLongitude] = useState(null);
+    // const [latitude, setLatitude] = useState(null);
+    // const [longitude, setLongitude] = useState(null);
     const [dataWithuserId, setDataWithuserId] = useState([])
     const [error, setError] = useState('');
 
@@ -48,8 +48,12 @@ function GeocodingForm() {
                     const location = data.resourceSets[0].resources[0].point.coordinates;
                     const latitude = location[0];
                     const longitude = location[1];
-                    setLatitude(latitude);
-                    setLongitude(longitude);
+                    // setLatitude(latitude);
+                    // setLongitude(longitude);
+                    const dataWithCoordinates = { ...dataWithuserId, location: address, latitude: latitude, longitude: longitude };
+                    const queryParams = new URLSearchParams(dataWithCoordinates).toString();
+        
+                    window.location.href = `./upload-images?${queryParams}`
                     setError('');
                 } else {
                     setError('The provided address is not valid or not present in the geocoding service.');
@@ -59,10 +63,6 @@ function GeocodingForm() {
                 setError('Error fetching geocoding data.', error);
             });
 
-            const dataWithCoordinates = { ...dataWithuserId, location: address, latitude: latitude, longitude: longitude };
-            const queryParams = new URLSearchParams(dataWithCoordinates).toString();
-
-            window.location.href = `./upload-images?${queryParams}`
     };
 
     return (

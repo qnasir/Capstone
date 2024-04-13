@@ -9,7 +9,7 @@ function Stationary() {
     const { register, handleSubmit, errors, reset } = useForm();
 
     const onSubmit = async (data) => {
-        if (!data.name || !data.title || !data.brand || !data.condition || !data.price || !data.location || !data.description) {
+        if (!data.name || !data.title || !data.brand || !data.condition || !data.price || !data.description) {
             alert("Please fill out all fields before submitting.");
             return;
         }
@@ -19,7 +19,7 @@ function Stationary() {
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 
-        window.location.href = `./upload-images?${queryParams}`
+        window.location.href = `./address?${queryParams}`
 
     }
 
@@ -62,18 +62,12 @@ function Stationary() {
                     </label>
                     <br />
                     <label>
-                        Location:
-                        <input type="text" {...register("location", { required: true })} />
-                        {errors?.location && <span className="error">This field is required</span>}
-                    </label>
-                    <br />
-                    <label>
                         Description:
                         <textarea name="stationery_description" {...register("description", { required: true })} ></textarea>
                         {errors?.description && <span className="error">This field is required</span>}
                     </label>
                     <br />
-                    <button className='btn' type="submit">Post Listing</button>
+                    <button className='btn' type="submit">Step2 : Add Address</button>
                 </form>
             </div>
         </div>

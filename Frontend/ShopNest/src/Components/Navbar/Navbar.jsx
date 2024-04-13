@@ -4,7 +4,7 @@ import logo from './svg/logo.png'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { useClerk } from '@clerk/clerk-react';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 

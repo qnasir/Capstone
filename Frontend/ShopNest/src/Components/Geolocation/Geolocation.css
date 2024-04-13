@@ -1,0 +1,46 @@
+.GeocodingForm {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+.GeocodingForm h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.GeocodingForm label {
+  display: block;
+  margin-bottom: 10px;
+}
+.GeocodingForm label input[type=text] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+.GeocodingForm button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.GeocodingForm button:hover {
+  background-color: #0056b3;
+}
+.GeocodingForm .error {
+  color: red;
+  margin-top: 10px;
+}
+.GeocodingForm .coordinates {
+  margin-top: 20px;
+  font-weight: bold;
+}/*# sourceMappingURL=Geolocation.css.map */

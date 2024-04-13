@@ -60,8 +60,7 @@ function ProductPage() {
         fetchProduct();
     }, [productId])
 
-    const shareURL = 'Website URl'
-    // const [product, setProduct] = useState(null);
+    const shareURL = `https://shop-nest-seven.vercel.app/product-page/${productId}`
     const [isToggle, setIsToggle] = useState(false);
 
     const ToggleShare = () => {

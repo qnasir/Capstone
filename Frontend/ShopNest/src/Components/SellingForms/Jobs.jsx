@@ -9,7 +9,7 @@ function Jobs() {
     const { register, handleSubmit, errors, reset } = useForm();
 
     const onSubmit = async (data) => {
-        if (!data.name || !data.title || !data.jobType || !data.price || !data.location || !data.description || !data.requirements) {
+        if (!data.name || !data.title || !data.jobType || !data.price || !data.description || !data.requirements) {
             alert("Please fill out all fields before submitting.");
             return;
         }
@@ -19,7 +19,7 @@ function Jobs() {
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 
-        window.location.href = `./upload-images?${queryParams}`
+        window.location.href = `./address?${queryParams}`
 
     }
 
@@ -47,12 +47,6 @@ function Jobs() {
                     </label>
                     <br />
                     <label>
-                        Location:
-                        <input type="text" {...register("location", { required: true })} />
-                        {errors?.location && <span className="error">This field is required</span>}
-                    </label>
-                    <br />
-                    <label>
                         Job Type:
                         <select {...register("jobType", { required: true })} >
                             <option value="temporary">Temporary</option>
@@ -75,7 +69,7 @@ function Jobs() {
                         {errors?.requirements && <span className="error">This field is required</span>}
                     </label>
                     <br />
-                    <button className='btn' type="submit">Post Job</button>
+                    <button className='btn' type="submit">Step2 : Add Address</button>
                 </form>
             </div>
         </div>

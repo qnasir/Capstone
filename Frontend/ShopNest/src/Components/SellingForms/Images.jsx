@@ -24,6 +24,7 @@ const Images = () => {
 
         if (images.length > 0) {
             fetchData();
+            console.log("Data", fetchedData)
         }
     }, [images]);
 
@@ -132,10 +133,10 @@ const Images = () => {
             {isPosting ? (
                 <div className='progress'>
                     <progress className='bar' value={progress} max={100} />
-                    <button className='uploadButton' disabled><ClipLoader loading={isPosting} color={'red'} size={15} />Uploading...</button>
+                    <button className='uploadButton' disabled><ClipLoader loading={isPosting} color={'red'} size={15} />Selling...</button>
                 </div>
             ) : (
-                <button onClick={submitProduct} className='uploadButton'>Upload Images</button>
+                <button onClick={submitProduct} className='uploadButton'>Sell</button>
             )}
             {successMessage && <p>{successMessage}</p>}
         </div>

@@ -19,7 +19,7 @@ function Books() {
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 
-        window.location.href = `./upload-images?${queryParams}`
+        window.location.href = `./address?${queryParams}`
 
     }
 
@@ -86,7 +86,7 @@ function Books() {
                         {errors?.description && <span className="error">This field is required</span>}
                     </label>
                     <br />
-                    <button className='btn' type="submit">Post Listing</button>
+                    <button className='btn' type="submit">Step2 : Add Address</button>
                 </form>
             </div>
         </div>

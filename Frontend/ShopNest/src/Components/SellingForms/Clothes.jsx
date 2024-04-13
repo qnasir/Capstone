@@ -12,7 +12,7 @@ function Clothes() {
     const colorOptions = ["Black","White","Gray","Beige","Brown","Navy","Red","Blue","Yellow","Green","Orange","Purple","Light Pink","Light Blue","Mint Green","Lavender"];
 
     const onSubmit = async (data) => {
-        if (!data.name || !data.color || !data.brand || !data.gender || !data.title || !data.condition || !data.price || !data.location || !data.description) {
+        if (!data.name || !data.color || !data.brand || !data.gender || !data.title || !data.condition || !data.price || !data.description) {
             alert("Please fill out all fields before submitting.");
             return;
         }
@@ -22,7 +22,7 @@ function Clothes() {
         console.log(dataWithCategory)
         const queryParams = new URLSearchParams(dataWithCategory).toString();
 
-        window.location.href = `./upload-images?${queryParams}`
+        window.location.href = `./address?${queryParams}`
 
     }
 
@@ -50,8 +50,6 @@ function Clothes() {
                             <option key={index} value={size}>{size}</option>
                             ))}
                         </select>
-                        {/* <input type="text" {...register("title", { required: true })} />
-                        {errors?.title && <span className="error">This field is required</span>} */}
                     </label>
                     <br />
                     <label>
@@ -70,8 +68,6 @@ function Clothes() {
                             <option key={index} value={color}>{color}</option>
                             ))}
                         </select>
-                        {/* <input type="text" {...register("color", { required: true })} />
-                        {errors?.color && <span className="error">This field is required</span>} */}
                     </label>
                     <br />
                     <label>
@@ -90,18 +86,12 @@ function Clothes() {
                     </label>
                     <br />
                     <label>
-                        Location:
-                        <input type="text" {...register("location", { required: true })} />
-                        {errors?.location && <span className="error">This field is required</span>}
-                    </label>
-                    <br />
-                    <label>
                         Description:
                         <textarea name="clothes_description" {...register("description", { required: true })} ></textarea>
                         {errors?.description && <span className="error">This field is required</span>}
                     </label>
                     <br />
-                    <button className='btn' type="submit">Post Listing</button>
+                    <button className='btn' type="submit">Step2 : Add Address</button>
                 </form>
             </div>
         </div>

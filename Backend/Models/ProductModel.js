@@ -9,6 +9,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    date: {
+        type: Date,
+        default: Date.now(),
+    },
     price: {
         type: Number,
         required: true
@@ -22,6 +26,18 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     location: {
+        type: String,
+        required: true
+    },
+    latitude: {
+        type: String,
+        required: false
+    },
+    longitude: {
+        type: String,
+        required: false
+    },
+    userId: {
         type: String,
         required: true
     },

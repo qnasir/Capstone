@@ -27,6 +27,18 @@ router.get("/wishlist/:userId", async (req, res) => {
   }
 });
 
+// Get route for single user
+router.get('/user/:userId', async (req, res) => {
+  try {
+      const userId = req.params.userId;
+      const foundUser = await User.find({ userId: userId });
+      res.json(foundUser);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // Post route for wishlist products
 router.post("/like-product", async (req, res) => {
   let productId = req.body.productId;
@@ -52,17 +64,23 @@ router.post("/signup", async (req, res) => {
   let userId = req.body.userId;
   let email = req.body.email;
   let phone = req.body.phone;
+  let userImage = req.body.userImage; 
 
   const user = {
     userId: userId,
     email: email,
-    phone: phone
+    phone: phone,
+    userImage: userImage,
   };
 
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ userId: user.userId });
     if (existingUser) {
+      if (user.userImage && existingUser.userImage !== user.userImage) {
+        await User.updateOne({ userId: user.userId }, { userImage: user.userImage });
+        return res.json({ message: "User image updated successfully" });
+      }
       return res.status(400).json({ message: "User already exists" });
     }
 
@@ -71,14 +89,15 @@ router.post("/signup", async (req, res) => {
       userId: user.userId,
       email: user.email,
       phone: user.phone,
+      userImage: user.userImage,
     });
     res.json({ message: "User registered successfully" });
-    // res.status(201).json(newUser)
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 // Post route for Login
 router.post("/login", async (req, res) => {

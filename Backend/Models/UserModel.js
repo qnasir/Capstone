@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userImage: {
+        type: String,
+        required: false
+    },
     likedProducts: [{
         name: {
             type: String,

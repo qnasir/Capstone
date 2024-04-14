@@ -12,8 +12,6 @@ function GeocodingForm() {
     const [state, setState] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [country, setCountry] = useState('');
-    // const [latitude, setLatitude] = useState(null);
-    // const [longitude, setLongitude] = useState(null);
     const [dataWithuserId, setDataWithuserId] = useState([])
     const [error, setError] = useState('');
 
@@ -22,7 +20,8 @@ function GeocodingForm() {
     useEffect(() => {
         if (user && user.id) {
             console.log(user.id)
-            const data = {...fetchedData, userId: `${user.id}`} 
+            console.log(user.firstName)
+            const data = {...fetchedData, userId: `${user.id}`, username: `${user.firstName}`} 
             setDataWithuserId(data)
         }
     }, [user])

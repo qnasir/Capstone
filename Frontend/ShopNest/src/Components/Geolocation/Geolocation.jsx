@@ -20,8 +20,7 @@ function GeocodingForm() {
     useEffect(() => {
         if (user && user.id) {
             console.log(user.id)
-            console.log(user.firstName)
-            const data = {...fetchedData, userId: `${user.id}`, username: `${user.firstName}`} 
+            const data = {...fetchedData, userId: `${user.id}`} 
             setDataWithuserId(data)
         }
     }, [user])

@@ -70,6 +70,7 @@ router.post("/signup", async (req, res) => {
     userId: userId,
     email: email,
     phone: phone,
+    username: username,
     userImage: userImage,
   };
 
@@ -89,6 +90,7 @@ router.post("/signup", async (req, res) => {
       userId: user.userId,
       email: user.email,
       phone: user.phone,
+      username: user.username,
       userImage: user.userImage,
     });
     res.json({ message: "User registered successfully" });

@@ -83,8 +83,9 @@ function ProductPage() {
                 setLatitude(response.data.latitude)
                 setLongitude(response.data.longitude)
 
-                const  userResponse = await axios.get(`${import.meta.env.VITE_USER_ID_KEY}/${userId}`)
+                const  userResponse = await axios.get(`http://localhost:3000/product-route/user/${userId}`)
                 const { email, phone, username, userImage } = userResponse.data
+                console.log("UserData", userResponse.data)
                 setUser({ email, phone, username, userImage })
             } catch (error) {
                 console.error(error)

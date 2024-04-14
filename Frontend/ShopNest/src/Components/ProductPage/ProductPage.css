@@ -150,6 +150,11 @@
   color: black;
   background: #00ffff;
 }
+.product_page_container .product .product_info .footer .date {
+  position: absolute;
+  bottom: 1rem;
+  left: 2.625rem;
+}
 .product_page_container .product .product_info .footer .location {
   position: absolute;
   bottom: 1rem;

@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import axios from 'axios'
 import './ProductPage.css'
 import image from '../Product/svg/download.jpeg'
 import SearchBar from '../Product/SearchBar/SearchBar'
 import Map from '../Map_ProductPage/Map'
+import { AppContext } from '../../Context/ParentContext'
 import { useParams } from 'react-router-dom';
 
 // React Icons
@@ -37,22 +38,54 @@ function ProductPage() {
 
     const { productId } = useParams();
 
+    const { latitude, setLatitude } = useContext(AppContext)
+    const { longitude, setLongitude } = useContext(AppContext)
     const [product, setProduct] = useState({
         name: "",
         title: "",
         location: "",
         price: "",
         description: "",
-        image: "",
-    })
+        image: [],
+        images: "",
+        userId: "",
+        brand: "",
+        warranty: "",
+        condition: "",
+        size: "",
+        gender: "",
+        color: "",
+        material: "",
+        isbn: "",
+        edition: "",
+        publisher: "",
+        jobType: "",
+        requirements: "",
+        processor: "",
+        ram: "",
+        storage: "",
+        screenSize: "",
+        os: "",
+    });
+    const [user, setUser] = useState({
+        email: "",
+        phone: "",
+        username: "",
+        userImage: "",
+    });
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const  response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productId}`)
-                const { image, name, location,  title,  description, price } = response.data
-                setProduct({ image, name, location,  title,  description, price })
-                console.log(response.data)
+                const { images, name, location,  title, date, userId, description, price } = response.data
+                setProduct({ images, name, location,  title, date, userId, description, price })
+                setLatitude(response.data.latitude)
+                setLongitude(response.data.longitude)
+
+                const  userResponse = await axios.get(`${import.meta.env.VITE_USER_ID_KEY}/${userId}`)
+                const { email, phone, username, userImage } = userResponse.data
+                setUser({ email, phone, username, userImage })
             } catch (error) {
                 console.error(error)
             }
@@ -67,6 +100,7 @@ function ProductPage() {
         setIsToggle(!isToggle);
     };
 
+
     return (
         <>
             <div className='parent_div'>
@@ -76,7 +110,7 @@ function ProductPage() {
 
                 <div className="product">
                     <div className="product_image">
-                        <img src={product.image} alt="" />
+                        <img src={product.images[0]} alt="" />
                     </div>
                     <div className="product_info">
                         <div className="heading">
@@ -140,7 +174,10 @@ function ProductPage() {
                                 <button className='buy'>BUY NOW</button>
                                 <button className='wishlist'>ADD TO WISHLIST</button>
                             </div>
-                            <div>
+                            <div >
+                                <span className='date'>
+                                    <p>Published on :- {product.date}</p>
+                                </span>
                                 <span className='location'>
                                     <SlLocationPin />
                                     <p>{product.location}</p>
@@ -154,9 +191,9 @@ function ProductPage() {
                     <div className="seller_detail">
                         <p className='post'>Posted By</p>
                         <div className="seller_image">
-                            <img src={image} alt="" />
+                            <img src={user.userImage} alt="" />
                         </div>
-                        <p className='seller'>NASIR</p>
+                        <p className='seller'>{user.username}</p>
                         <p className='verification'>VERIFIED</p>
                     </div>
                     <div className="map"><Map /></div>

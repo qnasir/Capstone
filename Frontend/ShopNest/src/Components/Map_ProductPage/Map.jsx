@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Map.css'
+import { AppContext } from '../../Context/ParentContext';
 
 const BingMapsComponent = () => {
-    const [searchInput, setSearchInput] = useState('');
     const [map, setMap] = useState(null);
-    const [searchManager, setSearchManager] = useState(null);
+
+    const { latitude } = useContext(AppContext)
+    const { longitude } = useContext(AppContext)
+    console.log(latitude)
+    console.log(longitude)
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -15,7 +19,7 @@ const BingMapsComponent = () => {
         window.getMap = () => {
             const newMap = new window.Microsoft.Maps.Map('#map', {
                 credentials: import.meta.env.VITE_BING_CREDENTIALS_KEY, 
-                center: new window.Microsoft.Maps.Location(10.81802845, 76.26371002),
+                center: new window.Microsoft.Maps.Location(latitude, longitude),
                 zoom: 10,
             });
 
@@ -28,57 +32,11 @@ const BingMapsComponent = () => {
         return () => {
             document.body.removeChild(script);
         };
-    }, []);
-
-    // useEffect(() => {
-    //     if (map && !searchManager) {
-    //         window.Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
-    //             setSearchManager(new window.Microsoft.Maps.Search.SearchManager(map));
-    //         });
-    //     }
-    // }, [map, searchManager]);
-
-    // const handleSearch = () => {
-    //     if (searchManager) {
-    //         geocodeQuery(searchInput);
-    //     }
-    // };
-
-    // const geocodeQuery = (query) => {
-    //     if (!searchManager) return;
-
-    //     let searchRequest = {
-    //         where: query,
-    //         callback: function (r) {
-    //             if (r && r.results && r.results.length > 0) {
-    //                 var pin = new window.Microsoft.Maps.Pushpin(r.results[0].location);
-    //                 map.entities.push(pin);
-
-    //                 map.setView({ bounds: r.results[0].bestView });
-    //             } else {
-    //                 alert("No results found.");
-    //             }
-    //         },
-    //         errorCallback: function (error) {
-    //             alert("Error occurred during search.", error);
-    //         }
-    //     };
-
-    //     searchManager.geocode(searchRequest);
-    // };
+    }, [latitude, longitude]);
 
     return (
         <div>
             <main>
-                {/* <div className="options">
-                    <input
-                        className="search_input"
-                        placeholder="Search"
-                        value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
-                    />
-                    <button className="search_btn" onClick={handleSearch}>Search</button>
-                </div> */}
                 <div id="map" style={{ width: '100%', height: '18rem', cursor: 'grab' }}></div>
             </main>
         </div>

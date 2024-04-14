@@ -49,7 +49,8 @@ function Navbar() {
           const userId = user.id;
           const email = user.primaryEmailAddress.emailAddress;
           const phone = user.primaryPhoneNumber.phoneNumber;
-          const data = { userId, email, phone };
+          const userImage = user.imageUrl;
+          const data = { userId, email, phone, userImage };
           
           const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY, data);
           console.log(response);

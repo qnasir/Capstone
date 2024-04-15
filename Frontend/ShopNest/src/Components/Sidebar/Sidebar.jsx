@@ -40,6 +40,10 @@ const Sidebar = (props) => {
 
       </div>
 
+      <div className='dashboard_button'>
+        <button>Dashboard</button>
+      </div>
+
     </div>
 
   );

@@ -37,7 +37,7 @@ function GeocodingForm() {
 
     const handleGeocode = () => {
         const fullAddress = `${address}, ${city}, ${state}, ${postalCode}, ${country}`;
-        const url = `http://dev.virtualearth.net/REST/v1/Locations?query=${encodeURIComponent(fullAddress)}&key=${bingMapsApiKey}`;
+        const url = `https://dev.virtualearth.net/REST/v1/Locations?query=${encodeURIComponent(fullAddress)}&key=${bingMapsApiKey}`;
 
         fetch(url)
             .then(response => response.json())

@@ -1,4 +1,5 @@
 import './Sidebar.css'
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // React-icons
@@ -41,7 +42,7 @@ const Sidebar = (props) => {
       </div>
 
       <div className='dashboard_button'>
-        <button>Dashboard</button>
+        <Link to="user_dashboard" ><button>Dashboard</button></Link>
       </div>
 
     </div>

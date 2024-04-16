@@ -1,24 +1,25 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from '../Components/Homepage/Homepage';
-import Wishlist from '../Components/Wishlist/Wishlist';
-import Register from '../Components/Register/Register';
-import ContactUs from '../Components/ContactUs/ContactUs';
-import ProductPage from '../Components/ProductPage/ProductPage';
-import Sell_Categories from '../Components/Sell_Categories/Sell_Categories';
-import Electrical from '../Components/SellingForms/Electrical';
-import Clothes from '../Components/SellingForms/Clothes'
-import Furtiture from '../Components/SellingForms/Furniture'
-import Gadgets from '../Components/SellingForms/Gadgets'
-import Jobs from '../Components/SellingForms/Jobs'
-import Mobiles from '../Components/SellingForms/Mobiles'
-import Sports from '../Components/SellingForms/Sports'
-import Stationary from '../Components/SellingForms/Stationary'
-import Books from '../Components/SellingForms/Books'
-import Laptop from '../Components/SellingForms/Laptop'
-import Images from '../Components/SellingForms/Images'
-import Login from '../Components/Authentication/Login'
-import Signup from '../Components/Authentication/Signup';
-import Geolocation from '../Components/Geolocation/Geolocation'
+import Home from '../components/Homepage/Homepage';
+import Wishlist from '../components/Wishlist/Wishlist';
+import Register from '../components/Register/Register';
+import ContactUs from '../components/ContactUs/ContactUs';
+import ProductPage from '../components/ProductPage/ProductPage';
+import Sell_Categories from '../components/Sell_Categories/Sell_Categories';
+import Electrical from '../components/SellingForms/Electrical';
+import Clothes from '../components/SellingForms/Clothes'
+import Furtiture from '../components/SellingForms/Furniture'
+import Gadgets from '../components/SellingForms/Gadgets'
+import Jobs from '../components/SellingForms/Jobs'
+import Mobiles from '../components/SellingForms/Mobiles'
+import Sports from '../components/SellingForms/Sports'
+import Stationary from '../components/SellingForms/Stationary'
+import Books from '../components/SellingForms/Books'
+import Laptop from '../components/SellingForms/Laptop'
+import Images from '../components/SellingForms/Images'
+import Login from '../components/Authentication/Login'
+import Signup from '../components/Authentication/Signup';
+import Geolocation from '../components/Geolocation/Geolocation'
+import UserDashboard from '../components/UserDashboard/UserDashboard';
 
 function AllRoutes() {
   return (
@@ -28,6 +29,7 @@ function AllRoutes() {
         <Route path="/wishlist/:userId" element={<Wishlist />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/user_dashboard" element={<UserDashboard />} />
         <Route path="/selling-page" element={<Sell_Categories />} />
         <Route path='/product-page/:productId' element={<ProductPage />} />
         <Route path='/selling-page/electrical-appliance' element={<Electrical />} />

@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './Components/i18n.js'
+import './components/i18n.js'
+import './index.css'
 import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
+import { TooltipProvider } from './components/ui/tooltip.jsx'
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -13,21 +15,12 @@ if (!PUBLISHABLE_KEY) {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <TooltipProvider>
+    <BrowserRouter>
       <ClerkProvider
         appearance={{
-          // baseTheme: [dark, neobrutalism],
-          // variables: { colorPrimary: 'red' },
-          // variables: {
-          //   colorPrimary: "red",
-          //   colorText: "white"
-          // },
-          signIn: { 
-            baseTheme: [shadesOfPurple], 
-            // variables: {
-            //   colorPrimary: "red",
-            //   colorText: "white"
-            // }
+          signIn: {
+            baseTheme: [shadesOfPurple],
           }
         }}
         publishableKey={PUBLISHABLE_KEY} >
@@ -35,5 +28,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <App />
         </React.Suspense>
       </ClerkProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </TooltipProvider>
 )

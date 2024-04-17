@@ -14,7 +14,7 @@ function Products({ product }) {
   const [userId, setUserId] = useState(null);
   const [likedProducts, setLikedProducts] = useState([]);
   
-  const { name, title, location, price, image, _id } = product;
+  const { name, title, location, price, images, _id } = product;
   const { user } = useClerk();
 
   useEffect(() => {
@@ -101,7 +101,7 @@ function Products({ product }) {
         <Link to={`product-page/${_id}`}>
           <div className="single_product">
             <div className="productImg">
-              <img src={image} alt="" />
+              <img src={images[0]} alt="" />
                <Link to="/"> 
                 <span className={likedProducts.includes(_id) ? 'heart active' : 'heart'}   onClick={() => AddToWishlist(_id)}>
                   <PiHeartStraightFill className='heart_icon' />

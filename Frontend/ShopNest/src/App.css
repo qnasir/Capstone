@@ -10,3 +10,11 @@
     color: var(--WhiteColor);
     gap: 2.625rem;
 }
+
+.cl-userButtonPopoverFooter{
+    display: none;
+}
+
+.cl-internal-b3fm6y{
+    display: none;
+}

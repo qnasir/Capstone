@@ -1,13 +1,15 @@
-import './UserDashboard.css'
-
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
 import { Link } from 'react-router-dom'
+import './UserDashboard.css'
+import { useClerk } from '@clerk/clerk-react'
+
 
 import {
-  File,
   Home,
+  X,
+  Check,
+  RefreshCcw,
   LineChart,
   ListFilter,
   MoreHorizontal,
@@ -73,19 +75,90 @@ import {
 function Dashboard() {
 
   const [products, setProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [value, setValue] = useState('All Products')
+  const [userId, setUserId] = useState(null);
+  // console.log(userId)
+
+  const { user } = useClerk();
+
+  useEffect(() => {
+    if (user && user.id) {
+      console.log(user.id)
+      setUserId(user.id)
+    }
+  }, [user])
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_BASE_URL)
-        console.log("All Products", response.data)
         setProducts(response.data)
+        setAllProducts(response.data)
       } catch (error) {
         console.log("Error in fetching data User Dashboard", error)
       }
     }
     fetchProducts()
   }, [])
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value)
+    const filteredProducts = allProducts.filter((item) => {
+      if (item.name.toLowerCase().includes(value.toLowerCase())) {
+        return item;
+      }
+    })
+    setProducts(filteredProducts)
+  }
+
+  const handleClick = (value) => {
+    setValue(value)
+
+    if (value === "Sold Products") {
+      const filteredProducts = allProducts.filter((item) => {
+        if (item.status === "Sold") {
+          return item;
+        }
+      })
+      setProducts(filteredProducts)
+    } else if (value === "Draft Products") {
+      const filteredProducts = allProducts.filter((item) => {
+        if (item.status === "Draft") {
+          return item;
+        }
+      })
+      setProducts(filteredProducts)
+    } else if (value === "All Products") {
+      setProducts(allProducts)
+    } else if (value === "Offered Products") {
+      const filteredProducts = allProducts.filter((item) => {
+        if (item.offers.length >= 1) {
+          return item;
+        }
+      })
+      setProducts(filteredProducts)
+    }
+
+  }
+
+  const handleReset = () => {
+    setProducts(allProducts)
+    setSearchTerm('')
+    // window.location.reload()
+  }
+
+  const handleAction = async (action, productId) => {
+    console.log("New", action)
+    console.log("New", productId)
+    // try {
+    //   const response = await axios.
+    // } catch(err) {
+    //   console.log("userDashboard crud error", err)
+    // }
+  }
 
   return (
     <div className='main_user_dashboard'>
@@ -94,6 +167,7 @@ function Dashboard() {
         <aside className="fixed left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
 
           <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+
             <Link
               href="#"
               className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
@@ -101,29 +175,30 @@ function Dashboard() {
               <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
               <span className="sr-only">Acme Inc</span>
             </Link>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  to="/"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Home className="h-5 w-5" />
-                  <span className="sr-only">Dashboard</span>
+                  <span className="sr-only">Home</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Dashboard</TooltipContent>
+              <TooltipContent side="right">Home</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  to={`/wishlist/${userId}`}
                   className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  <span className="sr-only">Orders</span>
+                  <span className="sr-only">Wishlist</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Orders</TooltipContent>
+              <TooltipContent side="right">Wishlist</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -132,10 +207,10 @@ function Dashboard() {
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Package className="h-5 w-5" />
-                  <span className="sr-only">Products</span>
+                  <span className="sr-only">History</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Products</TooltipContent>
+              <TooltipContent side="right">History</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -144,10 +219,10 @@ function Dashboard() {
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Users2 className="h-5 w-5" />
-                  <span className="sr-only">Customers</span>
+                  <span className="sr-only">Offers</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Customers</TooltipContent>
+              <TooltipContent side="right">Offers</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -274,6 +349,8 @@ function Dashboard() {
                 type="search"
                 placeholder="Search..."
                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                onChange={handleSearchChange}
+                value={searchTerm}
               />
             </div>
 
@@ -308,16 +385,23 @@ function Dashboard() {
           {/* ----------------- NAVBAR ENDED -----------------  */}
 
           <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-            <Tabs defaultValue="all">
+
+
+            {/* -------------------------- Working Field -------------------------- */}
+
+            <Tabs defaultValue={value}>
+
               <div className="flex items-center">
+
                 <TabsList>
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="active">Active</TabsTrigger>
-                  <TabsTrigger value="draft">Draft</TabsTrigger>
-                  <TabsTrigger value="archived" className="hidden sm:flex">
-                    Archived
+                  <TabsTrigger onClick={() => handleClick("All Products")} value="All Products">All</TabsTrigger>
+                  <TabsTrigger onClick={() => handleClick("Sold Products")} value="Sold Products">Sold</TabsTrigger>
+                  <TabsTrigger onClick={() => handleClick("Draft Products")} value="Draft Products">Draft</TabsTrigger>
+                  <TabsTrigger onClick={() => handleClick("Offered Products")} value="Offered Products" className="hidden sm:flex">
+                    Offered
                   </TabsTrigger>
                 </TabsList>
+
                 <div className="ml-auto flex items-center gap-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -332,33 +416,39 @@ function Dashboard() {
                       <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuCheckboxItem checked>
-                        Active
+                        Sold
                       </DropdownMenuCheckboxItem>
                       <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
                       <DropdownMenuCheckboxItem>
-                        Archived
+                        Offered
                       </DropdownMenuCheckboxItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button size="sm" variant="outline" className="h-8 gap-1">
-                    <File className="h-3.5 w-3.5" />
+
+                  <Button onClick={handleReset} size="sm" variant="outline" className="h-8 gap-1">
+                    <RefreshCcw className="h-3.5 w-3.5" />
                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Export
+                      Reset
                     </span>
                   </Button>
-                  <Button size="sm" className="h-8 gap-1">
-                    <PlusCircle className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Add Product
-                    </span>
-                  </Button>
+
+                  <Link to='/selling-page'>
+                    <Button size="sm" className="h-8 gap-1">
+                      <PlusCircle className="h-3.5 w-3.5" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                        Add Product
+                      </span>
+                    </Button>
+                  </Link>
+
                 </div>
               </div>
-              <TabsContent value="all">
+
+              <TabsContent value={value}>
                 <Card x-chunk="dashboard-06-chunk-0">
 
                   <CardHeader>
-                    <CardTitle>Products</CardTitle>
+                    <CardTitle>{value}</CardTitle>
                     <CardDescription>
                       Manage your products and view their sales performance.
                     </CardDescription>
@@ -383,6 +473,9 @@ function Dashboard() {
                             Offers
                           </TableHead>
                           <TableHead className="hidden md:table-cell">
+                            Decision
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
                             Created at
                           </TableHead>
                           <TableHead>
@@ -400,7 +493,7 @@ function Dashboard() {
 
                           if (product.offers && product.offers.length > 1) {
 
-                            return product.offers.map((offer,index) => (
+                            return product.offers.map((offer, index) => (
                               <TableRow key={index}>
                                 <TableCell className="hidden sm:table-cell">
                                   <img
@@ -423,6 +516,20 @@ function Dashboard() {
                                 <TableCell className="hidden md:table-cell">
                                   {offer}
                                 </TableCell>
+                                <TableCell className="hidden  md:table-cell">
+                                  <Button size="sm" className="h-8 gap-1">
+                                    <Check className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Accept
+                                    </span>
+                                  </Button>
+                                  <Button size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                    <X className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Reject
+                                    </span>
+                                  </Button>
+                                </TableCell>
                                 <TableCell className="hidden md:table-cell">
                                   {product.date.split('T')[0]}
                                 </TableCell>
@@ -442,15 +549,16 @@ function Dashboard() {
                                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                       <DropdownMenuItem>Edit</DropdownMenuItem>
                                       <DropdownMenuItem>Delete</DropdownMenuItem>
+                                      <DropdownMenuItem value='sold' onClick={() => handleAction("sold", product._id)}>Sold</DropdownMenuItem>
+                                      <DropdownMenuItem value='draft' onClick={() => handleAction("draft", product._id)}>Draft</DropdownMenuItem>
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                 </TableCell>
                               </TableRow>
                             ))
 
-                          } 
-                          else if (product.offers && product.offers.length === 0) {
-                            
+                          } else if (product.offers && product.offers.length === 0) {
+
                             return (
                               <TableRow key={product._id}>
                                 <TableCell className="hidden sm:table-cell">
@@ -475,6 +583,20 @@ function Dashboard() {
                                   no offers yet
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell">
+                                  <Button size="sm" className="h-8 gap-1">
+                                    <Check className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Accept
+                                    </span>
+                                  </Button>
+                                  <Button size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                    <X className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Reject
+                                    </span>
+                                  </Button>
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell">
                                   {product.date.split('T')[0]}
                                 </TableCell>
                                 <TableCell>
@@ -493,14 +615,15 @@ function Dashboard() {
                                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                       <DropdownMenuItem>Edit</DropdownMenuItem>
                                       <DropdownMenuItem>Delete</DropdownMenuItem>
+                                      <DropdownMenuItem value='sold' onClick={() => handleAction("sold", product._id)}>Sold</DropdownMenuItem>
+                                      <DropdownMenuItem value='draft' onClick={() => handleAction("draft", product._id)}>Draft</DropdownMenuItem>
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                 </TableCell>
                               </TableRow>
                             )
 
-                          } 
-                          else {
+                          } else {
 
                             return (
                               <TableRow key={product._id}>
@@ -526,6 +649,20 @@ function Dashboard() {
                                   {product.offers}
                                 </TableCell>
                                 <TableCell className="hidden md:table-cell">
+                                  <Button size="sm" className="h-8 gap-1">
+                                    <Check className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Accept
+                                    </span>
+                                  </Button>
+                                  <Button size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                    <X className="h-3.5 w-3.5" />
+                                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                      Reject
+                                    </span>
+                                  </Button>
+                                </TableCell>
+                                <TableCell className="hidden md:table-cell">
                                   {product.date.split('T')[0]}
                                 </TableCell>
                                 <TableCell>
@@ -544,7 +681,8 @@ function Dashboard() {
                                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                       <DropdownMenuItem>Edit</DropdownMenuItem>
                                       <DropdownMenuItem>Delete</DropdownMenuItem>
-                                      <DropdownMenuItem>Sold</DropdownMenuItem>
+                                      <DropdownMenuItem value='sold' onClick={() => handleAction("sold", product._id)}>Sold</DropdownMenuItem>
+                                      <DropdownMenuItem value='draft' onClick={() => handleAction("draft", product._id)}>Draft</DropdownMenuItem>
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                 </TableCell>
@@ -567,6 +705,7 @@ function Dashboard() {
                   </CardFooter>
                 </Card>
               </TabsContent>
+
             </Tabs>
           </main>
         </div>
@@ -577,3 +716,4 @@ function Dashboard() {
 }
 
 export default Dashboard
+

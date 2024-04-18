@@ -76,37 +76,16 @@ function Dashboard() {
 
   const [products, setProducts] = useState([])
   const [allProducts, setAllProducts] = useState([])
+  const [currentProducts, setCurrentProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [value, setValue] = useState('All Products')
   const [userId, setUserId] = useState(null);
   const [isEditing, setIsEditing] = useState(false)
   const [newPrice, setNewPrice] = useState('')
-  // console.log(userId)
-
-  const startEditing = (productId) => {
-    console.log(productId)
-    setIsEditing((prevIsEditing) => ({
-      ...prevIsEditing,
-      [productId]: true
-    }));
-  }
-
-  const handlePriceUpdate = async (id) => {
-    const productId = id
-    try {
-      console.log(newPrice)
-      console.log(productId)
-      setIsEditing((prevIsEditing) => ({
-        ...prevIsEditing,
-        [productId]: false
-      }));
-      const response = await axios.put(`${import.meta.env.VITE_USER_DASHBOARD_PRICE_UPDATE_KEY}/${newPrice}/${productId}`)
-      console.log(response.data)
-      window.location.reload()
-    } catch (err) {
-      console.log("Edit Price  Error" , err)
-    }
-  }
+  const [checkedLow, setCheckedLow] = useState(false)
+  const [checkedHigh, setCheckedHigh] = useState(false)
+  const [checkedAsc, setCheckedAsc] = useState(false)
+  const [checkedDes, setCheckedDes] = useState(false)
 
   const { user } = useClerk();
 
@@ -160,6 +139,28 @@ function Dashboard() {
 
   }
 
+  const startEditing = (productId) => {
+    setIsEditing((prevIsEditing) => ({
+      ...prevIsEditing,
+      [productId]: true
+    }));
+  }
+
+  const handlePriceUpdate = async (id) => {
+    const productId = id
+    try {
+      setIsEditing((prevIsEditing) => ({
+        ...prevIsEditing,
+        [productId]: false
+      }));
+      const response = await axios.put(`${import.meta.env.VITE_USER_DASHBOARD_PRICE_UPDATE_KEY}/${newPrice}/${productId}`)
+      console.log(response.data)
+      window.location.reload()
+    } catch (err) {
+      console.log("Edit Price  Error" , err)
+    }
+  }
+
   const handleClick = (value) => {
     setValue(value)
 
@@ -170,6 +171,7 @@ function Dashboard() {
         }
       })
       setProducts(filteredProducts)
+      setCurrentProducts(filteredProducts)
     } else if (value === "Draft Products") {
       const filteredProducts = allProducts.filter((item) => {
         if (item.status === "Draft") {
@@ -177,8 +179,10 @@ function Dashboard() {
         }
       })
       setProducts(filteredProducts)
+      setCurrentProducts(filteredProducts)
     } else if (value === "All Products") {
       setProducts(allProducts)
+      setCurrentProducts(allProducts)
     } else if (value === "Offered Products") {
       const filteredProducts = allProducts.filter((item) => {
         if (item.offers.length >= 1 && item.status === "Draft") {
@@ -186,6 +190,7 @@ function Dashboard() {
         }
       })
       setProducts(filteredProducts)
+      setCurrentProducts(filteredProducts)
     }
 
   }
@@ -193,10 +198,12 @@ function Dashboard() {
   const handleReset = () => {
     setProducts(allProducts)
     setSearchTerm('')
+    setCheckedAsc(false)
+    setCheckedDes(false)
+    setCheckedLow(false)
+    setCheckedHigh(false)
     // window.location.reload()
   }
-
-
 
   const handleReject = async (offer, productId) => {
     console.log(offer)
@@ -207,6 +214,36 @@ function Dashboard() {
       window.location.reload()
     } catch (err) {
       console.log("Rejection erroe", err)
+    }
+  }
+
+  const handleSortChange = (value) => {
+    if (value === "low_to_high") {
+      const sortedFiltered = [...currentProducts]
+      sortedFiltered.sort((a,b) => a.price - b.price)
+      setProducts(sortedFiltered)
+      setCheckedLow(true)
+      setCheckedHigh(false)
+    } else if (value === "high_to_low") {
+      const sortedFiltered = [...currentProducts]
+      sortedFiltered.sort((a,b) => b.price - a.price)
+      setProducts(sortedFiltered)
+      setCheckedHigh(true)
+      setCheckedLow(false)
+    } else if (value === "ascending") {
+      const sortedFiltered = [...currentProducts]
+      sortedFiltered.sort((a,b) => a.name.localeCompare(b.name))
+      setProducts(sortedFiltered)
+      setCurrentProducts(sortedFiltered)
+      setCheckedAsc(true)
+      setCheckedDes(false)
+    } else {
+      const sortedFiltered = [...currentProducts]
+      sortedFiltered.sort((a,b) => b.name.localeCompare(a.name))
+      setProducts(sortedFiltered)
+      setCurrentProducts(sortedFiltered)
+      setCheckedDes(true)
+      setCheckedAsc(false)
     }
   }
 
@@ -465,18 +502,23 @@ function Dashboard() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Sort by</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuCheckboxItem checked>
+
+                      <DropdownMenuCheckboxItem checked={checkedLow} onClick={() => handleSortChange("low_to_high")}>
                         Low to High
                       </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
+
+                      <DropdownMenuCheckboxItem checked={checkedHigh} onClick={() => handleSortChange("high_to_low")}>
                         High to Low
                       </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
+
+                      <DropdownMenuCheckboxItem checked={checkedAsc} onClick={() => handleSortChange("ascending")}>
                         Ascending Order
                       </DropdownMenuCheckboxItem>
-                      <DropdownMenuCheckboxItem>
+
+                      <DropdownMenuCheckboxItem checked={checkedDes} onClick={() => handleSortChange("descending")}>
                         Descending Order
                       </DropdownMenuCheckboxItem>
+                      
                     </DropdownMenuContent>
                   </DropdownMenu>
 
@@ -575,7 +617,7 @@ function Dashboard() {
                                         onBlur={() => handlePriceUpdate(product._id)}
                                       />
                                     ) : (
-                                      <span onClick={startEditing}>{product.price}</span>
+                                      <span>{product.price}</span>
                                     )}
                                   </TableCell>
                                   <TableCell className="hidden md:table-cell">
@@ -600,7 +642,7 @@ function Dashboard() {
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => handleAction("Edit", product._id)}>Edit</DropdownMenuItem>
+                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
                                         <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
                                         <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
                                         <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>

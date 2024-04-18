@@ -25,10 +25,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    offers: {
+    offers: [{
         type: String,
         required: false
-    },
+    }],
     status: {
         type: String,
         required: false

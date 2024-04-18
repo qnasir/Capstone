@@ -575,7 +575,7 @@ function Dashboard() {
                                         onBlur={() => handlePriceUpdate(product._id)}
                                       />
                                     ) : (
-                                      <span onClick={startEditing}>{product.price}</span>
+                                      <span>{product.price}</span>
                                     )}
                                   </TableCell>
                                   <TableCell className="hidden md:table-cell">
@@ -600,7 +600,7 @@ function Dashboard() {
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => handleAction("Edit", product._id)}>Edit</DropdownMenuItem>
+                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
                                         <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
                                         <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
                                         <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>

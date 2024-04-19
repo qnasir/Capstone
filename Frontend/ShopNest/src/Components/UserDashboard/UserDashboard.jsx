@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import './UserDashboard.css'
@@ -80,14 +80,18 @@ function Dashboard() {
   const [searchTerm, setSearchTerm] = useState('')
   const [value, setValue] = useState('All Products')
   const [userId, setUserId] = useState(null);
-  const [isEditing, setIsEditing] = useState(false)
+  const [activeLink,setActiveLink] = useState(null)
   const [newPrice, setNewPrice] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
   const [checkedLow, setCheckedLow] = useState(false)
   const [checkedHigh, setCheckedHigh] = useState(false)
   const [checkedAsc, setCheckedAsc] = useState(false)
   const [checkedDes, setCheckedDes] = useState(false)
+  const [isHistory, setIsHistory] = useState(false)
 
   const { user } = useClerk();
+
+  const inputRef = useRef();
 
   useEffect(() => {
     if (user && user.id) {
@@ -157,7 +161,7 @@ function Dashboard() {
       console.log(response.data)
       window.location.reload()
     } catch (err) {
-      console.log("Edit Price  Error" , err)
+      console.log("Edit Price  Error", err)
     }
   }
 
@@ -220,31 +224,46 @@ function Dashboard() {
   const handleSortChange = (value) => {
     if (value === "low_to_high") {
       const sortedFiltered = [...currentProducts]
-      sortedFiltered.sort((a,b) => a.price - b.price)
+      sortedFiltered.sort((a, b) => a.price - b.price)
       setProducts(sortedFiltered)
       setCheckedLow(true)
       setCheckedHigh(false)
     } else if (value === "high_to_low") {
       const sortedFiltered = [...currentProducts]
-      sortedFiltered.sort((a,b) => b.price - a.price)
+      sortedFiltered.sort((a, b) => b.price - a.price)
       setProducts(sortedFiltered)
       setCheckedHigh(true)
       setCheckedLow(false)
     } else if (value === "ascending") {
       const sortedFiltered = [...currentProducts]
-      sortedFiltered.sort((a,b) => a.name.localeCompare(b.name))
+      sortedFiltered.sort((a, b) => a.name.localeCompare(b.name))
       setProducts(sortedFiltered)
       setCurrentProducts(sortedFiltered)
       setCheckedAsc(true)
       setCheckedDes(false)
     } else {
       const sortedFiltered = [...currentProducts]
-      sortedFiltered.sort((a,b) => b.name.localeCompare(a.name))
+      sortedFiltered.sort((a, b) => b.name.localeCompare(a.name))
       setProducts(sortedFiltered)
       setCurrentProducts(sortedFiltered)
       setCheckedDes(true)
       setCheckedAsc(false)
     }
+  }
+
+  const showHistory = (linkName) => {
+    setProducts(allProducts)
+    setIsHistory(true)
+    handleLinkClick(linkName)
+  }
+
+  const handleDashboard = (linkName) => {
+    setIsHistory(false)
+    setActiveLink(linkName);
+  }
+
+  const handleLinkClick = (linkName) => {
+    setActiveLink(linkName);
   }
 
   return (
@@ -256,8 +275,8 @@ function Dashboard() {
           <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
 
             <Link
-              href="#"
-              className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+              onClick={() => handleDashboard("Inc")}
+              className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base ${activeLink === "Inc" ? 'bg-accent' : ''}`}
             >
               <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
               <span className="sr-only">Acme Inc</span>
@@ -267,7 +286,8 @@ function Dashboard() {
               <TooltipTrigger asChild>
                 <Link
                   to="/"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Home" ? 'bg-accent' : ''}`}
+                  onClick={() => {handleLinkClick("Home")}}
                 >
                   <Home className="h-5 w-5" />
                   <span className="sr-only">Home</span>
@@ -275,11 +295,13 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">Home</TooltipContent>
             </Tooltip>
+            
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   to={`/wishlist/${userId}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  onClick={() => handleLinkClick("Wishlist")}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Wishlist" ? 'bg-accent' : ''}`}
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span className="sr-only">Wishlist</span>
@@ -287,11 +309,12 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">Wishlist</TooltipContent>
             </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  onClick={() => showHistory("History") }
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "History" ? 'bg-accent' : ''}`}
                 >
                   <Package className="h-5 w-5" />
                   <span className="sr-only">History</span>
@@ -299,11 +322,13 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">History</TooltipContent>
             </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  onClick={() => handleLinkClick("Offers")}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Offers" ? 'bg-accent' : ''}`}
                 >
                   <Users2 className="h-5 w-5" />
                   <span className="sr-only">Offers</span>
@@ -311,11 +336,13 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">Offers</TooltipContent>
             </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  onClick={() => handleLinkClick("Analytics")}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Analytics" ? 'bg-accent' : ''}`}
                 >
                   <LineChart className="h-5 w-5" />
                   <span className="sr-only">Analytics</span>
@@ -323,6 +350,7 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">Analytics</TooltipContent>
             </Tooltip>
+
           </nav>
 
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -330,7 +358,8 @@ function Dashboard() {
               <TooltipTrigger asChild>
                 <Link
                   href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  onClick={() => handleLinkClick("Settings")}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Settings" ? 'bg-accent' : ''}`}
                 >
                   <Settings className="h-5 w-5" />
                   <span className="sr-only">Settings</span>
@@ -471,548 +500,921 @@ function Dashboard() {
 
           {/* ----------------- NAVBAR ENDED -----------------  */}
 
-          <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          {isHistory ? (
+
+            <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 
 
-            {/* -------------------------- Working Field -------------------------- */}
+              {/* -------------------------- Working Field -------------------------- */}
 
-            <Tabs defaultValue={value}>
+              <Tabs defaultValue={value}>
 
-              <div className="flex items-center">
+                <div className="flex items-center">
 
-                <TabsList>
-                  <TabsTrigger onClick={() => handleClick("All Products")} value="All Products">All</TabsTrigger>
-                  <TabsTrigger onClick={() => handleClick("Sold Products")} value="Sold Products">Sold</TabsTrigger>
-                  <TabsTrigger onClick={() => handleClick("Draft Products")} value="Draft Products">Draft</TabsTrigger>
-                  <TabsTrigger onClick={() => handleClick("Offered Products")} value="Offered Products" className="hidden sm:flex">
-                    Offered
-                  </TabsTrigger>
-                </TabsList>
+                  <TabsList>
+                    <TabsTrigger onClick={() => handleClick("All Products")} value="All Products">All</TabsTrigger>
+                    <TabsTrigger onClick={() => handleClick("Purchased Products")} value="Purchased Products">Purchased</TabsTrigger>
+                    <TabsTrigger onClick={() => handleClick("Sold Products")} value="Sold Products">Sold</TabsTrigger>
+                  </TabsList>
 
-                <div className="ml-auto flex items-center gap-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="h-8 gap-1">
-                        <ListFilter className="h-3.5 w-3.5" />
-                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                          Sort
-                        </span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Sort by</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
+                  <div className="ml-auto flex items-center gap-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                          <ListFilter className="h-3.5 w-3.5" />
+                          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                            Sort
+                          </span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
 
-                      <DropdownMenuCheckboxItem checked={checkedLow} onClick={() => handleSortChange("low_to_high")}>
-                        Low to High
-                      </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={checkedLow} onClick={() => handleSortChange("low_to_high")}>
+                          Low to High
+                        </DropdownMenuCheckboxItem>
 
-                      <DropdownMenuCheckboxItem checked={checkedHigh} onClick={() => handleSortChange("high_to_low")}>
-                        High to Low
-                      </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={checkedHigh} onClick={() => handleSortChange("high_to_low")}>
+                          High to Low
+                        </DropdownMenuCheckboxItem>
 
-                      <DropdownMenuCheckboxItem checked={checkedAsc} onClick={() => handleSortChange("ascending")}>
-                        Ascending Order
-                      </DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={checkedAsc} onClick={() => handleSortChange("ascending")}>
+                          Ascending Order
+                        </DropdownMenuCheckboxItem>
 
-                      <DropdownMenuCheckboxItem checked={checkedDes} onClick={() => handleSortChange("descending")}>
-                        Descending Order
-                      </DropdownMenuCheckboxItem>
-                      
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                        <DropdownMenuCheckboxItem checked={checkedDes} onClick={() => handleSortChange("descending")}>
+                          Descending Order
+                        </DropdownMenuCheckboxItem>
 
-                  <Button onClick={handleReset} size="sm" variant="outline" className="h-8 gap-1">
-                    <RefreshCcw className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Reset
-                    </span>
-                  </Button>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
 
-                  <Link to='/selling-page'>
-                    <Button size="sm" className="h-8 gap-1">
-                      <PlusCircle className="h-3.5 w-3.5" />
+                    <Button onClick={handleReset} size="sm" variant="outline" className="h-8 gap-1">
+                      <RefreshCcw className="h-3.5 w-3.5" />
                       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Add Product
+                        Reset
                       </span>
                     </Button>
-                  </Link>
 
+                    <Link to='/selling-page'>
+                      <Button size="sm" className="h-8 gap-1">
+                        <PlusCircle className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                          Add Product
+                        </span>
+                      </Button>
+                    </Link>
+
+                  </div>
                 </div>
-              </div>
 
-              <TabsContent value={value}>
-                <Card x-chunk="dashboard-06-chunk-0">
+                <TabsContent value={value}>
+                  <Card x-chunk="dashboard-06-chunk-0">
 
-                  <CardHeader>
-                    <CardTitle>{value}</CardTitle>
-                    <CardDescription>
-                      Manage your products and view their sales performance.
-                    </CardDescription>
-                  </CardHeader>
+                    <CardHeader>
+                      <CardTitle>{value} History Section</CardTitle>
+                      <CardDescription>
+                        Manage your products history and view their sales performance.
+                      </CardDescription>
+                    </CardHeader>
 
-                  <CardContent>
+                    <CardContent>
 
-                    <Table>
+                      <Table>
 
-                      <TableHeader>
+                        <TableHeader>
 
-                        <TableRow>
-                          <TableHead className="hidden w-[100px] sm:table-cell">
-                            <span className="sr-only">Image</span>
-                          </TableHead>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Price
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Offers
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Decision
-                          </TableHead>
-                          <TableHead className="hidden md:table-cell">
-                            Created at
-                          </TableHead>
-                          <TableHead>
-                            <span className="sr-only">Actions</span>
-                          </TableHead>
-                        </TableRow>
+                          <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                              <span className="sr-only">Image</span>
+                            </TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Price
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Offered
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Sold/Purchased at
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Created at
+                            </TableHead>
+                            <TableHead>
+                              <span className="sr-only">Actions</span>
+                            </TableHead>
+                          </TableRow>
 
-                      </TableHeader>
+                        </TableHeader>
 
-                      <TableBody>
+                        <TableBody>
 
-                        {/* -------------- From here single products start -------------- */}
+                          {/* -------------- From here single products start -------------- */}
 
-                        {products && products.map((product) => {
+                          {products && products.map((product) => {
 
-                          if (product.offers && product.offers.length > 1) {
+                            if (product.offers && product.offers.length > 1) {
 
-                            if (product.status && product.status === "Sold") {
-                              return product.offers.map((offer, index) => (
-                                <TableRow key={index}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
+                              if (product.status && product.status === "Sold") {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
                                       />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {offer}
-                                  </TableCell>
-                                  <TableCell className="hidden  md:table-cell">
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              ))
-                            } else {
-                              return product.offers.map((offer, index) => (
-                                <TableRow key={index}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing[product._id] ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          autoFocus={true}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                      {product.soldDate.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              } else if ((product.status && product.status === "Purchased")) {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
                                       />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {offer}
-                                  </TableCell>
-                                  <TableCell className="hidden  md:table-cell">
-                                    <Button size="sm" className="h-8 gap-1">
-                                      <Check className="h-3.5 w-3.5" />
-                                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                        Accept
-                                      </span>
-                                    </Button>
-                                    <Button onClick={() => handleReject(offer, product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
-                                      <X className="h-3.5 w-3.5" />
-                                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                        Reject
-                                      </span>
-                                    </Button>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                      {product.soldDate.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    {/* <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell> */}
+                                  </TableRow>
+                                ))
+                              }
+
+
+                            }  else {
+
+                              if (product.status && product.status === "Sold") {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                      {product.soldDate.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              } else if ((product.status && product.status === "Purchased")) {
+                                return (
+                                  <TableRow key={product._id}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.offers}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.soldDate.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                  </TableRow>
+                                )
+                              }
                             }
 
+                          })}
 
-                          } else if (product.offers && product.offers.length === 0) {
+                        </TableBody>
 
-                            if (product.status && product.status === "Sold") {
-                              return product.offers.map((offer, index) => (
-                                <TableRow key={index}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing[product._id] ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
+                      </Table>
+
+                    </CardContent>
+                    <CardFooter>
+                      <div className="text-xs text-muted-foreground">
+                        Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}
+                        products
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+              </Tabs>
+
+
+            </main>
+
+
+          ) : (
+
+            <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+
+
+              {/* -------------------------- Working Field -------------------------- */}
+
+              <Tabs defaultValue={value}>
+
+                <div className="flex items-center">
+
+                  <TabsList>
+                    <TabsTrigger onClick={() => handleClick("All Products")} value="All Products">All</TabsTrigger>
+                    <TabsTrigger onClick={() => handleClick("Sold Products")} value="Sold Products">Sold</TabsTrigger>
+                    <TabsTrigger onClick={() => handleClick("Draft Products")} value="Draft Products">Draft</TabsTrigger>
+                    <TabsTrigger onClick={() => handleClick("Offered Products")} value="Offered Products" className="hidden sm:flex">
+                      Offered
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <div className="ml-auto flex items-center gap-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-8 gap-1">
+                          <ListFilter className="h-3.5 w-3.5" />
+                          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                            Sort
+                          </span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+
+                        <DropdownMenuCheckboxItem checked={checkedLow} onClick={() => handleSortChange("low_to_high")}>
+                          Low to High
+                        </DropdownMenuCheckboxItem>
+
+                        <DropdownMenuCheckboxItem checked={checkedHigh} onClick={() => handleSortChange("high_to_low")}>
+                          High to Low
+                        </DropdownMenuCheckboxItem>
+
+                        <DropdownMenuCheckboxItem checked={checkedAsc} onClick={() => handleSortChange("ascending")}>
+                          Ascending Order
+                        </DropdownMenuCheckboxItem>
+
+                        <DropdownMenuCheckboxItem checked={checkedDes} onClick={() => handleSortChange("descending")}>
+                          Descending Order
+                        </DropdownMenuCheckboxItem>
+
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <Button onClick={handleReset} size="sm" variant="outline" className="h-8 gap-1">
+                      <RefreshCcw className="h-3.5 w-3.5" />
+                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                        Reset
+                      </span>
+                    </Button>
+
+                    <Link to='/selling-page'>
+                      <Button size="sm" className="h-8 gap-1">
+                        <PlusCircle className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                          Add Product
+                        </span>
+                      </Button>
+                    </Link>
+
+                  </div>
+                </div>
+
+                <TabsContent value={value}>
+                  <Card x-chunk="dashboard-06-chunk-0">
+
+                    <CardHeader>
+                      <CardTitle>{value}</CardTitle>
+                      <CardDescription>
+                        Manage your products and view their sales performance.
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardContent>
+
+                      <Table>
+
+                        <TableHeader>
+
+                          <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                              <span className="sr-only">Image</span>
+                            </TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Price
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Offers
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Decision
+                            </TableHead>
+                            <TableHead className="hidden md:table-cell">
+                              Created at
+                            </TableHead>
+                            <TableHead>
+                              <span className="sr-only">Actions</span>
+                            </TableHead>
+                          </TableRow>
+
+                        </TableHeader>
+
+                        <TableBody>
+
+                          {/* -------------- From here single products start -------------- */}
+
+                          {products && products.map((product) => {
+
+                            if (product.offers && product.offers.length > 1) {
+
+                              if (product.status && product.status === "Sold") {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
                                       />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {offer}
-                                  </TableCell>
-                                  <TableCell className="hidden  md:table-cell">
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          autoFocus={true}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              } else if ((product.status && product.status === "Draft")) {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                      <Button size="sm" className="h-8 gap-1">
+                                        <Check className="h-3.5 w-3.5" />
+                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                          Accept
+                                        </span>
+                                      </Button>
+                                      <Button onClick={() => handleReject(offer, product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                        <X className="h-3.5 w-3.5" />
+                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                          Reject
+                                        </span>
+                                      </Button>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              }
+
+
+                            } else if (product.offers && product.offers.length === 0) {
+
+                              if (product.status && product.status === "Sold") {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              } else if ((product.status && product.status === "Draft")) {
+
+                                return (
+                                  <TableRow key={product._id}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      no offers yet
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                )
+                              }
+
                             } else {
 
-                              return (
-                                <TableRow key={product._id}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing[product._id] ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
+                              if (product.status && product.status === "Sold") {
+                                return product.offers.map((offer, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
                                       />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    no offers yet
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              )
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {offer}
+                                    </TableCell>
+                                    <TableCell className="hidden  md:table-cell">
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              } else if ((product.status && product.status === "Draft")) {
+
+
+                                return (
+                                  <TableRow key={product._id}>
+                                    <TableCell className="hidden sm:table-cell">
+                                      <img
+                                        alt="Product image"
+                                        className="aspect-square rounded-md object-cover"
+                                        height="64"
+                                        src={product.images[0]}
+                                        width="64"
+                                      />
+                                    </TableCell>
+                                    <TableCell className="font-medium">
+                                      {product.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      <Badge variant="outline">{product.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {isEditing[product._id] ? (
+                                        <input
+                                          type='text'
+                                          value={newPrice}
+                                          ref={inputRef}
+                                          onChange={(e) => setNewPrice(e.target.value)}
+                                          onBlur={() => handlePriceUpdate(product._id)}
+                                        />
+                                      ) : (
+                                        <span>{product.price}</span>
+                                      )}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.offers}
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      <Button size="sm" className="h-8 gap-1">
+                                        <Check className="h-3.5 w-3.5" />
+                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                          Accept
+                                        </span>
+                                      </Button>
+                                      <Button onClick={() => handleReject(product.offers[0], product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                        <X className="h-3.5 w-3.5" />
+                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                          Reject
+                                        </span>
+                                      </Button>
+                                    </TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                      {product.date.split('T')[0]}
+                                    </TableCell>
+                                    <TableCell>
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            aria-haspopup="true"
+                                            size="icon"
+                                            variant="ghost"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                            <span className="sr-only">Toggle menu</span>
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                          <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
+                                          <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
+                                          <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    </TableCell>
+                                  </TableRow>
+                                )
+
+                              }
                             }
 
-                          } else {
+                          })}
 
-                            if (product.status && product.status === "Sold") {
-                              return product.offers.map((offer, index) => (
-                                <TableRow key={index}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing[product._id] ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
-                                      />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {offer}
-                                  </TableCell>
-                                  <TableCell className="hidden  md:table-cell">
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              ))
-                            } else {
+                        </TableBody>
+
+                      </Table>
+
+                    </CardContent>
+                    <CardFooter>
+                      <div className="text-xs text-muted-foreground">
+                        Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}
+                        products
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+              </Tabs>
 
 
-                              return (
-                                <TableRow key={product._id}>
-                                  <TableCell className="hidden sm:table-cell">
-                                    <img
-                                      alt="Product image"
-                                      className="aspect-square rounded-md object-cover"
-                                      height="64"
-                                      src={product.images[0]}
-                                      width="64"
-                                    />
-                                  </TableCell>
-                                  <TableCell className="font-medium">
-                                    {product.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline">{product.status}</Badge>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {isEditing[product._id] ? (
-                                      <input
-                                        type='text'
-                                        value={newPrice}
-                                        onChange={(e) => setNewPrice(e.target.value)}
-                                        onBlur={() => handlePriceUpdate(product._id)}
-                                      />
-                                    ) : (
-                                      <span>{product.price}</span>
-                                    )}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.offers}
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    <Button size="sm" className="h-8 gap-1">
-                                      <Check className="h-3.5 w-3.5" />
-                                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                        Accept
-                                      </span>
-                                    </Button>
-                                    <Button onClick={() => handleReject(product.offers[0], product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
-                                      <X className="h-3.5 w-3.5" />
-                                      <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                        Reject
-                                      </span>
-                                    </Button>
-                                  </TableCell>
-                                  <TableCell className="hidden md:table-cell">
-                                    {product.date.split('T')[0]}
-                                  </TableCell>
-                                  <TableCell>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          aria-haspopup="true"
-                                          size="icon"
-                                          variant="ghost"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                          <span className="sr-only">Toggle menu</span>
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem value='Edit' onClick={() => startEditing(product._id)}>Edit</DropdownMenuItem>
-                                        <DropdownMenuItem value='Delete' onClick={() => handleAction("Delete", product._id)}>Delete</DropdownMenuItem>
-                                        <DropdownMenuItem value='Sold' onClick={() => handleAction("Sold", product._id)}>Sold</DropdownMenuItem>
-                                        <DropdownMenuItem value='Draft' onClick={() => handleAction("Draft", product._id)}>Draft</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </TableCell>
-                                </TableRow>
-                              )
+            </main>
 
-                            }
-                          }
+          )}
 
-                        })}
 
-                      </TableBody>
-
-                    </Table>
-                  </CardContent>
-                  <CardFooter>
-                    <div className="text-xs text-muted-foreground">
-                      Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}
-                      products
-                    </div>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-
-            </Tabs>
-          </main>
         </div>
 
       </div>

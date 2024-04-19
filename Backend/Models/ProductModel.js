@@ -13,6 +13,10 @@ const ProductSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    soldDate: {
+        type: Date,
+        default: Date.now(),
+    },
     price: {
         type: Number,
         required: true

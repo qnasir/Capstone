@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import './ProductPage.css'
 import image from '../Product/svg/download.jpeg'
@@ -6,6 +6,7 @@ import SearchBar from '../Product/SearchBar/SearchBar'
 import Map from '../Map_ProductPage/Map'
 import { AppContext } from '../../Context/ParentContext'
 import { useParams } from 'react-router-dom';
+import { useClerk } from '@clerk/clerk-react'
 
 // React Icons
 import { FaRupeeSign } from "react-icons/fa";
@@ -20,7 +21,7 @@ import {
     TwitterShareButton,
     WhatsappShareButton,
     PinterestShareButton,
-  
+
 } from "react-share";
 
 
@@ -37,14 +38,17 @@ import {
 function ProductPage() {
 
     const { productId } = useParams();
+    const { user } = useClerk();
 
     const { latitude, setLatitude } = useContext(AppContext)
     const { longitude, setLongitude } = useContext(AppContext)
+    const [isActive, setIsActive] = useState(true)
     const [product, setProduct] = useState({
         name: "",
         title: "",
         location: "",
         price: "",
+        _id: "",
         description: "",
         image: [],
         images: "",
@@ -67,7 +71,7 @@ function ProductPage() {
         screenSize: "",
         os: "",
     });
-    const [user, setUser] = useState({
+    const [owner, setOwner] = useState({
         email: "",
         phone: "",
         username: "",
@@ -77,22 +81,42 @@ function ProductPage() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const  response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productId}`)
-                const { images, name, location,  title, date, userId, description, price } = response.data
-                setProduct({ images, name, location,  title, date, userId, description, price })
+                const response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productId}`)
+                const { images, name, location, title, date, userId, description, price, _id } = response.data
+                setProduct({ images, name, location, title, date, userId, description, price, _id })
                 setLatitude(response.data.latitude)
                 setLongitude(response.data.longitude)
 
-                const  userResponse = await axios.get(`${import.meta.env.VITE_USER_ID_KEY}/${userId}`)
+                const userResponse = await axios.get(`${import.meta.env.VITE_USER_ID_KEY}/${userId}`)
                 const { email, phone, username, userImage } = userResponse.data[0];
-                console.log("UserData", userResponse.data[0])
-                setUser({ email, phone, username, userImage })
+                setOwner({ email, phone, username, userImage })
             } catch (error) {
                 console.error(error)
             }
         }
         fetchProduct();
     }, [productId])
+    
+    useEffect(() => {
+        if (user) {
+            const userId = user.id
+            const likedProducts = async () => {
+                try {
+                    const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
+                    const data = response.data
+                    console.log(data)
+                    data.map((product) => {
+                        if (product._id === productId) {
+                            setIsActive(false)
+                        }
+                    })
+                } catch(err) {
+                    console.log("Error fetching liked products", err)
+                }
+            }
+            likedProducts()
+        }
+    }, [user])
 
     const shareURL = `https://shop-nest-seven.vercel.app/product-page/${productId}`
     const [isToggle, setIsToggle] = useState(false);
@@ -100,6 +124,32 @@ function ProductPage() {
     const ToggleShare = () => {
         setIsToggle(!isToggle);
     };
+
+    const handleWishlist = async (productId, action) => {
+        if (user) {
+            if (action === "Add") {
+                setIsActive(false)
+                const userId = user.id
+                const data = {userId, productId}
+                try {
+                    const response = await axios.post(import.meta.env.VITE_LIKED_PRODUCT_KEY, data);
+                    localStorage.setItem('likedProducts', JSON.stringify(productId));
+                    console.log(response.data)
+                } catch (err) {
+                    console.log("Current Error")
+                }
+            } else if (action === "Remove") {
+                setIsActive(true)
+                const userId = user.id
+                try {
+                    const response = await axios.delete(`${import.meta.env.VITE_REMOVE_LIKED_PRODUCT_KEY}/${userId}/${productId}`);
+                    console.log(response.data)
+                } catch (err) {
+                    console.log("Current Error")
+                }
+            }
+        }
+    }
 
 
     return (
@@ -126,38 +176,38 @@ function ProductPage() {
                                 </div>
 
                                 <ul className="share_buttons">
-                                  
-                                        <li style={{ '--i': '0', '--clr': '#25D366' }} className={isToggle ? 'active' : ''}>
-                                                <WhatsappShareButton className='social_icon' url={shareURL}>
-                                                    <WhatsappIcon size={30} round={true} />
-                                                </WhatsappShareButton>
-                                        </li>
 
-                                        <li style={{ '--i': '1', '--clr': '#E60023' }} className={isToggle ? 'active' : ''}>
-                                                <PinterestShareButton className='social_icon' url={shareURL}>
-                                                    <PinterestIcon size={30} round={true} />
-                                                </PinterestShareButton>
-                                        </li>
+                                    <li style={{ '--i': '0', '--clr': '#25D366' }} className={isToggle ? 'active' : ''}>
+                                        <WhatsappShareButton className='social_icon' url={shareURL}>
+                                            <WhatsappIcon size={30} round={true} />
+                                        </WhatsappShareButton>
+                                    </li>
 
-                                        <li style={{ '--i': '2', '--clr': '#0965FE' }} className={isToggle ? 'active' : ''}>
-                                                <FacebookShareButton className='social_icon' url={shareURL}>
-                                                    <FacebookIcon size={30} round={true} />
-                                                </FacebookShareButton>
-                                        </li>
+                                    <li style={{ '--i': '1', '--clr': '#E60023' }} className={isToggle ? 'active' : ''}>
+                                        <PinterestShareButton className='social_icon' url={shareURL}>
+                                            <PinterestIcon size={30} round={true} />
+                                        </PinterestShareButton>
+                                    </li>
 
-                                        <li style={{ '--i': '3', '--clr': '#000000' }} className={isToggle ? 'active' : ''}>
-                                                <TwitterShareButton className='social_icon' url={shareURL}>
-                                                    <XIcon size={30} round={true} />
-                                                </TwitterShareButton>
-                                        </li>
+                                    <li style={{ '--i': '2', '--clr': '#0965FE' }} className={isToggle ? 'active' : ''}>
+                                        <FacebookShareButton className='social_icon' url={shareURL}>
+                                            <FacebookIcon size={30} round={true} />
+                                        </FacebookShareButton>
+                                    </li>
 
-                                        <li style={{ '--i': '4', '--clr': '#25A3E3' }} className={isToggle ? 'active' : ''}>
-                                                <TelegramShareButton className='social_icon' url={shareURL}>
-                                                    <TelegramIcon size={30} round={true} />
-                                                </TelegramShareButton>
-                                        </li>
+                                    <li style={{ '--i': '3', '--clr': '#000000' }} className={isToggle ? 'active' : ''}>
+                                        <TwitterShareButton className='social_icon' url={shareURL}>
+                                            <XIcon size={30} round={true} />
+                                        </TwitterShareButton>
+                                    </li>
 
-        
+                                    <li style={{ '--i': '4', '--clr': '#25A3E3' }} className={isToggle ? 'active' : ''}>
+                                        <TelegramShareButton className='social_icon' url={shareURL}>
+                                            <TelegramIcon size={30} round={true} />
+                                        </TelegramShareButton>
+                                    </li>
+
+
                                 </ul>
                             </div>
 
@@ -173,7 +223,11 @@ function ProductPage() {
                         <div className="footer">
                             <div className="buttons">
                                 <button className='buy'>BUY NOW</button>
-                                <button className='wishlist'>ADD TO WISHLIST</button>
+                                {isActive ? (
+                                    <button onClick={() => handleWishlist(product._id, "Add")} className='wishlist'>ADD TO WISHLIST</button>
+                                ) : (
+                                    <button onClick={() => handleWishlist(product._id, "Remove")} className='wishlist'>REMOVE FROM WISHLIST</button>
+                                )}
                             </div>
                             <div >
                                 <span className='date'>
@@ -192,9 +246,9 @@ function ProductPage() {
                     <div className="seller_detail">
                         <p className='post'>Posted By</p>
                         <div className="seller_image">
-                            <img src={user.userImage} alt="" />
+                            <img src={owner.userImage} alt="" />
                         </div>
-                        <p className='seller'>{user.username}</p>
+                        <p className='seller'>{owner.username}</p>
                         <p className='verification'>VERIFIED</p>
                     </div>
                     <div className="map"><Map /></div>
@@ -205,6 +259,6 @@ function ProductPage() {
     )
 }
 
-export default ProductPage  
+export default ProductPage
 
 

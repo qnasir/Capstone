@@ -286,7 +286,7 @@ function Dashboard() {
               <TooltipTrigger asChild>
                 <Link
                   to="/"
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Home" ? 'bg-accent' : ''}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Home" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
                   onClick={() => {handleLinkClick("Home")}}
                 >
                   <Home className="h-5 w-5" />
@@ -301,7 +301,7 @@ function Dashboard() {
                 <Link
                   to={`/wishlist/${userId}`}
                   onClick={() => handleLinkClick("Wishlist")}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Wishlist" ? 'bg-accent' : ''}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Wishlist" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span className="sr-only">Wishlist</span>
@@ -314,7 +314,7 @@ function Dashboard() {
               <TooltipTrigger asChild>
                 <Link
                   onClick={() => showHistory("History") }
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "History" ? 'bg-accent' : ''}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "History" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
                 >
                   <Package className="h-5 w-5" />
                   <span className="sr-only">History</span>
@@ -328,7 +328,7 @@ function Dashboard() {
                 <Link
                   href="#"
                   onClick={() => handleLinkClick("Offers")}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Offers" ? 'bg-accent' : ''}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Offers" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
                 >
                   <Users2 className="h-5 w-5" />
                   <span className="sr-only">Offers</span>
@@ -342,7 +342,7 @@ function Dashboard() {
                 <Link
                   href="#"
                   onClick={() => handleLinkClick("Analytics")}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Analytics" ? 'bg-accent' : ''}`}
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Analytics" ? 'bg-accent' : 'text-muted-foreground'}`}
                 >
                   <LineChart className="h-5 w-5" />
                   <span className="sr-only">Analytics</span>

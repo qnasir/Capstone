@@ -7,8 +7,6 @@ const BingMapsComponent = () => {
 
     const { latitude } = useContext(AppContext)
     const { longitude } = useContext(AppContext)
-    console.log(latitude)
-    console.log(longitude)
 
     useEffect(() => {
         const script = document.createElement('script');

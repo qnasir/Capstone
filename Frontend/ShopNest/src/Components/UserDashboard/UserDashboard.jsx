@@ -195,6 +195,14 @@ function Dashboard() {
       })
       setProducts(filteredProducts)
       setCurrentProducts(filteredProducts)
+    } else if (value === "Purchased Products") {
+      const filteredProducts = allProducts.filter((item) => {
+        if (item.offers.length >= 1 && item.status === "Purchased") {
+          return item;
+        }
+      })
+      setProducts(filteredProducts)
+      setCurrentProducts(filteredProducts)
     }
 
   }

@@ -21,7 +21,7 @@ function Login() {
             window.localStorage.setItem("userId", response.data.userId)
             window.location.href = '../'
           } catch (err) {
-            console.error(err)
+            console.log(err)
           }
           
           window.addEventListener('load', ()=> {       

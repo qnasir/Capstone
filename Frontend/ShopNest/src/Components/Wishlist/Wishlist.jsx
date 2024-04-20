@@ -19,7 +19,7 @@ function Wishlist() {
         const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
         setProducts(response.data)
       } catch (err) {
-        console.error(err)
+        console.log(err)
       }
     }
     fetchProducts()
@@ -35,7 +35,7 @@ function Wishlist() {
     //     }
     //     setProducts(fetchedProducts)
     //   } catch (err) {
-    //     console.error(err)
+    //     console.log(err)
     //   }
     // }
     

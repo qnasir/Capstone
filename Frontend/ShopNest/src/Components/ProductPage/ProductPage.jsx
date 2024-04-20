@@ -105,7 +105,7 @@ function ProductPage() {
                 const { email, phone, username, userImage } = userResponse.data[0];
                 setOwner({ email, phone, username, userImage })
             } catch (error) {
-                console.error(error)
+                console.log(error)
             }
         }
         fetchProduct();

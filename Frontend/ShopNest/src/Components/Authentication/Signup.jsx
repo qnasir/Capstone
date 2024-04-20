@@ -15,7 +15,7 @@ function Signup() {
         const response = await axios.post(import.meta.env.VITE_SIGNUP_KEY,data)
         alert("User added successfully")
       } catch (err) {
-        console.error(err)
+        console.log(err)
       }
 
     }

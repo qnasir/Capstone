@@ -9,7 +9,7 @@ function List({products}) {
         <div className='grid_parent'>
             {products && products.map((product) => {
                 return (
-                        <Products key={product._id} product={product} />
+                        <Products product={product} />
                 )
             })}
         </div>

@@ -63,7 +63,7 @@ const Images = () => {
                 });
                 uploadUrls.push(response.data.secure_url);
             } catch (err) {
-                console.error("Error in submitProduct", err);
+                console.log("Error in submitProduct", err);
             }
         }
 
@@ -79,7 +79,7 @@ const Images = () => {
             await axios.post(import.meta.env.VITE_PRODUCT_POST_KEY, updatedData);
             updateProgress();
         } catch (err) {
-            console.error(err);
+            console.log(err);
         }
     };
 

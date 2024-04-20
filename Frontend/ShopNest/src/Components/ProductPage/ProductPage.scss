@@ -150,6 +150,10 @@
                 font-family: Calibri;
                 max-width: 92%;
             }
+
+            .request {
+                font-size: 0.8rem;
+            }
     
             .footer {
                 display: flex;
@@ -159,7 +163,7 @@
                 .buttons {
                     display: flex;
                     gap: 2rem;
-                    margin-top: 1.7rem;
+                    margin-top: 0.5rem;
                     // padding-top: 1rem;
                     // width: fit-content;
                     // height: 2rem;
@@ -175,6 +179,7 @@
         
                     .buy {
                         background: #00ffff;
+                        color: black;
                         border-bottom: 4px solid #0094FF;
                     }
         

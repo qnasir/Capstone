@@ -112,9 +112,9 @@ router.put("/userDashboard/products/:action/:productId", async (req, res) => {
     const foundProduct = await Product.findById(productId);
 
     if (action === "Edit") {
-      console.log("Edit")
-    } else if (action  === "Delete") {
-      console.log("Delete")
+      console.log("Edit");
+    } else if (action === "Delete") {
+      console.log("Delete");
     } else {
       if (foundProduct && action !== foundProduct.status) {
         const updatedProduct = await Product.updateOne(
@@ -124,62 +124,107 @@ router.put("/userDashboard/products/:action/:productId", async (req, res) => {
         res.json("Product updated successfully");
       }
     }
-
   } catch (err) {
     console.log(err);
   }
 });
 
 // userDashboard Edit Price
-router.put("/userDashboard/products/priceUpdate/:newPrice/:productId", async (req,res) => {
-  const productId = req.params.productId
-  const newPrice = req.params.newPrice
-  console.log(newPrice)
-  console.log(productId)
-  try {
-    const updatedProduct = await Product.updateOne(
-      { _id: productId },
-      { $set:{ price: newPrice } }
-    );
-    res.json("Product updated successfully")
-  } catch (err) {
-    console.log("Price Update Error", err)
+router.put(
+  "/userDashboard/products/priceUpdate/:newPrice/:productId",
+  async (req, res) => {
+    const productId = req.params.productId;
+    const newPrice = req.params.newPrice;
+    console.log(newPrice);
+    console.log(productId);
+    try {
+      const updatedProduct = await Product.updateOne(
+        { _id: productId },
+        { $set: { price: newPrice } }
+      );
+      res.json("Product updated successfully");
+    } catch (err) {
+      console.log("Price Update Error", err);
+    }
   }
-})
+);
 
 // userDashboard change status
-router.delete("/userDashboard/products/reject/:offer/:productId", async (req, res) => {
-  const offer = req.params.offer; 
-  const productId = req.params.productId;
+router.delete(
+  "/userDashboard/products/reject/:offer/:productId",
+  async (req, res) => {
+    const offer = req.params.offer;
+    const productId = req.params.productId;
+    try {
+      const updatedProduct = await Product.findOneAndUpdate(
+        { _id: productId },
+        { $pull: { offers: offer } },
+        { new: true }
+      );
+      console.log(updatedProduct);
+      res.send("Offer removed successfully");
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// userDashboard delete the product
+router.delete("/userDashboard/products/:productId", async (req, res) => {
   try {
-    const updatedProduct = await Product.findOneAndUpdate(
-      { _id: productId },
-      { $pull: { offers: offer } }, // Corrected the condition here
-      { new: true }
-    );
-    console.log(updatedProduct);
-    res.send("Offer removed successfully");
+    const productId = req.params.productId;
+    const deleteProduct = await Product.findByIdAndDelete(productId);
+
+    if (!deleteProduct) {
+      res.json("Product Not Found");
+    }
+    res.json("Product Removed Successfully");
   } catch (err) {
     console.log(err);
-    res.status(500).send("Internal Server Error");
   }
 });
 
-// userDashboard delete the product
-router.delete('/userDashboard/products/:productId', async (req, res) => {
-    try {
-        const productId = req.params.productId
-        const deleteProduct = await Product.findByIdAndDelete(productId);
+// Put route to add buyerID and offer
+router.post("/product/buy", async (req, res) => {
+  const productId = req.body.productId
+  console.log(productId)
+  const data = {
+    productId: productId,
+    buyerId: req.body.buyerId,
+    offer: req.body.offer,
+    status: req.body.status
+  }
 
-        if (!deleteProduct) {
-            res.json("Product Not Found")
-        }
-        res.json("Product Removed Successfully")
-    } catch (err) {
-        console.log(err)
-    }
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      { $push: { offers: data } },
+      { new: true }
+    );
+    console.log(updatedProduct)
+    res.json("Request Successfull")
+  } catch (err) {
+    console.log("Buyer", err);
+  }
+});
+
+// Remove offer by the buyer
+router.delete('/removeOffer/:productId/:buyerId', async (req, res) => {
+  const buyerId = req.params.buyerId
+  const productId = req.params.productId
+  console.log(productId)
+  console.log(buyerId)
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: productId },
+      { $pull : { 'offers': { buyerId: buyerId } } },
+      { new: true }
+    )
+    res.json("Offer Removed Successfully")
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 module.exports = router;
-
-

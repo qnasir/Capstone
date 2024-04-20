@@ -80,7 +80,7 @@ function Dashboard() {
   const [searchTerm, setSearchTerm] = useState('')
   const [value, setValue] = useState('All Products')
   const [userId, setUserId] = useState(null);
-  const [activeLink,setActiveLink] = useState(null)
+  const [activeLink, setActiveLink] = useState(null)
   const [newPrice, setNewPrice] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const [checkedLow, setCheckedLow] = useState(false)
@@ -295,7 +295,7 @@ function Dashboard() {
                 <Link
                   to="/"
                   className={`flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "Home" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
-                  onClick={() => {handleLinkClick("Home")}}
+                  onClick={() => { handleLinkClick("Home") }}
                 >
                   <Home className="h-5 w-5" />
                   <span className="sr-only">Home</span>
@@ -303,7 +303,7 @@ function Dashboard() {
               </TooltipTrigger>
               <TooltipContent side="right">Home</TooltipContent>
             </Tooltip>
-            
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
@@ -321,7 +321,7 @@ function Dashboard() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  onClick={() => showHistory("History") }
+                  onClick={() => showHistory("History")}
                   className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 ${activeLink === "History" ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
                 >
                   <Package className="h-5 w-5" />
@@ -659,7 +659,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      5555 {/* *********************************************************************************************************{offer} */}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                       {product.soldDate.split('T')[0]}
@@ -721,7 +721,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      {product.offers && product.offers.map((item) => {
+                                        if (item.status === "accepted") {
+                                          return item.offer
+                                        } else {
+                                          return 1
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                       {product.soldDate.split('T')[0]}
@@ -755,7 +761,7 @@ function Dashboard() {
                               }
 
 
-                            }  else {
+                            } else {
 
                               if (product.status && product.status === "Sold") {
                                 return product.offers.map((offer, index) => (
@@ -789,7 +795,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      {product.offers.map((singleOffer) => {
+                                        if (singleOffer.status === "accepted") {
+                                          return singleOffer.offer
+                                        } else {
+                                          return 7777777
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                       {product.soldDate.split('T')[0]}
@@ -831,7 +843,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers}
+                                      {product.offers && product.offers.map((item) => {
+                                        if (item.status === "accepted") {
+                                          return item.offer
+                                        } else {
+                                          return 8888888
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                       {product.soldDate.split('T')[0]}
@@ -1020,7 +1038,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      {product.offers.map((singleOffer) => {
+                                        if (singleOffer.status === "accepted") {
+                                          return singleOffer.offer
+                                        } else {
+                                          return 7777777
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                     </TableCell>
@@ -1081,7 +1105,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      5555 {/* ******************************************************************************************************{offer} */}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                       <Button size="sm" className="h-8 gap-1">
@@ -1160,7 +1184,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      {product.offers.map((singleOffer) => {
+                                        if (singleOffer.status === "accepted") {
+                                          return singleOffer.offer
+                                        } else {
+                                          return 7777777
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                     </TableCell>
@@ -1289,7 +1319,13 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {offer}
+                                      {product.offers.map((singleOffer) => {
+                                        if (singleOffer.status === "accepted") {
+                                          return singleOffer.offer
+                                        } else {
+                                          return 7777777
+                                        }
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
                                     </TableCell>
@@ -1353,7 +1389,9 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers}
+                                      {product.offers.map((singleOffer) => {
+                                          return singleOffer.offer
+                                      })}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                       <Button size="sm" className="h-8 gap-1">
@@ -1406,6 +1444,7 @@ function Dashboard() {
                       </Table>
 
                     </CardContent>
+
                     <CardFooter>
                       <div className="text-xs text-muted-foreground">
                         Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}

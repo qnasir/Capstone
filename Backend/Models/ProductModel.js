@@ -30,8 +30,18 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
     offers: [{
-        type: String,
-        required: false
+        buyerId: {
+            type: String,
+            required: false
+        },
+        offer: {
+            type: Number,
+            require: false
+        },
+        status: {
+            type: String,
+            required: false
+        }
     }],
     status: {
         type: String,

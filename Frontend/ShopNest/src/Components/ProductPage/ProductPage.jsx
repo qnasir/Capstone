@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import './ProductPage.css'
-import image from '../Product/svg/download.jpeg'
 import SearchBar from '../Product/SearchBar/SearchBar'
 import Map from '../Map_ProductPage/Map'
 import { AppContext } from '../../Context/ParentContext'
@@ -24,6 +23,7 @@ import {
 
 } from "react-share";
 
+import { Send } from "lucide-react"
 
 //Social Media Icons
 import {
@@ -34,6 +34,16 @@ import {
     XIcon,
 } from "react-share";
 
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+
+
 
 function ProductPage() {
 
@@ -43,12 +53,16 @@ function ProductPage() {
     const { latitude, setLatitude } = useContext(AppContext)
     const { longitude, setLongitude } = useContext(AppContext)
     const [isActive, setIsActive] = useState(true)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(true)
+    const [offeredPrice, setOfferedPrice] = useState(null)
+    const [isRequested, setIsRequested] = useState(false)
     const [product, setProduct] = useState({
         name: "",
         title: "",
         location: "",
         price: "",
         _id: "",
+        offers: [],
         description: "",
         image: [],
         images: "",
@@ -82,8 +96,8 @@ function ProductPage() {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productId}`)
-                const { images, name, location, title, date, userId, description, price, _id } = response.data
-                setProduct({ images, name, location, title, date, userId, description, price, _id })
+                const { images, name, location, title, date, userId, description, price, _id, offers } = response.data
+                setProduct({ images, name, location, title, date, userId, description, price, _id, offers })
                 setLatitude(response.data.latitude)
                 setLongitude(response.data.longitude)
 
@@ -96,27 +110,39 @@ function ProductPage() {
         }
         fetchProduct();
     }, [productId])
-    
+
+    useState(() => {
+    }, [offeredPrice])
+
     useEffect(() => {
         if (user) {
-            const userId = user.id
             const likedProducts = async () => {
+                const userId = user.id
                 try {
+                    product.offers.map((item) => {
+                        if (item.buyerId === userId) {
+                            console.log("True")
+                            setOfferedPrice(item.offer)
+                            setIsRequested(true)
+                        }
+                    })
+
                     const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
                     const data = response.data
-                    console.log(data)
                     data.map((product) => {
                         if (product._id === productId) {
                             setIsActive(false)
                         }
                     })
-                } catch(err) {
+
+                } catch (err) {
                     console.log("Error fetching liked products", err)
                 }
             }
             likedProducts()
         }
-    }, [user])
+    }, [product.offers, user])
+
 
     const shareURL = `https://shop-nest-seven.vercel.app/product-page/${productId}`
     const [isToggle, setIsToggle] = useState(false);
@@ -130,7 +156,7 @@ function ProductPage() {
             if (action === "Add") {
                 setIsActive(false)
                 const userId = user.id
-                const data = {userId, productId}
+                const data = { userId, productId }
                 try {
                     const response = await axios.post(import.meta.env.VITE_LIKED_PRODUCT_KEY, data);
                     localStorage.setItem('likedProducts', JSON.stringify(productId));
@@ -151,6 +177,38 @@ function ProductPage() {
         }
     }
 
+    const handleBuy = async (event, offerAmount) => {
+        event.preventDefault()
+        setIsPopoverOpen(false)
+        const buyerId = user.id
+        const offer = offerAmount.value
+        const status = "pending"
+
+        if (user) {
+            const data = { productId, buyerId, offer, status }
+            try {
+                const response = await axios.post(import.meta.env.VITE_BUY_PRODUCT_KEY, data)
+                setIsRequested(true)
+                window.location.reload()
+            } catch (err) {
+                console.log("Buy Error", err)
+            }
+        }
+    }
+
+    const removeOffer = async () => {
+        const buyerId = user.id
+        if (user) {
+            try {
+                const response = await axios.delete(`${import.meta.env.VITE_REMOVE_OFFER_PRODUCT_KEY}/${productId}/${buyerId}`)
+                console.log(response.data)
+                setIsRequested(false)
+            } catch(err) {
+                console.log("Remove Offer Error", err)
+            }
+            console.log(buyerId)
+        }
+    }
 
     return (
         <>
@@ -220,14 +278,56 @@ function ProductPage() {
                         <div className="discription">
                             <p>{product.description}</p>
                         </div>
+                            {isRequested ? (<span className='request'><small>Offerd Price :- {offeredPrice}</small></span>) : ('')}
                         <div className="footer">
                             <div className="buttons">
-                                <button className='buy'>BUY NOW</button>
+                                <Popover>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            {isRequested ? (<button onClick={removeOffer} className="buy" variant="outline">Remove Offer</button>) : (<button onClick={() => setIsPopoverOpen(true)} className="buy" variant="outline">BUY NOW</button>)}
+                                        </PopoverTrigger>
+                                        {isPopoverOpen && (
+                                            <PopoverContent className="w-100 bg-white p-4 rounded-md">
+
+                                                <form onSubmit={(event) => handleBuy(event, offerAmount)}>
+                                                    <div className="space-y-5">
+                                                        <h4 className="font-medium leading-none">Make an Offer</h4>
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Enter your offer below:
+                                                        </p>
+                                                    </div>
+                                                    <div className="grid gap-2">
+                                                        <div className="grid pt-1 grid-cols-3 items-center gap-4">
+                                                            <label htmlFor="offerAmount" className="col-span-1">Offer Amount</label>
+                                                            <input
+                                                                type="number"
+                                                                id="offerAmount"
+                                                                required
+                                                                placeholder="Enter offer amount"
+                                                                className="col-span-2 h-8 border rounded-md px-2"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <Button type="submit" size="sm" className="h-8 mt-4 w-full gap-1">
+                                                        <Send className="h-3.5 w-3.5" />
+                                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                                            Sumbit Offer
+                                                        </span>
+                                                    </Button>
+                                                </form>
+
+                                            </PopoverContent>
+                                        )}
+                                    </Popover>
+
+                                </Popover>
+
                                 {isActive ? (
                                     <button onClick={() => handleWishlist(product._id, "Add")} className='wishlist'>ADD TO WISHLIST</button>
                                 ) : (
                                     <button onClick={() => handleWishlist(product._id, "Remove")} className='wishlist'>REMOVE FROM WISHLIST</button>
                                 )}
+
                             </div>
                             <div >
                                 <span className='date'>

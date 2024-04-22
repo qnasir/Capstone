@@ -218,14 +218,11 @@ function Dashboard() {
   }
 
   const handleReject = async (offer, productId) => {
-    console.log(offer)
-    console.log(productId)
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_USER_DASHBOARD_REJECT_KEY}/${offer}/${productId}`)
-      console.log(response.data)
+      const response = await axios.delete(`${import.meta.env.VITE_REMOVE_OFFER_PRODUCT_KEY}/${productId}/${offer.buyerId}`)
       window.location.reload()
     } catch (err) {
-      console.log("Rejection erroe", err)
+      console.log("Rejection error", err)
     }
   }
 
@@ -1105,10 +1102,10 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      5555 {/* ******************************************************************************************************{offer} */}
+                                    {offer.offer}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
-                                      <Button size="sm" className="h-8 gap-1">
+                                      <Button onClick={() => acceptOffer(product._id,offer)} size="sm" className="h-8 gap-1">
                                         <Check className="h-3.5 w-3.5" />
                                         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                           Accept
@@ -1394,13 +1391,13 @@ function Dashboard() {
                                       })}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      <Button size="sm" className="h-8 gap-1">
+                                      <Button onClick={() => acceptOffer(product._id,offer)} size="sm" className="h-8 gap-1">
                                         <Check className="h-3.5 w-3.5" />
                                         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                           Accept
                                         </span>
                                       </Button>
-                                      <Button onClick={() => handleReject(product.offers[0], product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                      <Button onClick={() => handleReject(product.offers[0].buyerId, product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
                                         <X className="h-3.5 w-3.5" />
                                         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                           Reject

@@ -155,6 +155,8 @@ router.delete(
   async (req, res) => {
     const offer = req.params.offer;
     const productId = req.params.productId;
+    console.log(offer)
+    console.log(productId)
     try {
       const updatedProduct = await Product.findOneAndUpdate(
         { _id: productId },

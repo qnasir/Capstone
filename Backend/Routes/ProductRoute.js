@@ -150,25 +150,43 @@ router.put(
 );
 
 // userDashboard Accept Offer
-router.put('/userDashboard/acceptOffer/:productId/:buyerId', async (req,res) => {
-  const productId = req.params.productId
-  const buyerId = req.params.buyerId
-  console.log(productId, buyerId)
-  try {
-    const updatedProduct = await Product.findOneAndUpdate(
-      {
-        _id: productId,
-        "offers.buyerId": buyerId,
-        "offers.status": "pending"
-      },
-      { $set: { "offers.$.status": "accepted"} },
-      { new: true }
-    )
-    res.json("Offer Accepted Succesfully")
-  } catch(err) {
-    console.log("Accept Offer Error", err)
+router.put(
+  "/userDashboard/acceptOffer/:productId/:buyerId/:action",
+  async (req, res) => {
+
+    const { productId, buyerId, action } = req.params
+    console.log(productId, buyerId, action);
+    if (action === "accept") {
+      try {
+        const updatedProduct = await Product.findOneAndUpdate(
+          {
+            _id: productId,
+            "offers.buyerId": buyerId,
+          },
+          { $set: { "offers.$.status": "accepted" } },
+          { new: true }
+        );
+        res.json("Offer Accepted Succesfully");
+      } catch (err) {
+        console.log("Accept Offer Error", err);
+      }
+    } else {
+      try {
+        const updatedProduct = await Product.findOneAndUpdate(
+          {
+            _id: productId,
+            "offers.buyerId": buyerId,
+          },
+          { $set: { "offers.$.status": "pending" } },
+          { new: true }
+        );
+        res.json("Accept Offer undo successfully");
+      } catch (err) {
+        console.log("Undo Error", err);
+      }
+    }
   }
-})
+);
 
 // userDashboard change status
 router.delete("/userDashboard/products/reject/:offer/:productId",async (req, res) => {

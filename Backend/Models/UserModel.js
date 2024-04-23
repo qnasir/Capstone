@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userSince: {
+        type: String,
+        required: false
+    },
     username: {
         type: String,
         required: true

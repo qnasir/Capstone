@@ -228,9 +228,9 @@ function Dashboard() {
     }
   }
 
-  const handleAccept = async (productId, buyerId) => {
+  const handleAccept = async (productId, buyerId, action) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_ACCEPT_OFFER_PRODUCT_KEY}/${productId}/${buyerId}`)
+      const response = await axios.put(`${import.meta.env.VITE_ACCEPT_OFFER_PRODUCT_KEY}/${productId}/${buyerId}/${action}`)
       console.log(response.data)
       window.location.reload()
     } catch (err) {
@@ -1119,7 +1119,7 @@ function Dashboard() {
                                     <TableCell className="hidden  md:table-cell">
                                       {offer.status === "pending" ? (
                                         <>
-                                          <Button onClick={() => handleAccept(product._id, offer.buyerId)} size="sm" className="h-8 gap-1">
+                                          <Button onClick={() => handleAccept(product._id, offer.buyerId, "accept")} size="sm" className="h-8 gap-1">
                                             <Check className="h-3.5 w-3.5" />
                                             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                               Accept
@@ -1134,8 +1134,8 @@ function Dashboard() {
                                         </>
                                       ) : (
                                         <>
-                                        Accepted Offer
-                                          <Button onClick={() => handleAccept(product._id, offer.buyerId)} size="sm" className="h-8 ml-3 gap-1">
+                                          Accepted Offer
+                                          <Button onClick={() => handleAccept(product._id, offer.buyerId, "undo")} size="sm" className="h-8 ml-3 gap-1">
                                             <Check className="h-3.5 w-3.5" />
                                             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                               Undo
@@ -1420,7 +1420,7 @@ function Dashboard() {
                                     <TableCell className="hidden md:table-cell">
                                       {product.offers[0].status === "pending" ? (
                                         <>
-                                          <Button onClick={() => handleAccept(product._id, product.offers[0].buyerId)} size="sm" className="h-8 gap-1">
+                                          <Button onClick={() => handleAccept(product._id, product.offers[0].buyerId, "accept")} size="sm" className="h-8 gap-1">
                                             <Check className="h-3.5 w-3.5" />
                                             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                                               Accept
@@ -1433,7 +1433,17 @@ function Dashboard() {
                                             </span>
                                           </Button>
                                         </>
-                                      ) : ('Offer Accepted')}
+                                      ) : (
+                                        <>
+                                          Accepted Offer
+                                          <Button onClick={() => handleAccept(product._id, product.offers[0].buyerId, "undo")} size="sm" className="h-8 gap-1">
+                                            <Check className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Undo
+                                            </span>
+                                          </Button>
+                                        </>
+                                      )}
 
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">

@@ -149,10 +149,29 @@ router.put(
   }
 );
 
+// userDashboard Accept Offer
+router.put('/userDashboard/acceptOffer/:productId/:buyerId', async (req,res) => {
+  const productId = req.params.productId
+  const buyerId = req.params.buyerId
+  console.log(productId, buyerId)
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      {
+        _id: productId,
+        "offers.buyerId": buyerId,
+        "offers.status": "pending"
+      },
+      { $set: { "offers.$.status": "accepted"} },
+      { new: true }
+    )
+    res.json("Offer Accepted Succesfully")
+  } catch(err) {
+    console.log("Accept Offer Error", err)
+  }
+})
+
 // userDashboard change status
-router.delete(
-  "/userDashboard/products/reject/:offer/:productId",
-  async (req, res) => {
+router.delete("/userDashboard/products/reject/:offer/:productId",async (req, res) => {
     const offer = req.params.offer;
     const productId = req.params.productId;
     console.log(offer)
@@ -213,10 +232,8 @@ router.post("/product/buy", async (req, res) => {
 
 // Remove offer by the buyer
 router.delete('/removeOffer/:productId/:buyerId', async (req, res) => {
-  const buyerId = req.params.buyerId
   const productId = req.params.productId
-  console.log(productId)
-  console.log(buyerId)
+  const buyerId = req.params.buyerId
   try {
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: productId },

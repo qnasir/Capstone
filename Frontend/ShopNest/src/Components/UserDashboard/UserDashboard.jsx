@@ -217,12 +217,24 @@ function Dashboard() {
     // window.location.reload()
   }
 
-  const handleReject = async (offer, productId) => {
+  const handleReject = async (productId, buyerId) => {
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_REMOVE_OFFER_PRODUCT_KEY}/${productId}/${offer.buyerId}`)
+      console.log(productId, buyerId)
+      const response = await axios.delete(`${import.meta.env.VITE_REMOVE_OFFER_PRODUCT_KEY}/${productId}/${buyerId}`)
+      console.log(response.data)
       window.location.reload()
     } catch (err) {
       console.log("Rejection error", err)
+    }
+  }
+
+  const handleAccept = async (productId, buyerId) => {
+    try {
+      const response = await axios.put(`${import.meta.env.VITE_ACCEPT_OFFER_PRODUCT_KEY}/${productId}/${buyerId}`)
+      console.log(response.data)
+      window.location.reload()
+    } catch (err) {
+      console.log("Accept Offer Error", err)
     }
   }
 
@@ -1102,21 +1114,36 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                    {offer.offer}
+                                      {offer.offer}
                                     </TableCell>
                                     <TableCell className="hidden  md:table-cell">
-                                      <Button onClick={() => acceptOffer(product._id,offer)} size="sm" className="h-8 gap-1">
-                                        <Check className="h-3.5 w-3.5" />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                          Accept
-                                        </span>
-                                      </Button>
-                                      <Button onClick={() => handleReject(offer, product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
-                                        <X className="h-3.5 w-3.5" />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                          Reject
-                                        </span>
-                                      </Button>
+                                      {offer.status === "pending" ? (
+                                        <>
+                                          <Button onClick={() => handleAccept(product._id, offer.buyerId)} size="sm" className="h-8 gap-1">
+                                            <Check className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Accept
+                                            </span>
+                                          </Button>
+                                          <Button onClick={() => handleReject(product._id, offer.buyerId)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                            <X className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Reject
+                                            </span>
+                                          </Button>
+                                        </>
+                                      ) : (
+                                        <>
+                                        Accepted Offer
+                                          <Button onClick={() => handleAccept(product._id, offer.buyerId)} size="sm" className="h-8 ml-3 gap-1">
+                                            <Check className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Undo
+                                            </span>
+                                          </Button>
+                                        </>
+                                      )}
+
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                       {product.date.split('T')[0]}
@@ -1387,22 +1414,27 @@ function Dashboard() {
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                       {product.offers.map((singleOffer) => {
-                                          return singleOffer.offer
+                                        return singleOffer.offer
                                       })}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      <Button onClick={() => acceptOffer(product._id,offer)} size="sm" className="h-8 gap-1">
-                                        <Check className="h-3.5 w-3.5" />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                          Accept
-                                        </span>
-                                      </Button>
-                                      <Button onClick={() => handleReject(product.offers[0].buyerId, product._id)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
-                                        <X className="h-3.5 w-3.5" />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                          Reject
-                                        </span>
-                                      </Button>
+                                      {product.offers[0].status === "pending" ? (
+                                        <>
+                                          <Button onClick={() => handleAccept(product._id, product.offers[0].buyerId)} size="sm" className="h-8 gap-1">
+                                            <Check className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Accept
+                                            </span>
+                                          </Button>
+                                          <Button onClick={() => handleReject(product._id, product.offers[0].buyerId)} size="sm" variant="outline" className="h-8 ml-5 gap-1">
+                                            <X className="h-3.5 w-3.5" />
+                                            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                              Reject
+                                            </span>
+                                          </Button>
+                                        </>
+                                      ) : ('Offer Accepted')}
+
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                       {product.date.split('T')[0]}

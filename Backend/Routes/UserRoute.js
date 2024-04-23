@@ -65,6 +65,7 @@ router.post("/signup", async (req, res) => {
   let email = req.body.email;
   let phone = req.body.phone;
   let userImage = req.body.userImage; 
+  let userSince = req.body.userSince; 
 
   const user = {
     userId: userId,
@@ -72,6 +73,7 @@ router.post("/signup", async (req, res) => {
     phone: phone,
     username: username,
     userImage: userImage,
+    userSince: userSince,
   };
 
   try {
@@ -92,6 +94,7 @@ router.post("/signup", async (req, res) => {
       phone: user.phone,
       username: user.username,
       userImage: user.userImage,
+      userSince: user.userSince,
     });
     res.json({ message: "User registered successfully" });
   } catch (error) {

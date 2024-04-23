@@ -49,6 +49,7 @@ function ProductPage() {
 
     const { productId } = useParams();
     const { user } = useClerk();
+    console.log(user)
 
     const { latitude, setLatitude } = useContext(AppContext)
     const { longitude, setLongitude } = useContext(AppContext)

@@ -45,7 +45,8 @@ const ProductSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        required: false
+        required: true,
+        default: "Draft",
     },
     location: {
         type: String,

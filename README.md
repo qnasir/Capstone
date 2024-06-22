@@ -1,4 +1,4 @@
-# OLX-Like Website Project
+# SHOP-NEST Website Project
 
 ## Overview
 This project aims to develop a web-based platform similar to OLX, providing users with the ability to buy and sell various products online. The platform facilitates easy navigation for users to explore listings, create new listings for items they wish to sell, manage their profiles, and make purchases securely.

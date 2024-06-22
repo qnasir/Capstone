@@ -20,6 +20,7 @@ const Images = () => {
                 data[key] = value;
             }
             setFetchedData(data);
+            console.log(data)
         };
 
         if (images.length > 0) {

@@ -16,14 +16,7 @@ function GeocodingForm() {
     const [error, setError] = useState('');
 
     const bingMapsApiKey = 'AnSwNOD-rjLdT-e7jJq1Y7mzbGpX7H4lS2dcU1V7CMPUx6BmmPh8g-No4K9dJNN5';
-
-    useEffect(() => {
-        if (user && user.id) {
-            console.log(user.id)
-            const data = {...fetchedData, userId: `${user.id}`} 
-            setDataWithuserId(data)
-        }
-    }, [user])
+    
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -32,8 +25,18 @@ function GeocodingForm() {
                 data[key] = value;
             }
             setFetchedData(data);
+            console.log("FirstData", data)
 
     }, [])
+
+    useEffect(() => {
+        if (user && user.id) {
+            console.log(user.id)
+            const data = {...fetchedData, userId: `${user.id}`} 
+            setDataWithuserId(data)
+            console.log("SecondData", data)
+        }
+    }, [user])
 
     const handleGeocode = () => {
         const fullAddress = `${address}, ${city}, ${state}, ${postalCode}, ${country}`;
@@ -50,6 +53,7 @@ function GeocodingForm() {
                     // setLongitude(longitude);
                     const dataWithCoordinates = { ...dataWithuserId, location: address, latitude: latitude, longitude: longitude };
                     const queryParams = new URLSearchParams(dataWithCoordinates).toString();
+                    console.log("ThirdData", dataWithCoordinates)
         
                     window.location.href = `./upload-images?${queryParams}`
                     setError('');

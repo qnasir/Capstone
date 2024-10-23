@@ -804,7 +804,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers.map((singleOffer) => {
+                                      {product.offers && product.offers.map((singleOffer) => {
                                         if (singleOffer.status === "accepted") {
                                           return singleOffer.offer
                                         } else {
@@ -1047,7 +1047,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers.map((singleOffer) => {
+                                      {product.offers && product.offers.map((singleOffer) => {
                                         if (singleOffer.status === "accepted") {
                                           return singleOffer.offer
                                         } else {
@@ -1208,7 +1208,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers.map((singleOffer) => {
+                                      {product.offers && product.offers.map((singleOffer) => {
                                         if (singleOffer.status === "accepted") {
                                           return singleOffer.offer
                                         } else {
@@ -1343,7 +1343,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers.map((singleOffer) => {
+                                      {product.offers && product.offers.map((singleOffer) => {
                                         if (singleOffer.status === "accepted") {
                                           return singleOffer.offer
                                         } else {
@@ -1413,7 +1413,7 @@ function Dashboard() {
                                       )}
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                      {product.offers.map((singleOffer) => {
+                                      {product.offers && product.offers.map((singleOffer) => {
                                         return singleOffer.offer
                                       })}
                                     </TableCell>

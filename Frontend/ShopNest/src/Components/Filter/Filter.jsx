@@ -208,13 +208,13 @@ function Filter() {
                     <div className='select_container'>
                         <select onChange={handleSize}>
                             <option value="">Size</option>
-                            {sizeOptions.map((size, index) => (
+                            {sizeOptions && sizeOptions.map((size, index) => (
                                 <option key={index} value={size}>{size}</option>
                             ))}
                         </select>
                         <select onChange={handleColor}>
                             <option value="">Color</option>
-                            {colorOptions.map((color, index) => (
+                            {sizeOptions && colorOptions.map((color, index) => (
                                 <option key={index} value={color}>{color}</option>
                             ))}
                         </select>

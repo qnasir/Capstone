@@ -119,7 +119,7 @@ function ProductPage() {
         if (user) {
             const likedProducts = async () => {
                 const userId = user.id
-                try {
+                try {product.offers && 
                     product.offers.map((item) => {
                         if (item.buyerId === userId) {
                             console.log("True")
@@ -130,7 +130,7 @@ function ProductPage() {
 
                     const response = await axios.get(`${import.meta.env.VITE_WISHLIST_ID_KEY}/${userId}`)
                     const data = response.data
-                    data.map((product) => {
+                    data && data.map((product) => {
                         if (product._id === productId) {
                             setIsActive(false)
                         }

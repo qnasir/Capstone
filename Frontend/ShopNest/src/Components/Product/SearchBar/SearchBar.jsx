@@ -40,7 +40,7 @@ function SearchBar(props) {
                 <div className='language_filter dropdown'>
                     <GrLanguage className='dropdown_button' />
                     <div className='dropdown_content'>
-                        {languages.map((language) => (
+                        {languages && languages.map((language) => (
                             <button key={language.code} onClick={() => changeLanguage(language.code)} >{language.lang}</button>
                         ))}
                     </div>

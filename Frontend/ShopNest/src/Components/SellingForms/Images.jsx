@@ -122,7 +122,7 @@ const Images = () => {
                 <p>Drag & drop some files here, or click to select files</p>
             </div>
             <div className="image-preview">
-                {images.map((file, index) => (
+                {images && images.map((file, index) => (
                     <div key={index} className="image-preview-item">
                         <img src={URL.createObjectURL(file)} alt={`Image ${index}`} />
                         <button className="delete-button" onClick={() => removeImage(index)}>

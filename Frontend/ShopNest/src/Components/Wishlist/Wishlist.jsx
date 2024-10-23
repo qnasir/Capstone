@@ -32,7 +32,7 @@ function Wishlist() {
 
   return (
     <div className="grid_parent_wishlist">
-      {products.map((product) => {
+      {products && products.map((product) => {
         return (
           <>
             <div key={product._id} className='product_container'>

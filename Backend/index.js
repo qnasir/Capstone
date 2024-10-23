@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: ['https://shop-nest-six.vercel.app','http://localhost:5173'],
+  origin: ['https://shopnest-nasir.vercel.app','http://localhost:5173'],
   methods: 'GET, POST, PUT, DELETE',
   allowedHeaders: 'Content-Type',
   credentials: true,

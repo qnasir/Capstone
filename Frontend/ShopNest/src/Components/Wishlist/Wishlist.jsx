@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import { FaIndianRupeeSign } from "react-icons/fa6";
+import { SlLocationPin } from "react-icons/sl";
 import { useParams } from 'react-router-dom'
 import './Wishlist.css'
 
@@ -24,22 +27,6 @@ function Wishlist() {
     }
     fetchProducts()
 
-    // Fetching products by their ids
-    // const fetchingProduts = async () => {
-    //   const fetchedProducts = [];
-    //   try {
-    //     for (const [index, productIds] of wishProducts.entries()) {
-    //       const response = await axios.get(`${import.meta.env.VITE_PRODUCT_ID_KEY}/${productIds}`)
-    //       fetchedProducts.push(response.data)
-    //       console.log(products)
-    //     }
-    //     setProducts(fetchedProducts)
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
-    
-    // fetchingProduts()
 
   }, [])
 
@@ -47,16 +34,40 @@ function Wishlist() {
     <div className="grid_parent_wishlist">
       {products.map((product) => {
         return (
-          <div key={product._id}>
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-            <p>{product.location}</p>
-            <p>{product.description}</p>
-          </div>
-        )
+          <>
+            <div key={product._id} className='product_container'>
+              <Link to={`product-page/${product._id}`}>
+                <div className="single_product">
+                  <div className="productImg">
+                    <img src={product.images[0]} alt="" />
+                  </div>
+
+                  <div className="productInfo">
+                    <div className="title">
+                      <p className='productName'>{product.name}</p>
+                      <p className='productTitle'>{product.title}</p>
+                    </div>
+
+                    <div className="price_div">
+                      <span>
+                        <SlLocationPin className='location_icon' />
+                        <p className='location'>{product.location}</p>
+                      </span>
+                      <span className='price'>
+                        <FaIndianRupeeSign />
+                        <span className='price_text'>{product.price}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </>
+        );
       })}
     </div>
   )
+
 }
 
 export default Wishlist
